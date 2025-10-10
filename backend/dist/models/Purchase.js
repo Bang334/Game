@@ -39,11 +39,11 @@ class PurchaseModel {
     // Get user purchases with details
     static async findByUserIdWithDetails(userId) {
         const [rows] = await db_1.pool.execute(`
-      SELECT p.*, u.username, g.name as game_name, pub.name as publisher_name
-      FROM Purchase p
-      JOIN User u ON p.user_id = u.user_id
-      JOIN Game g ON p.game_id = g.game_id
-      JOIN Publisher pub ON g.publisher_id = pub.publisher_id
+      SELECT p.*, u.username, g.name as game_name, g.image, g.description, g.price, g.average_rating, g.link_download, pub.name as publisher_name
+      FROM \`Purchase\` p
+      JOIN \`User\` u ON p.user_id = u.user_id
+      JOIN \`Game\` g ON p.game_id = g.game_id
+      JOIN \`Publisher\` pub ON g.publisher_id = pub.publisher_id
       WHERE p.user_id = ?
       ORDER BY p.purchase_date DESC
     `, [userId]);
@@ -58,38 +58,30 @@ class PurchaseModel {
     static async getPurchaseStats() {
         const [rows] = await db_1.pool.execute(`
       SELECT 
-        COUNT(*) as total_purchases,
-        SUM(price) as total_revenue,
-        AVG(price) as average_price
+        COUNT(*) as total_purchases
       FROM Purchase
     `);
         const result = rows[0];
         return {
-            total_purchases: result.total_purchases || 0,
-            total_revenue: result.total_revenue || 0,
-            average_price: result.average_price || 0
+            total_purchases: result.total_purchases || 0
         };
     }
     // Get user purchase statistics
     static async getUserPurchaseStats(userId) {
         const [rows] = await db_1.pool.execute(`
       SELECT 
-        COUNT(*) as total_purchases,
-        SUM(price) as total_spent,
-        AVG(price) as average_price
+        COUNT(*) as total_purchases
       FROM Purchase
       WHERE user_id = ?
     `, [userId]);
         const result = rows[0];
         return {
-            total_purchases: result.total_purchases || 0,
-            total_spent: result.total_spent || 0,
-            average_price: result.average_price || 0
+            total_purchases: result.total_purchases || 0
         };
     }
     // Create new purchase
     static async create(data) {
-        const [result] = await db_1.pool.execute('INSERT INTO Purchase (user_id, game_id, price) VALUES (?, ?, ?)', [data.user_id, data.game_id, data.price]);
+        const [result] = await db_1.pool.execute('INSERT INTO Purchase (user_id, game_id, payment_method) VALUES (?, ?, ?)', [data.user_id, data.game_id, data.payment_method || 'bank_transfer']);
         return result.insertId;
     }
     // Delete purchase
@@ -117,13 +109,12 @@ class PurchaseModel {
         g.game_id,
         g.name as game_name,
         p.name as publisher_name,
-        COUNT(pur.purchase_id) as purchase_count,
-        SUM(pur.price) as total_revenue
+        COUNT(pur.purchase_id) as purchase_count
       FROM Game g
       JOIN Publisher p ON g.publisher_id = p.publisher_id
       LEFT JOIN Purchase pur ON g.game_id = pur.game_id
       GROUP BY g.game_id
-      ORDER BY purchase_count DESC, total_revenue DESC
+      ORDER BY purchase_count DESC
       LIMIT ?
     `, [limit]);
         return rows;

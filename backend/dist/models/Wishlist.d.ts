@@ -10,18 +10,24 @@ export interface CreateWishlistData {
 export interface WishlistWithDetails extends Wishlist {
     username: string;
     game_name: string;
+    image: string | null;
+    description: string | null;
     publisher_name: string;
     price: number;
     average_rating: number;
+    link_download: string | null;
+    genres: string[];
 }
 export declare class WishlistModel {
     static findAll(): Promise<Wishlist[]>;
     static findById(wishlistId: number): Promise<Wishlist | null>;
     static findByUserId(userId: number): Promise<Wishlist[]>;
     static findByGameId(gameId: number): Promise<Wishlist[]>;
+    static findByUserAndGame(userId: number, gameId: number): Promise<Wishlist | null>;
     static findByUserIdWithDetails(userId: number): Promise<WishlistWithDetails[]>;
     static isInWishlist(userId: number, gameId: number): Promise<boolean>;
     static addToWishlist(data: CreateWishlistData): Promise<number>;
+    static create(data: CreateWishlistData): Promise<number>;
     static removeFromWishlist(userId: number, gameId: number): Promise<boolean>;
     static delete(wishlistId: number): Promise<boolean>;
     static getWishlistStats(): Promise<{

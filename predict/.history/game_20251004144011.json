@@ -1,0 +1,3675 @@
+{
+  "games": [
+    {
+      "id": 1,
+      "name": "Cyberpunk 2077",
+      "description": "An open-world action-adventure RPG set in the dystopian future of Night City. Play as V, a mercenary seeking immortality through a cybernetic implant. Features deep character customization, branching storylines, and immersive cyberpunk atmosphere.",
+      "rating": 4.2,
+      "release_year": 2020,
+      "publisher": "CD Projekt Red",
+      "genre": [
+        "Puzzle",
+        "Casual"
+      ],
+      "mode": "Offline",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 3070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i9",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 70,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Vietnamese",
+        "Japanese",
+        "Korean"
+      ],
+      "downloads": 76129705
+    },
+    {
+      "id": 2,
+      "name": "Candy Crush Saga",
+      "description": "A popular match-three puzzle game where players swap colored candies to create matches and clear levels. Features hundreds of levels, special candies, and social features. Perfect for casual gaming sessions.",
+      "rating": 3.8,
+      "release_year": 2012,
+      "publisher": "King",
+      "genre": [
+        "Puzzle",
+        "Casual"
+      ],
+      "mode": "Online",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "1GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "2GB",
+        "gpu": "Intel HD"
+      },
+      "multiplayer": true,
+      "capacity": 0.1,
+      "age_rating": "3+",
+      "platform": [
+        "Mobile",
+        "PC"
+      ],
+      "language": [
+        "English",
+        "Vietnamese",
+        "Chinese",
+        "Spanish"
+      ],
+      "downloads": 73462243
+    },
+    {
+      "id": 3,
+      "name": "Call of Duty: Modern Warfare",
+      "description": "A military first-person shooter featuring intense multiplayer combat and cinematic single-player campaign. Includes realistic weapons, tactical gameplay, and competitive multiplayer modes with various maps and game types.",
+      "rating": 4.5,
+      "release_year": 2019,
+      "publisher": "Activision",
+      "genre": [
+        "Puzzle",
+        "Casual"
+      ],
+      "mode": "Online",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1060"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 2070"
+      },
+      "multiplayer": true,
+      "capacity": 175,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS4",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "French",
+        "German",
+        "Spanish"
+      ],
+      "downloads": 92660441
+    },
+    {
+      "id": 4,
+      "name": "Minecraft",
+      "description": "A sandbox game where players can build, explore, and survive in procedurally generated worlds made of blocks. Features creative mode for building, survival mode for adventure, and multiplayer servers for social play.",
+      "rating": 4.8,
+      "release_year": 2011,
+      "publisher": "Mojang",
+      "genre": [
+        "Puzzle",
+        "Casual"
+      ],
+      "mode": "Online",
+      "price": 300000,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "4GB",
+        "gpu": "GTX 750"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1050"
+      },
+      "multiplayer": true,
+      "capacity": 1,
+      "age_rating": "7+",
+      "platform": [
+        "PC",
+        "Mobile",
+        "Console"
+      ],
+      "language": [
+        "English",
+        "Vietnamese",
+        "Japanese",
+        "Chinese"
+      ],
+      "downloads": 67726259
+    },
+    {
+      "id": 5,
+      "name": "The Witcher 3",
+      "description": "An epic fantasy RPG following Geralt of Rivia, a monster hunter in a vast open world. Features rich storytelling, complex characters, moral choices, and extensive side quests in a beautifully crafted medieval fantasy setting.",
+      "rating": 4.9,
+      "release_year": 2015,
+      "publisher": "CD Projekt Red",
+      "genre": [
+        "RPG",
+        "Action",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "6GB",
+        "gpu": "GTX 770"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "8GB",
+        "gpu": "GTX 970"
+      },
+      "multiplayer": false,
+      "capacity": 35,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS4",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Polish",
+        "German",
+        "French"
+      ],
+      "downloads": 65164725
+    },
+    {
+      "id": 6,
+      "name": "Among Us",
+      "description": "A multiplayer social deduction game where players work together on a spaceship while trying to identify impostors among the crew. Features deception, teamwork, and quick rounds perfect for party gaming.",
+      "rating": 4.1,
+      "release_year": 2018,
+      "publisher": "InnerSloth",
+      "genre": [
+        "RPG",
+        "Action",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 50000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "1GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "2GB",
+        "gpu": "Intel HD"
+      },
+      "multiplayer": true,
+      "capacity": 0.25,
+      "age_rating": "10+",
+      "platform": [
+        "Mobile",
+        "PC"
+      ],
+      "language": [
+        "English",
+        "Vietnamese",
+        "Korean",
+        "Japanese"
+      ],
+      "downloads": 72318373
+    },
+    {
+      "id": 7,
+      "name": "Red Dead Redemption 2",
+      "description": "An open-world western action-adventure game set in the American frontier. Play as Arthur Morgan, an outlaw in the dying days of the Wild West. Features stunning landscapes, realistic horse riding, and immersive storytelling.",
+      "rating": 4.7,
+      "release_year": 2018,
+      "publisher": "Rockstar Games",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Western"
+      ],
+      "mode": "Offline",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1060"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "12GB",
+        "gpu": "RTX 2060"
+      },
+      "multiplayer": true,
+      "capacity": 150,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS4",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Spanish",
+        "French",
+        "Italian"
+      ],
+      "downloads": 7051696
+    },
+    {
+      "id": 8,
+      "name": "Tetris",
+      "description": "The classic puzzle game where players arrange falling blocks to create complete lines. Features simple yet addictive gameplay, increasing speed, and timeless appeal. Perfect for quick gaming sessions and nostalgic fun.",
+      "rating": 4.6,
+      "release_year": 1984,
+      "publisher": "EA",
+      "genre": [
+        "Puzzle",
+        "Classic"
+      ],
+      "mode": "Offline",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "512MB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "1GB",
+        "gpu": "Intel HD"
+      },
+      "multiplayer": false,
+      "capacity": 0.05,
+      "age_rating": "3+",
+      "platform": [
+        "PC",
+        "Mobile"
+      ],
+      "language": [
+        "English",
+        "Russian",
+        "Japanese",
+        "Chinese"
+      ],
+      "downloads": 44783712
+    },
+    {
+      "id": 9,
+      "name": "Elden Ring",
+      "description": "A dark fantasy action RPG featuring challenging combat, vast open world exploration, and deep lore. Created by FromSoftware, it combines Souls-like difficulty with expansive environments and epic boss battles.",
+      "rating": 4.8,
+      "release_year": 2022,
+      "publisher": "FromSoftware",
+      "genre": [
+        "RPG",
+        "Action",
+        "Dark Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "12GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 3070"
+      },
+      "multiplayer": true,
+      "capacity": 60,
+      "age_rating": "16+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Japanese",
+        "Korean",
+        "Chinese"
+      ],
+      "downloads": 884217
+    },
+    {
+      "id": 10,
+      "name": "Grand Theft Auto V",
+      "description": "An open-world action-adventure game set in Los Santos. Play as three different protagonists in an interconnected story of heists, crime, and survival in a satirical recreation of modern Southern California.",
+      "rating": 4.8,
+      "release_year": 2013,
+      "publisher": "Rockstar Games",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Crime"
+      ],
+      "mode": "Online",
+      "price": 1400000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 660"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": true,
+      "capacity": 110,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS4",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Spanish",
+        "French",
+        "German"
+      ],
+      "downloads": 53112985
+    },
+    {
+      "id": 11,
+      "name": "FIFA 24",
+      "description": "The latest installment in the FIFA series featuring updated rosters, improved gameplay mechanics, and enhanced graphics. Experience realistic football simulation with career mode, ultimate team, and online multiplayer.",
+      "rating": 4.3,
+      "release_year": 2023,
+      "publisher": "EA Sports",
+      "genre": [
+        "Sports",
+        "Football",
+        "Simulation"
+      ],
+      "mode": "Online",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1050"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 3060"
+      },
+      "multiplayer": true,
+      "capacity": 50,
+      "age_rating": "3+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Spanish",
+        "French",
+        "German"
+      ],
+      "downloads": 71645622
+    },
+    {
+      "id": 12,
+      "name": "Assassin's Creed Valhalla",
+      "description": "Embark on a legendary Viking saga as Eivor in 9th century England. Build settlements, forge alliances, and lead raids in this epic action RPG that blends history with mythology.",
+      "rating": 4.4,
+      "release_year": 2020,
+      "publisher": "Ubisoft",
+      "genre": [
+        "Action",
+        "Adventure",
+        "RPG"
+      ],
+      "mode": "Offline",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 960"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 2070"
+      },
+      "multiplayer": false,
+      "capacity": 160,
+      "age_rating": "18+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "French",
+        "German",
+        "Italian"
+      ],
+      "downloads": 86145166
+    },
+    {
+      "id": 13,
+      "name": "Valorant",
+      "description": "A tactical 5v5 character-based shooter where precise gunplay meets unique agent abilities. Compete in ranked matches and prove your skills in this free-to-play competitive FPS.",
+      "rating": 4.2,
+      "release_year": 2020,
+      "publisher": "Riot Games",
+      "genre": [
+        "Shooter",
+        "Tactical",
+        "Competitive"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "4GB",
+        "gpu": "Intel HD 3000"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1050"
+      },
+      "multiplayer": true,
+      "capacity": 8,
+      "age_rating": "13+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "English",
+        "Korean",
+        "Japanese",
+        "Chinese"
+      ],
+      "downloads": 53844198
+    },
+    {
+      "id": 14,
+      "name": "Stardew Valley",
+      "description": "A charming farming simulation game where you inherit your grandfather's old farm plot. Grow crops, raise animals, mine, fish, and build relationships with the townspeople in this relaxing indie game.",
+      "rating": 4.9,
+      "release_year": 2016,
+      "publisher": "ConcernedApe",
+      "genre": [
+        "Simulation",
+        "Farming",
+        "Indie"
+      ],
+      "mode": "Offline",
+      "price": 400000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "2GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "4GB",
+        "gpu": "Intel HD"
+      },
+      "multiplayer": true,
+      "capacity": 0.5,
+      "age_rating": "10+",
+      "platform": [
+        "PC",
+        "Mobile",
+        "Console"
+      ],
+      "language": [
+        "English",
+        "Vietnamese",
+        "Japanese",
+        "Korean"
+      ],
+      "downloads": 77038907
+    },
+    {
+      "id": 15,
+      "name": "League of Legends",
+      "description": "A competitive 5v5 MOBA where two teams of champions battle to destroy the enemy Nexus. Choose from over 160 unique champions and climb the ranked ladder in this free-to-play esports phenomenon.",
+      "rating": 4.1,
+      "release_year": 2009,
+      "publisher": "Riot Games",
+      "genre": [
+        "MOBA",
+        "Strategy",
+        "Competitive"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "2GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 560"
+      },
+      "multiplayer": true,
+      "capacity": 16,
+      "age_rating": "13+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "English",
+        "Korean",
+        "Chinese",
+        "Vietnamese"
+      ],
+      "downloads": 71564220
+    },
+    {
+      "id": 16,
+      "name": "Overwatch 2",
+      "description": "A team-based hero shooter featuring diverse heroes with unique abilities. Fight for the future in 6v6 battles across iconic locations in this fast-paced competitive FPS.",
+      "rating": 3.9,
+      "release_year": 2022,
+      "publisher": "Blizzard Entertainment",
+      "genre": [
+        "Shooter",
+        "Hero",
+        "Team"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "6GB",
+        "gpu": "GTX 600"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "8GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": true,
+      "capacity": 50,
+      "age_rating": "13+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Korean",
+        "Japanese",
+        "Chinese"
+      ],
+      "downloads": 57011773
+    },
+    {
+      "id": 17,
+      "name": "Hollow Knight",
+      "description": "A challenging 2D Metroidvania featuring a mysterious insect knight exploring the fallen kingdom of Hallownest. Discover ancient secrets, battle fierce creatures, and master precise platforming.",
+      "rating": 4.8,
+      "release_year": 2017,
+      "publisher": "Team Cherry",
+      "genre": [
+        "Metroidvania",
+        "Platformer",
+        "Indie"
+      ],
+      "mode": "Offline",
+      "price": 450000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "4GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "8GB",
+        "gpu": "GTX 560"
+      },
+      "multiplayer": false,
+      "capacity": 9,
+      "age_rating": "10+",
+      "platform": [
+        "PC",
+        "Console"
+      ],
+      "language": [
+        "English",
+        "Japanese",
+        "Korean",
+        "Chinese"
+      ],
+      "downloads": 62752174
+    },
+    {
+      "id": 18,
+      "name": "Apex Legends",
+      "description": "A free-to-play battle royale shooter set in the Titanfall universe. Choose from unique Legends with special abilities and compete in squads of three in fast-paced matches on diverse maps.",
+      "rating": 4.3,
+      "release_year": 2019,
+      "publisher": "EA",
+      "genre": [
+        "Battle Royale",
+        "Shooter",
+        "Team"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "6GB",
+        "gpu": "GTX 650"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 970"
+      },
+      "multiplayer": true,
+      "capacity": 56,
+      "age_rating": "13+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Japanese",
+        "Korean",
+        "French"
+      ],
+      "downloads": 6438110
+    },
+    {
+      "id": 19,
+      "name": "Genshin Impact",
+      "description": "An open-world action RPG featuring anime-style graphics and elemental combat. Explore the fantasy world of Teyvat, collect characters with unique abilities, and uncover the mysteries of this gacha game.",
+      "rating": 4.5,
+      "release_year": 2020,
+      "publisher": "miHoYo",
+      "genre": [
+        "Action",
+        "RPG",
+        "Gacha"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1030"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": true,
+      "capacity": 30,
+      "age_rating": "12+",
+      "platform": [
+        "PC",
+        "Mobile",
+        "PS5"
+      ],
+      "language": [
+        "English",
+        "Chinese",
+        "Japanese",
+        "Korean"
+      ],
+      "downloads": 18577216
+    },
+    {
+      "id": 20,
+      "name": "Fall Guys",
+      "description": "A colorful battle royale party game featuring jellybean-like characters competing in wacky obstacle courses. Survive elimination rounds and be the last bean standing in this fun multiplayer experience.",
+      "rating": 3.8,
+      "release_year": 2020,
+      "publisher": "Mediatonic",
+      "genre": [
+        "Party",
+        "Battle Royale",
+        "Casual"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 660"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": true,
+      "capacity": 2,
+      "age_rating": "3+",
+      "platform": [
+        "PC",
+        "PS5",
+        "Xbox"
+      ],
+      "language": [
+        "English",
+        "Japanese",
+        "Korean",
+        "Chinese"
+      ],
+      "downloads": 51974930
+    },
+    {
+      "id": 21,
+      "name": "Fortnite",
+      "description": "A popular battle royale game featuring shooter elements. Fortnite offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.7,
+      "release_year": 2017,
+      "publisher": "Epic Games",
+      "genre": [
+        "Battle Royale",
+        "Shooter"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "4GB",
+        "gpu": "RTX 3070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "4GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": true,
+      "capacity": 48.8,
+      "age_rating": "16+",
+      "platform": [
+        "PC",
+        "PS5"
+      ],
+      "language": [
+        "Chinese",
+        "English",
+        "Korean"
+      ],
+      "downloads": 11648667
+    },
+    {
+      "id": 22,
+      "name": "Counter-Strike 2",
+      "description": "A popular fps game featuring tactical elements. Counter-Strike 2 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.6,
+      "release_year": 2020,
+      "publisher": "Valve",
+      "genre": [
+        "FPS",
+        "Tactical"
+      ],
+      "mode": "Offline",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "4GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "16GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": true,
+      "capacity": 40.2,
+      "age_rating": "16+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "Korean",
+        "Vietnamese",
+        "German",
+        "Japanese"
+      ],
+      "downloads": 80665291
+    },
+    {
+      "id": 23,
+      "name": "Dota 2",
+      "description": "A popular moba game featuring strategy elements. Dota 2 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.8,
+      "release_year": 2021,
+      "publisher": "Valve",
+      "genre": [
+        "MOBA",
+        "Strategy"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "16GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "32GB",
+        "gpu": "RTX 2070"
+      },
+      "multiplayer": false,
+      "capacity": 22.9,
+      "age_rating": "3+",
+      "platform": [
+        "PS5",
+        "Mobile",
+        "Console"
+      ],
+      "language": [
+        "Vietnamese",
+        "English",
+        "French",
+        "Spanish"
+      ],
+      "downloads": 18044707
+    },
+    {
+      "id": 24,
+      "name": "World of Warcraft",
+      "description": "A popular mmorpg game featuring fantasy elements. World of Warcraft offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.3,
+      "release_year": 2023,
+      "publisher": "Blizzard",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "RTX 4080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 155.8,
+      "age_rating": "3+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "French",
+        "Korean",
+        "Japanese"
+      ],
+      "downloads": 34476322
+    },
+    {
+      "id": 25,
+      "name": "Final Fantasy XIV",
+      "description": "A popular mmorpg game featuring fantasy elements. Final Fantasy XIV offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.0,
+      "release_year": 2016,
+      "publisher": "Square Enix",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "8GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": false,
+      "capacity": 73.5,
+      "age_rating": "18+",
+      "platform": [
+        "Console"
+      ],
+      "language": [
+        "English",
+        "Korean",
+        "Chinese",
+        "German"
+      ],
+      "downloads": 82542277
+    },
+    {
+      "id": 26,
+      "name": "Destiny 2",
+      "description": "A popular looter shooter game featuring sci-fi elements. Destiny 2 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.7,
+      "release_year": 2015,
+      "publisher": "Bungie",
+      "genre": [
+        "Looter Shooter",
+        "Sci-Fi"
+      ],
+      "mode": "Online",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "16GB",
+        "gpu": "RTX 2060"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": true,
+      "capacity": 159.4,
+      "age_rating": "16+",
+      "platform": [
+        "Console",
+        "Mobile"
+      ],
+      "language": [
+        "Vietnamese",
+        "Korean",
+        "French",
+        "English"
+      ],
+      "downloads": 77471488
+    },
+    {
+      "id": 27,
+      "name": "Warframe",
+      "description": "A popular looter shooter game featuring sci-fi elements. Warframe offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.1,
+      "release_year": 2023,
+      "publisher": "Digital Extremes",
+      "genre": [
+        "Looter Shooter",
+        "Sci-Fi"
+      ],
+      "mode": "Offline",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "4GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "4GB",
+        "gpu": "GTX 1080"
+      },
+      "multiplayer": false,
+      "capacity": 34.5,
+      "age_rating": "3+",
+      "platform": [
+        "PC",
+        "PS5"
+      ],
+      "language": [
+        "German",
+        "Spanish",
+        "Japanese"
+      ],
+      "downloads": 51086239
+    },
+    {
+      "id": 28,
+      "name": "Path of Exile",
+      "description": "A popular arpg game featuring dark fantasy elements. Path of Exile offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.5,
+      "release_year": 2020,
+      "publisher": "Grinding Gear Games",
+      "genre": [
+        "ARPG",
+        "Dark Fantasy"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "16GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": true,
+      "capacity": 177.5,
+      "age_rating": "3+",
+      "platform": [
+        "Xbox"
+      ],
+      "language": [
+        "Vietnamese",
+        "Chinese",
+        "French"
+      ],
+      "downloads": 44211525
+    },
+    {
+      "id": 29,
+      "name": "Diablo IV",
+      "description": "A popular arpg game featuring dark fantasy elements. Diablo IV offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.8,
+      "release_year": 2015,
+      "publisher": "Blizzard",
+      "genre": [
+        "ARPG",
+        "Dark Fantasy"
+      ],
+      "mode": "Online",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "16GB",
+        "gpu": "GTX 1050"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "16GB",
+        "gpu": "GTX 1050"
+      },
+      "multiplayer": true,
+      "capacity": 0.5,
+      "age_rating": "13+",
+      "platform": [
+        "Mobile"
+      ],
+      "language": [
+        "Japanese",
+        "German"
+      ],
+      "downloads": 84229735
+    },
+    {
+      "id": 30,
+      "name": "Lost Ark",
+      "description": "A popular mmorpg game featuring fantasy elements. Lost Ark offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.0,
+      "release_year": 2019,
+      "publisher": "Smilegate",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "4GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "GTX 1080"
+      },
+      "multiplayer": false,
+      "capacity": 50.5,
+      "age_rating": "13+",
+      "platform": [
+        "Xbox",
+        "Mobile",
+        "Console"
+      ],
+      "language": [
+        "Korean",
+        "Vietnamese",
+        "English"
+      ],
+      "downloads": 96982395
+    },
+    {
+      "id": 31,
+      "name": "New World",
+      "description": "A popular mmorpg game featuring fantasy elements. New World offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.2,
+      "release_year": 2021,
+      "publisher": "Amazon Games",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": true,
+      "capacity": 34.3,
+      "age_rating": "7+",
+      "platform": [
+        "Console"
+      ],
+      "language": [
+        "German",
+        "Chinese",
+        "Spanish",
+        "English"
+      ],
+      "downloads": 42984306
+    },
+    {
+      "id": 32,
+      "name": "Guild Wars 2",
+      "description": "A popular mmorpg game featuring fantasy elements. Guild Wars 2 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.6,
+      "release_year": 2017,
+      "publisher": "ArenaNet",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "4GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "4GB",
+        "gpu": "RTX 2070"
+      },
+      "multiplayer": false,
+      "capacity": 170.8,
+      "age_rating": "18+",
+      "platform": [
+        "Xbox"
+      ],
+      "language": [
+        "Korean",
+        "English"
+      ],
+      "downloads": 92093688
+    },
+    {
+      "id": 33,
+      "name": "Elder Scrolls Online",
+      "description": "A popular mmorpg game featuring fantasy elements. Elder Scrolls Online offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.8,
+      "release_year": 2015,
+      "publisher": "Zenimax",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "8GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3070"
+      },
+      "multiplayer": true,
+      "capacity": 126.0,
+      "age_rating": "16+",
+      "platform": [
+        "Mobile",
+        "PS5",
+        "PC"
+      ],
+      "language": [
+        "Vietnamese",
+        "English",
+        "Spanish"
+      ],
+      "downloads": 92566884
+    },
+    {
+      "id": 34,
+      "name": "Black Desert Online",
+      "description": "A popular mmorpg game featuring fantasy elements. Black Desert Online offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.3,
+      "release_year": 2015,
+      "publisher": "Pearl Abyss",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "8GB",
+        "gpu": "GTX 1080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "RTX 2060"
+      },
+      "multiplayer": true,
+      "capacity": 148.3,
+      "age_rating": "3+",
+      "platform": [
+        "Mobile",
+        "Xbox",
+        "PC"
+      ],
+      "language": [
+        "Vietnamese",
+        "Chinese",
+        "French",
+        "Japanese"
+      ],
+      "downloads": 46509981
+    },
+    {
+      "id": 35,
+      "name": "Tera",
+      "description": "A popular mmorpg game featuring fantasy elements. Tera offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.5,
+      "release_year": 2021,
+      "publisher": "Bluehole",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "Intel i5",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 192.1,
+      "age_rating": "3+",
+      "platform": [
+        "Console",
+        "PS5"
+      ],
+      "language": [
+        "Chinese",
+        "Japanese",
+        "German"
+      ],
+      "downloads": 54027192
+    },
+    {
+      "id": 36,
+      "name": "Aion",
+      "description": "A popular mmorpg game featuring fantasy elements. Aion offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.7,
+      "release_year": 2019,
+      "publisher": "NCSoft",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "8GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "16GB",
+        "gpu": "RTX 2070"
+      },
+      "multiplayer": false,
+      "capacity": 123.4,
+      "age_rating": "3+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "Japanese",
+        "French",
+        "Chinese",
+        "English"
+      ],
+      "downloads": 94346256
+    },
+    {
+      "id": 37,
+      "name": "Blade & Soul",
+      "description": "A popular mmorpg game featuring fantasy elements. Blade & Soul offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.8,
+      "release_year": 2020,
+      "publisher": "NCSoft",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "Intel Pentium",
+        "ram": "32GB",
+        "gpu": "RTX 3070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i9",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 72.6,
+      "age_rating": "3+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "Chinese",
+        "French"
+      ],
+      "downloads": 13151298
+    },
+    {
+      "id": 38,
+      "name": "Vindictus",
+      "description": "A popular mmorpg game featuring fantasy elements. Vindictus offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.6,
+      "release_year": 2022,
+      "publisher": "Nexon",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Offline",
+      "price": 300000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "16GB",
+        "gpu": "RTX 2060"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 2060"
+      },
+      "multiplayer": false,
+      "capacity": 34.9,
+      "age_rating": "10+",
+      "platform": [
+        "PS5",
+        "Mobile",
+        "PC"
+      ],
+      "language": [
+        "Japanese",
+        "German",
+        "Korean"
+      ],
+      "downloads": 60289579
+    },
+    {
+      "id": 39,
+      "name": "Dragon Nest",
+      "description": "A popular mmorpg game featuring fantasy elements. Dragon Nest offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.3,
+      "release_year": 2022,
+      "publisher": "Nexon",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "4GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i3",
+        "ram": "16GB",
+        "gpu": "RTX 2060"
+      },
+      "multiplayer": false,
+      "capacity": 187.2,
+      "age_rating": "3+",
+      "platform": [
+        "PS5"
+      ],
+      "language": [
+        "German",
+        "Vietnamese",
+        "French",
+        "English"
+      ],
+      "downloads": 15960607
+    },
+    {
+      "id": 40,
+      "name": "MapleStory 2",
+      "description": "A popular mmorpg game featuring fantasy elements. MapleStory 2 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.9,
+      "release_year": 2015,
+      "publisher": "Nexon",
+      "genre": [
+        "MMORPG",
+        "Fantasy"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "gpu": "GTX 1060"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 112.2,
+      "age_rating": "3+",
+      "platform": [
+        "PC",
+        "Console"
+      ],
+      "language": [
+        "German",
+        "Korean",
+        "Spanish",
+        "Chinese"
+      ],
+      "downloads": 79218401
+    },
+    {
+      "id": 41,
+      "name": "Rocket League",
+      "description": "A popular sports game featuring racing elements. Rocket League offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.1,
+      "release_year": 2021,
+      "publisher": "Psyonix",
+      "genre": [
+        "Sports",
+        "Racing"
+      ],
+      "mode": "Offline",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "Intel i9",
+        "ram": "16GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i9",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 131.2,
+      "age_rating": "13+",
+      "platform": [
+        "PS5",
+        "Mobile",
+        "PC"
+      ],
+      "language": [
+        "Spanish",
+        "Korean"
+      ],
+      "downloads": 75140499
+    },
+    {
+      "id": 42,
+      "name": "FIFA 23",
+      "description": "A popular sports game featuring football elements. FIFA 23 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.9,
+      "release_year": 2018,
+      "publisher": "EA Sports",
+      "genre": [
+        "Sports",
+        "Football"
+      ],
+      "mode": "Online",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "Intel i9",
+        "ram": "8GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": false,
+      "capacity": 87.2,
+      "age_rating": "7+",
+      "platform": [
+        "Xbox",
+        "PS5",
+        "PC"
+      ],
+      "language": [
+        "English",
+        "French"
+      ],
+      "downloads": 95143516
+    },
+    {
+      "id": 43,
+      "name": "NBA 2K24",
+      "description": "A popular sports game featuring basketball elements. NBA 2K24 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.1,
+      "release_year": 2021,
+      "publisher": "2K Sports",
+      "genre": [
+        "Sports",
+        "Basketball"
+      ],
+      "mode": "Online",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "8GB",
+        "gpu": "RTX 4080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 101.7,
+      "age_rating": "13+",
+      "platform": [
+        "Console",
+        "PC",
+        "PS5"
+      ],
+      "language": [
+        "Spanish",
+        "French",
+        "Japanese"
+      ],
+      "downloads": 36957011
+    },
+    {
+      "id": 44,
+      "name": "Madden NFL 24",
+      "description": "A popular sports game featuring football elements. Madden NFL 24 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.5,
+      "release_year": 2019,
+      "publisher": "EA Sports",
+      "genre": [
+        "Sports",
+        "Football"
+      ],
+      "mode": "Offline",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "16GB",
+        "gpu": "GTX 1080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 128.6,
+      "age_rating": "7+",
+      "platform": [
+        "Mobile"
+      ],
+      "language": [
+        "Japanese",
+        "Vietnamese",
+        "Korean"
+      ],
+      "downloads": 28871611
+    },
+    {
+      "id": 45,
+      "name": "NHL 24",
+      "description": "A popular sports game featuring hockey elements. NHL 24 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.0,
+      "release_year": 2019,
+      "publisher": "EA Sports",
+      "genre": [
+        "Sports",
+        "Hockey"
+      ],
+      "mode": "Online",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "Intel i3",
+        "ram": "32GB",
+        "gpu": "GTX 1070"
+      },
+      "rec_spec": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "gpu": "RTX 3070"
+      },
+      "multiplayer": true,
+      "capacity": 29.1,
+      "age_rating": "7+",
+      "platform": [
+        "Xbox",
+        "PS5",
+        "PC"
+      ],
+      "language": [
+        "Korean",
+        "French",
+        "German"
+      ],
+      "downloads": 65207339
+    },
+    {
+      "id": 46,
+      "name": "F1 23",
+      "description": "A popular racing game featuring simulation elements. F1 23 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.7,
+      "release_year": 2021,
+      "publisher": "EA Sports",
+      "genre": [
+        "Racing",
+        "Simulation"
+      ],
+      "mode": "Online",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "rec_spec": {
+        "cpu": "Intel i9",
+        "ram": "32GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 18.8,
+      "age_rating": "18+",
+      "platform": [
+        "Console",
+        "PS5"
+      ],
+      "language": [
+        "French",
+        "Vietnamese",
+        "Spanish",
+        "English"
+      ],
+      "downloads": 37246860
+    },
+    {
+      "id": 47,
+      "name": "Gran Turismo 7",
+      "description": "A popular racing game featuring simulation elements. Gran Turismo 7 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.1,
+      "release_year": 2020,
+      "publisher": "Sony",
+      "genre": [
+        "Racing",
+        "Simulation"
+      ],
+      "mode": "Online",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "4GB",
+        "gpu": "GTX 1080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": true,
+      "capacity": 166.1,
+      "age_rating": "16+",
+      "platform": [
+        "PC"
+      ],
+      "language": [
+        "Vietnamese",
+        "French"
+      ],
+      "downloads": 74642763
+    },
+    {
+      "id": 48,
+      "name": "Forza Horizon 5",
+      "description": "A popular racing game featuring open world elements. Forza Horizon 5 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.6,
+      "release_year": 2020,
+      "publisher": "Microsoft",
+      "genre": [
+        "Racing",
+        "Open World"
+      ],
+      "mode": "Offline",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "8GB",
+        "gpu": "RTX 2060"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": false,
+      "capacity": 28.7,
+      "age_rating": "3+",
+      "platform": [
+        "Mobile",
+        "Xbox"
+      ],
+      "language": [
+        "French",
+        "Spanish",
+        "Korean"
+      ],
+      "downloads": 36715118
+    },
+    {
+      "id": 49,
+      "name": "Assetto Corsa",
+      "description": "A popular racing game featuring simulation elements. Assetto Corsa offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.8,
+      "release_year": 2015,
+      "publisher": "Kunos",
+      "genre": [
+        "Racing",
+        "Simulation"
+      ],
+      "mode": "Online",
+      "price": 800000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": false,
+      "capacity": 125.9,
+      "age_rating": "16+",
+      "platform": [
+        "Xbox"
+      ],
+      "language": [
+        "French",
+        "Korean",
+        "English",
+        "Spanish"
+      ],
+      "downloads": 22455925
+    },
+    {
+      "id": 50,
+      "name": "iRacing",
+      "description": "A popular racing game featuring simulation elements. iRacing offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.6,
+      "release_year": 2021,
+      "publisher": "iRacing",
+      "genre": [
+        "Racing",
+        "Simulation"
+      ],
+      "mode": "Online",
+      "price": 1600000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "8GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "16GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 57.8,
+      "age_rating": "13+",
+      "platform": [
+        "PS5",
+        "PC",
+        "Xbox"
+      ],
+      "language": [
+        "French",
+        "Spanish",
+        "English",
+        "Korean"
+      ],
+      "downloads": 17202925
+    },
+    {
+      "id": 51,
+      "name": "Sims 4",
+      "description": "A popular simulation game featuring life elements. Sims 4 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.8,
+      "release_year": 2018,
+      "publisher": "EA",
+      "genre": [
+        "Simulation",
+        "Life"
+      ],
+      "mode": "Online",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "Intel i5",
+        "ram": "4GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "8GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": false,
+      "capacity": 156.5,
+      "age_rating": "18+",
+      "platform": [
+        "PS5",
+        "Mobile",
+        "Console"
+      ],
+      "language": [
+        "Spanish",
+        "Japanese"
+      ],
+      "downloads": 9973115
+    },
+    {
+      "id": 52,
+      "name": "Cities: Skylines",
+      "description": "A popular simulation game featuring city building elements. Cities: Skylines offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.0,
+      "release_year": 2018,
+      "publisher": "Paradox",
+      "genre": [
+        "Simulation",
+        "City Building"
+      ],
+      "mode": "Online",
+      "price": 1800000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 2060"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3070"
+      },
+      "multiplayer": false,
+      "capacity": 194.2,
+      "age_rating": "13+",
+      "platform": [
+        "Xbox"
+      ],
+      "language": [
+        "Korean",
+        "Spanish"
+      ],
+      "downloads": 46439620
+    },
+    {
+      "id": 53,
+      "name": "Civilization VI",
+      "description": "A popular strategy game featuring turn-based elements. Civilization VI offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.9,
+      "release_year": 2023,
+      "publisher": "2K Games",
+      "genre": [
+        "Strategy",
+        "Turn-based"
+      ],
+      "mode": "Online",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "8GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "8GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": true,
+      "capacity": 70.3,
+      "age_rating": "16+",
+      "platform": [
+        "Xbox",
+        "PS5",
+        "Mobile"
+      ],
+      "language": [
+        "Chinese",
+        "Korean",
+        "Vietnamese",
+        "French"
+      ],
+      "downloads": 79259887
+    },
+    {
+      "id": 54,
+      "name": "Age of Empires IV",
+      "description": "A popular strategy game featuring rts elements. Age of Empires IV offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.6,
+      "release_year": 2018,
+      "publisher": "Microsoft",
+      "genre": [
+        "Strategy",
+        "RTS"
+      ],
+      "mode": "Offline",
+      "price": 1200000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "GTX 1070"
+      },
+      "multiplayer": true,
+      "capacity": 32.0,
+      "age_rating": "18+",
+      "platform": [
+        "Xbox",
+        "Console",
+        "Mobile"
+      ],
+      "language": [
+        "Spanish",
+        "French",
+        "Chinese",
+        "Korean"
+      ],
+      "downloads": 65242646
+    },
+    {
+      "id": 55,
+      "name": "Total War: Warhammer III",
+      "description": "A popular strategy game featuring rts elements. Total War: Warhammer III offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.9,
+      "release_year": 2016,
+      "publisher": "Creative Assembly",
+      "genre": [
+        "Strategy",
+        "RTS"
+      ],
+      "mode": "Online",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "32GB",
+        "gpu": "RTX 2070"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": false,
+      "capacity": 13.4,
+      "age_rating": "10+",
+      "platform": [
+        "PS5"
+      ],
+      "language": [
+        "Spanish",
+        "German",
+        "Japanese"
+      ],
+      "downloads": 92674595
+    },
+    {
+      "id": 56,
+      "name": "Crusader Kings III",
+      "description": "A popular strategy game featuring grand strategy elements. Crusader Kings III offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.0,
+      "release_year": 2024,
+      "publisher": "Paradox",
+      "genre": [
+        "Strategy",
+        "Grand Strategy"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "4GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 3",
+        "ram": "16GB",
+        "gpu": "RTX 4080"
+      },
+      "multiplayer": true,
+      "capacity": 52.3,
+      "age_rating": "16+",
+      "platform": [
+        "Console",
+        "PC",
+        "Xbox"
+      ],
+      "language": [
+        "French",
+        "Korean"
+      ],
+      "downloads": 93104288
+    },
+    {
+      "id": 57,
+      "name": "Europa Universalis IV",
+      "description": "A popular strategy game featuring grand strategy elements. Europa Universalis IV offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.4,
+      "release_year": 2019,
+      "publisher": "Paradox",
+      "genre": [
+        "Strategy",
+        "Grand Strategy"
+      ],
+      "mode": "Online",
+      "price": 0,
+      "min_spec": {
+        "cpu": "Intel i7",
+        "ram": "32GB",
+        "gpu": "Intel HD"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "32GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": true,
+      "capacity": 170.3,
+      "age_rating": "10+",
+      "platform": [
+        "Console"
+      ],
+      "language": [
+        "English",
+        "Korean",
+        "Spanish",
+        "French"
+      ],
+      "downloads": 91512754
+    },
+    {
+      "id": 58,
+      "name": "Hearts of Iron IV",
+      "description": "A popular strategy game featuring grand strategy elements. Hearts of Iron IV offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 3.7,
+      "release_year": 2020,
+      "publisher": "Paradox",
+      "genre": [
+        "Strategy",
+        "Grand Strategy"
+      ],
+      "mode": "Offline",
+      "price": 0,
+      "min_spec": {
+        "cpu": "AMD Ryzen 5",
+        "ram": "4GB",
+        "gpu": "GTX 1060"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "32GB",
+        "gpu": "GTX 1060"
+      },
+      "multiplayer": false,
+      "capacity": 60.2,
+      "age_rating": "18+",
+      "platform": [
+        "Mobile",
+        "PS5",
+        "PC"
+      ],
+      "language": [
+        "Korean",
+        "French",
+        "English",
+        "German"
+      ],
+      "downloads": 61747455
+    },
+    {
+      "id": 59,
+      "name": "Stellaris",
+      "description": "A popular strategy game featuring grand strategy elements. Stellaris offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.3,
+      "release_year": 2021,
+      "publisher": "Paradox",
+      "genre": [
+        "Strategy",
+        "Grand Strategy"
+      ],
+      "mode": "Online",
+      "price": 100000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "16GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "16GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": true,
+      "capacity": 100.1,
+      "age_rating": "16+",
+      "platform": [
+        "PC",
+        "Xbox"
+      ],
+      "language": [
+        "Chinese",
+        "Japanese",
+        "English"
+      ],
+      "downloads": 45169079
+    },
+    {
+      "id": 60,
+      "name": "Victoria 3",
+      "description": "A popular strategy game featuring grand strategy elements. Victoria 3 offers engaging gameplay with modern graphics and immersive experiences.",
+      "rating": 4.5,
+      "release_year": 2021,
+      "publisher": "Paradox",
+      "genre": [
+        "Strategy",
+        "Grand Strategy"
+      ],
+      "mode": "Online",
+      "price": 500000,
+      "min_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "4GB",
+        "gpu": "RTX 3080"
+      },
+      "rec_spec": {
+        "cpu": "AMD Ryzen 7",
+        "ram": "8GB",
+        "gpu": "RTX 3080"
+      },
+      "multiplayer": true,
+      "capacity": 173.4,
+      "age_rating": "10+",
+      "platform": [
+        "Console"
+      ],
+      "language": [
+        "French",
+        "Spanish",
+        "Chinese"
+      ],
+      "downloads": 6190730
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Gamer Pro",
+      "age": 25,
+      "gender": "male",
+      "favorite_games": [
+        9,
+        19,
+        21
+      ],
+      "purchased_games": [
+        5,
+        40,
+        9,
+        18,
+        19,
+        20,
+        21
+      ],
+      "view_history": {
+        "5": 12,
+        "11": 8,
+        "50": 5,
+        "16": 10,
+        "18": 11,
+        "21": 11,
+        "43": 9,
+        "19": 11,
+        "29": 12,
+        "31": 8,
+        "42": 12,
+        "44": 15,
+        "7": 5
+      }
+    },
+    {
+      "id": 2,
+      "name": "Casual Player",
+      "age": 35,
+      "gender": "female",
+      "favorite_games": [
+        36,
+        6,
+        40,
+        41,
+        11,
+        43,
+        14,
+        31
+      ],
+      "purchased_games": [
+        36,
+        6,
+        40,
+        41,
+        10,
+        11,
+        43,
+        14,
+        19,
+        31
+      ],
+      "view_history": {
+        "19": 6,
+        "6": 5,
+        "42": 5,
+        "32": 3,
+        "41": 5,
+        "49": 8,
+        "31": 3,
+        "50": 10,
+        "9": 10,
+        "24": 4,
+        "44": 8
+      }
+    },
+    {
+      "id": 3,
+      "name": "Mobile Gamer",
+      "age": 22,
+      "gender": "male",
+      "favorite_games": [
+        6,
+        7,
+        9,
+        12,
+        18,
+        19,
+        22
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        9,
+        12,
+        18,
+        19,
+        22
+      ],
+      "view_history": {
+        "40": 5,
+        "16": 13,
+        "13": 5,
+        "20": 13,
+        "6": 15,
+        "7": 8,
+        "19": 10,
+        "9": 10,
+        "12": 9,
+        "22": 15,
+        "18": 12,
+        "5": 9,
+        "10": 13
+      }
+    },
+    {
+      "id": 4,
+      "name": "Mobile",
+      "age": 22,
+      "gender": "male",
+      "favorite_games": [
+        5,
+        10,
+        12,
+        13,
+        19,
+        20
+      ],
+      "purchased_games": [
+        5,
+        10,
+        12,
+        13,
+        19,
+        20,
+        21,
+        22
+      ],
+      "view_history": {
+        "16": 12,
+        "13": 9,
+        "19": 12,
+        "12": 13,
+        "20": 11,
+        "31": 11,
+        "40": 5,
+        "29": 5,
+        "39": 5,
+        "45": 6,
+        "2": 10,
+        "18": 14,
+        "30": 10,
+        "22": 10,
+        "25": 12
+      }
+    },
+    {
+      "id": 5,
+      "name": "Action Fan",
+      "age": 28,
+      "gender": "male",
+      "favorite_games": [
+        32,
+        43,
+        11,
+        12,
+        23
+      ],
+      "purchased_games": [
+        32,
+        34,
+        35,
+        11,
+        43,
+        12,
+        47,
+        48,
+        23,
+        56,
+        31
+      ],
+      "view_history": {
+        "35": 10,
+        "7": 9,
+        "10": 6,
+        "33": 7,
+        "37": 10,
+        "41": 5,
+        "34": 6,
+        "25": 3,
+        "11": 9,
+        "43": 5,
+        "47": 3,
+        "19": 8,
+        "48": 6,
+        "36": 7
+      }
+    },
+    {
+      "id": 6,
+      "name": "Rockstar Lover",
+      "age": 26,
+      "gender": "female",
+      "favorite_games": [
+        32,
+        7,
+        12,
+        47,
+        18,
+        22
+      ],
+      "purchased_games": [
+        32,
+        5,
+        7,
+        12,
+        47,
+        49,
+        18,
+        22,
+        58,
+        30
+      ],
+      "view_history": {
+        "18": 10,
+        "22": 5,
+        "10": 3,
+        "13": 6,
+        "16": 9,
+        "9": 8,
+        "6": 8,
+        "19": 3,
+        "5": 4,
+        "45": 8,
+        "34": 7,
+        "33": 5
+      }
+    },
+    {
+      "id": 7,
+      "name": "Competitive Gamer",
+      "age": 20,
+      "gender": "male",
+      "favorite_games": [
+        5,
+        7,
+        9,
+        12,
+        13,
+        16,
+        21
+      ],
+      "purchased_games": [
+        5,
+        7,
+        9,
+        12,
+        13,
+        16,
+        21
+      ],
+      "view_history": {
+        "12": 5,
+        "7": 10,
+        "21": 9,
+        "5": 8,
+        "19": 11,
+        "20": 9,
+        "48": 15,
+        "28": 6,
+        "10": 13,
+        "41": 6,
+        "33": 13,
+        "3": 12
+      }
+    },
+    {
+      "id": 8,
+      "name": "Esports Pro",
+      "age": 19,
+      "gender": "male",
+      "favorite_games": [
+        7,
+        9,
+        12,
+        18,
+        21
+      ],
+      "purchased_games": [
+        5,
+        7,
+        9,
+        12,
+        13,
+        16,
+        18,
+        21,
+        22
+      ],
+      "view_history": {
+        "18": 12,
+        "13": 5,
+        "21": 5,
+        "22": 9,
+        "16": 5,
+        "6": 14,
+        "48": 15,
+        "35": 6,
+        "34": 13,
+        "25": 7,
+        "29": 7,
+        "39": 9,
+        "20": 9,
+        "33": 10,
+        "19": 6
+      }
+    },
+    {
+      "id": 9,
+      "name": "Riot Fan",
+      "age": 21,
+      "gender": "female",
+      "favorite_games": [
+        6,
+        10,
+        12,
+        13,
+        18,
+        19,
+        20,
+        22
+      ],
+      "purchased_games": [
+        6,
+        10,
+        12,
+        13,
+        18,
+        19,
+        20,
+        22
+      ],
+      "view_history": {
+        "7": 11,
+        "5": 14,
+        "22": 11,
+        "13": 8,
+        "18": 8,
+        "31": 5,
+        "39": 11,
+        "20": 5,
+        "12": 11,
+        "9": 13,
+        "3": 5,
+        "43": 9,
+        "24": 11,
+        "34": 7,
+        "38": 15
+      }
+    },
+    {
+      "id": 10,
+      "name": "Indie Lover",
+      "age": 24,
+      "gender": "female",
+      "favorite_games": [
+        5,
+        6,
+        7,
+        47,
+        16,
+        18,
+        19
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        47,
+        16,
+        18,
+        19
+      ],
+      "view_history": {
+        "58": 6,
+        "32": 6,
+        "47": 6,
+        "49": 8,
+        "18": 13,
+        "16": 8,
+        "9": 6,
+        "5": 5,
+        "21": 10,
+        "10": 10,
+        "6": 15,
+        "22": 15
+      }
+    },
+    {
+      "id": 11,
+      "name": "Chill Gamer",
+      "age": 30,
+      "gender": "male",
+      "favorite_games": [
+        37,
+        6,
+        7,
+        11,
+        48,
+        31
+      ],
+      "purchased_games": [
+        37,
+        6,
+        7,
+        10,
+        11,
+        43,
+        48,
+        60,
+        31
+      ],
+      "view_history": {
+        "43": 5,
+        "23": 7,
+        "48": 7,
+        "34": 8,
+        "5": 7,
+        "33": 10,
+        "12": 8,
+        "55": 10,
+        "31": 10,
+        "45": 9,
+        "24": 4,
+        "54": 9,
+        "7": 3,
+        "6": 9,
+        "10": 10,
+        "49": 5
+      }
+    },
+    {
+      "id": 12,
+      "name": "Free Player",
+      "age": 18,
+      "gender": "male",
+      "favorite_games": [
+        9,
+        12,
+        13,
+        22
+      ],
+      "purchased_games": [
+        6,
+        9,
+        12,
+        13,
+        18,
+        21,
+        22
+      ],
+      "view_history": {
+        "21": 15,
+        "7": 6,
+        "13": 14,
+        "40": 12,
+        "12": 5,
+        "8": 13,
+        "45": 13,
+        "27": 5,
+        "44": 12,
+        "2": 15,
+        "28": 11
+      }
+    },
+    {
+      "id": 13,
+      "name": "Mobile Enthusiast",
+      "age": 23,
+      "gender": "female",
+      "favorite_games": [
+        5,
+        6,
+        7,
+        9,
+        12,
+        13,
+        47,
+        19
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        9,
+        12,
+        13,
+        47
+      ],
+      "view_history": {
+        "47": 14,
+        "12": 13,
+        "16": 8,
+        "10": 14,
+        "5": 8,
+        "19": 5,
+        "20": 5,
+        "7": 13,
+        "22": 5,
+        "9": 12,
+        "18": 8,
+        "21": 14
+      }
+    },
+    {
+      "id": 14,
+      "name": "EA Sports Fan",
+      "age": 27,
+      "gender": "male",
+      "favorite_games": [
+        33,
+        35,
+        37,
+        10,
+        43,
+        46
+      ],
+      "purchased_games": [
+        33,
+        35,
+        37,
+        10,
+        43,
+        45,
+        46,
+        47,
+        30,
+        31
+      ],
+      "view_history": {
+        "23": 10,
+        "33": 10,
+        "19": 7,
+        "41": 4,
+        "35": 4,
+        "48": 6,
+        "30": 6,
+        "32": 7,
+        "53": 4,
+        "57": 10,
+        "39": 7,
+        "59": 9,
+        "60": 8,
+        "5": 8
+      }
+    },
+    {
+      "id": 15,
+      "name": "RPG Master",
+      "age": 29,
+      "gender": "male",
+      "favorite_games": [
+        34,
+        7,
+        12,
+        56,
+        25,
+        57,
+        31
+      ],
+      "purchased_games": [
+        34,
+        6,
+        7,
+        39,
+        12,
+        56,
+        25,
+        31,
+        30,
+        57
+      ],
+      "view_history": {
+        "60": 8,
+        "45": 4,
+        "31": 3,
+        "35": 4,
+        "34": 4,
+        "47": 4,
+        "55": 7,
+        "19": 4,
+        "36": 7,
+        "53": 8,
+        "7": 7,
+        "38": 7,
+        "30": 8
+      }
+    },
+    {
+      "id": 16,
+      "name": "Shooter Expert",
+      "age": 25,
+      "gender": "female",
+      "favorite_games": [
+        7,
+        9,
+        18,
+        19,
+        22
+      ],
+      "purchased_games": [
+        7,
+        9,
+        10,
+        47,
+        18,
+        19,
+        22
+      ],
+      "view_history": {
+        "47": 9,
+        "32": 12,
+        "58": 9,
+        "7": 5,
+        "5": 14,
+        "12": 12,
+        "19": 11,
+        "21": 11,
+        "16": 8,
+        "10": 12,
+        "22": 9
+      }
+    },
+    {
+      "id": 17,
+      "name": "Casual Family",
+      "age": 35,
+      "gender": "female",
+      "favorite_games": [
+        37,
+        41,
+        10,
+        43,
+        14,
+        51,
+        24
+      ],
+      "purchased_games": [
+        32,
+        37,
+        7,
+        41,
+        10,
+        43,
+        12,
+        14,
+        51,
+        24
+      ],
+      "view_history": {
+        "24": 10,
+        "14": 7,
+        "34": 8,
+        "9": 6,
+        "42": 5,
+        "37": 6,
+        "35": 4,
+        "50": 5,
+        "45": 8,
+        "12": 9,
+        "47": 8,
+        "43": 8
+      }
+    },
+    {
+      "id": 18,
+      "name": "Hardcore Gamer",
+      "age": 24,
+      "gender": "male",
+      "favorite_games": [
+        10,
+        13,
+        16,
+        18,
+        19,
+        20
+      ],
+      "purchased_games": [
+        5,
+        7,
+        10,
+        12,
+        13,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "view_history": {
+        "10": 7,
+        "9": 9,
+        "22": 9,
+        "13": 7,
+        "12": 15,
+        "21": 12,
+        "40": 12,
+        "18": 8,
+        "30": 8,
+        "36": 6,
+        "42": 9,
+        "27": 11,
+        "17": 13,
+        "1": 9
+      }
+    },
+    {
+      "id": 19,
+      "name": "Ubisoft Fan",
+      "age": 26,
+      "gender": "male",
+      "favorite_games": [
+        32,
+        44,
+        19,
+        21,
+        55,
+        30
+      ],
+      "purchased_games": [
+        32,
+        43,
+        44,
+        12,
+        46,
+        19,
+        21,
+        55,
+        30
+      ],
+      "view_history": {
+        "9": 8,
+        "13": 4,
+        "20": 10,
+        "11": 7,
+        "33": 5,
+        "21": 8,
+        "23": 7,
+        "5": 10,
+        "48": 5,
+        "38": 6,
+        "49": 10,
+        "53": 7,
+        "59": 9
+      }
+    },
+    {
+      "id": 20,
+      "name": "Puzzle Solver",
+      "age": 32,
+      "gender": "female",
+      "favorite_games": [
+        34,
+        6,
+        45,
+        48,
+        30
+      ],
+      "purchased_games": [
+        34,
+        6,
+        43,
+        11,
+        45,
+        14,
+        48,
+        30
+      ],
+      "view_history": {
+        "58": 5,
+        "36": 9,
+        "55": 10,
+        "40": 7,
+        "43": 5,
+        "19": 3,
+        "59": 7,
+        "7": 6,
+        "34": 8,
+        "31": 8,
+        "12": 7,
+        "42": 7,
+        "49": 4,
+        "10": 8,
+        "35": 7,
+        "38": 9,
+        "46": 7,
+        "11": 8
+      }
+    },
+    {
+      "id": 21,
+      "name": "Asian Gamer",
+      "age": 22,
+      "gender": "male",
+      "favorite_games": [
+        10,
+        19,
+        12,
+        7
+      ],
+      "purchased_games": [
+        5,
+        7,
+        10,
+        12,
+        13,
+        16,
+        18,
+        19,
+        21
+      ],
+      "view_history": {
+        "40": 14,
+        "19": 12,
+        "5": 12,
+        "18": 15,
+        "7": 10,
+        "12": 11,
+        "13": 8,
+        "9": 14,
+        "20": 7,
+        "10": 14,
+        "22": 11,
+        "21": 8,
+        "6": 12
+      }
+    },
+    {
+      "id": 22,
+      "name": "Console Player",
+      "age": 28,
+      "gender": "male",
+      "favorite_games": [
+        33,
+        11,
+        12,
+        49,
+        53,
+        30,
+        31
+      ],
+      "purchased_games": [
+        33,
+        11,
+        12,
+        49,
+        53,
+        30,
+        31
+      ],
+      "view_history": {
+        "43": 4,
+        "57": 4,
+        "12": 10,
+        "6": 6,
+        "56": 10,
+        "37": 4,
+        "58": 6,
+        "48": 4,
+        "46": 10,
+        "10": 8,
+        "47": 7,
+        "5": 5,
+        "49": 7
+      }
+    },
+    {
+      "id": 23,
+      "name": "Retro Gamer",
+      "age": 31,
+      "gender": "male",
+      "favorite_games": [
+        5,
+        7,
+        9,
+        42,
+        47,
+        49
+      ],
+      "purchased_games": [
+        33,
+        5,
+        7,
+        9,
+        42,
+        47,
+        49
+      ],
+      "view_history": {
+        "57": 6,
+        "39": 7,
+        "31": 4,
+        "34": 3,
+        "60": 6,
+        "32": 5,
+        "37": 10,
+        "43": 4,
+        "9": 3,
+        "35": 3,
+        "40": 9,
+        "41": 10,
+        "44": 6,
+        "11": 8,
+        "56": 4
+      }
+    },
+    {
+      "id": 24,
+      "name": "Team Player",
+      "age": 20,
+      "gender": "female",
+      "favorite_games": [
+        6,
+        9,
+        13,
+        18,
+        20
+      ],
+      "purchased_games": [
+        6,
+        9,
+        13,
+        16,
+        18,
+        19,
+        20
+      ],
+      "view_history": {
+        "47": 9,
+        "19": 11,
+        "9": 8,
+        "18": 9,
+        "20": 8,
+        "5": 8,
+        "21": 14,
+        "6": 9,
+        "13": 9,
+        "10": 13
+      }
+    },
+    {
+      "id": 25,
+      "name": "Strategy Mind",
+      "age": 33,
+      "gender": "male",
+      "favorite_games": [
+        38,
+        7,
+        11,
+        50,
+        24
+      ],
+      "purchased_games": [
+        35,
+        5,
+        38,
+        7,
+        11,
+        44,
+        49,
+        50,
+        24,
+        31
+      ],
+      "view_history": {
+        "9": 4,
+        "35": 5,
+        "45": 9,
+        "33": 8,
+        "40": 5,
+        "11": 7,
+        "57": 8,
+        "39": 6,
+        "12": 6,
+        "59": 4,
+        "50": 3,
+        "10": 9,
+        "23": 5
+      }
+    },
+    {
+      "id": 26,
+      "name": "Pro Gamer",
+      "age": 18,
+      "gender": "female",
+      "favorite_games": [
+        12,
+        13,
+        6,
+        22
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        12,
+        13,
+        19,
+        20,
+        22
+      ],
+      "view_history": {
+        "12": 11,
+        "6": 11,
+        "19": 15,
+        "5": 6,
+        "20": 14,
+        "10": 10,
+        "48": 7,
+        "37": 11,
+        "39": 10,
+        "38": 6,
+        "41": 13,
+        "29": 14,
+        "32": 13,
+        "18": 12,
+        "30": 5
+      }
+    },
+    {
+      "id": 27,
+      "name": "Casual Explorer",
+      "age": 22,
+      "gender": "female",
+      "favorite_games": [
+        5,
+        6,
+        7,
+        18,
+        21
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        47,
+        16,
+        18,
+        21
+      ],
+      "view_history": {
+        "47": 7,
+        "10": 12,
+        "16": 6,
+        "9": 15,
+        "13": 6,
+        "7": 9,
+        "20": 8,
+        "12": 13,
+        "22": 13
+      }
+    },
+    {
+      "id": 28,
+      "name": "Mobile Master",
+      "age": 25,
+      "gender": "female",
+      "favorite_games": [
+        7,
+        9,
+        10,
+        18,
+        19,
+        30
+      ],
+      "purchased_games": [
+        5,
+        6,
+        7,
+        9,
+        10,
+        12,
+        18,
+        19,
+        20,
+        21,
+        22,
+        30
+      ],
+      "view_history": {
+        "19": 14,
+        "9": 12,
+        "47": 12,
+        "5": 5,
+        "12": 13,
+        "13": 13,
+        "58": 12,
+        "16": 12,
+        "7": 9,
+        "33": 6,
+        "10": 13,
+        "2": 7,
+        "25": 8,
+        "41": 7,
+        "21": 13,
+        "18": 6,
+        "30": 6
+      }
+    },
+    {
+      "id": 29,
+      "name": "Console King",
+      "age": 28,
+      "gender": "male",
+      "favorite_games": [
+        34,
+        35,
+        39,
+        11,
+        47,
+        60
+      ],
+      "purchased_games": [
+        34,
+        35,
+        39,
+        11,
+        47,
+        23,
+        60,
+        31
+      ],
+      "view_history": {
+        "35": 6,
+        "60": 5,
+        "30": 9,
+        "53": 8,
+        "57": 10,
+        "32": 10,
+        "25": 5,
+        "56": 10,
+        "11": 9,
+        "7": 8,
+        "34": 8,
+        "12": 8,
+        "5": 9,
+        "31": 6,
+        "23": 5,
+        "36": 8,
+        "58": 9,
+        "54": 5
+      }
+    },
+    {
+      "id": 30,
+      "name": "PC Enthusiast",
+      "age": 30,
+      "gender": "female",
+      "favorite_games": [
+        32,
+        43,
+        12,
+        22,
+        57
+      ],
+      "purchased_games": [
+        32,
+        36,
+        43,
+        12,
+        44,
+        22,
+        57,
+        25
+      ],
+      "view_history": {
+        "42": 9,
+        "5": 9,
+        "9": 9,
+        "22": 9,
+        "45": 5,
+        "60": 9,
+        "14": 3,
+        "56": 6,
+        "25": 7,
+        "48": 5,
+        "57": 6,
+        "40": 4,
+        "6": 4,
+        "36": 10,
+        "51": 8,
+        "24": 7,
+        "10": 4,
+        "47": 8,
+        "43": 3
+      }
+    },
+    {
+      "id": 31,
+      "name": "Strategy Expert",
+      "age": 32,
+      "gender": "male",
+      "favorite_games": [
+        24,
+        50,
+        45,
+        55
+      ],
+      "purchased_games": [
+        35,
+        7,
+        42,
+        11,
+        12,
+        45,
+        50,
+        55,
+        24
+      ],
+      "view_history": {
+        "49": 8,
+        "38": 5,
+        "11": 7,
+        "12": 6,
+        "60": 9,
+        "48": 7,
+        "5": 9,
+        "42": 6,
+        "6": 3,
+        "47": 9,
+        "43": 10,
+        "58": 5,
+        "19": 5,
+        "44": 5,
+        "34": 4,
+        "36": 3
+      }
+    },
+    {
+      "id": 32,
+      "name": "Racing Champion",
+      "age": 35,
+      "gender": "male",
+      "favorite_games": [
+        43,
+        11,
+        44,
+        41
+      ],
+      "purchased_games": [
+        41,
+        10,
+        11,
+        43,
+        44,
+        14,
+        31
+      ],
+      "view_history": {
+        "14": 10,
+        "24": 4,
+        "45": 7,
+        "6": 4,
+        "41": 9,
+        "44": 7,
+        "31": 6,
+        "32": 9,
+        "42": 7,
+        "56": 7,
+        "38": 4,
+        "49": 8,
+        "60": 9,
+        "59": 9,
+        "50": 9
+      }
+    },
+    {
+      "id": 33,
+      "name": "Sports Fanatic",
+      "age": 38,
+      "gender": "male",
+      "favorite_games": [
+        41,
+        49,
+        51,
+        52,
+        58
+      ],
+      "purchased_games": [
+        41,
+        14,
+        47,
+        49,
+        51,
+        52,
+        19,
+        54,
+        58,
+        59
+      ],
+      "view_history": {
+        "10": 5,
+        "44": 2,
+        "3": 4,
+        "41": 5,
+        "7": 3,
+        "19": 6,
+        "57": 4,
+        "52": 2,
+        "11": 8,
+        "59": 1,
+        "46": 4,
+        "5": 1,
+        "6": 2,
+        "9": 2,
+        "54": 6
+      }
+    },
+    {
+      "id": 34,
+      "name": "RPG Lover",
+      "age": 40,
+      "gender": "male",
+      "favorite_games": [
+        5,
+        9,
+        46,
+        14,
+        49,
+        51,
+        59
+      ],
+      "purchased_games": [
+        5,
+        9,
+        41,
+        46,
+        14,
+        49,
+        51,
+        57,
+        59
+      ],
+      "view_history": {
+        "41": 5,
+        "3": 3,
+        "5": 6,
+        "57": 8,
+        "50": 2,
+        "56": 6,
+        "53": 5,
+        "14": 2,
+        "54": 2,
+        "9": 2,
+        "49": 4
+      }
+    },
+    {
+      "id": 35,
+      "name": "Indie Discoverer",
+      "age": 42,
+      "gender": "male",
+      "favorite_games": [
+        5,
+        14,
+        47,
+        49,
+        51,
+        19,
+        56,
+        59
+      ],
+      "purchased_games": [
+        5,
+        14,
+        47,
+        49,
+        51,
+        19,
+        56,
+        59
+      ],
+      "view_history": {
+        "49": 3,
+        "9": 4,
+        "54": 4,
+        "41": 1,
+        "14": 7,
+        "57": 5,
+        "6": 7,
+        "19": 5,
+        "56": 1,
+        "51": 3
+      }
+    }
+  ]
+}

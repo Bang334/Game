@@ -4,6 +4,7 @@ export interface User {
     email: string;
     password: string;
     age: number | null;
+    gender: string | null;
     balance: number;
     role_id: number;
 }
@@ -12,6 +13,7 @@ export interface CreateUserData {
     email: string;
     password: string;
     age?: number;
+    gender?: string;
     balance?: number;
     role_id: number;
 }
@@ -20,6 +22,7 @@ export interface UpdateUserData {
     email?: string;
     password?: string;
     age?: number;
+    gender?: string;
     balance?: number;
     role_id?: number;
 }

@@ -1,0 +1,965 @@
+@startuml ERD_Database
+' ========================================
+' ERD - Entity Relationship Diagram
+' Database Schema for Game Store
+' ========================================
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) <i>x</i>
+
+hide methods
+hide stereotypes
+
+' Entities
+table(user) {
+  primary_key(user_id): INT
+  username: VARCHAR(50)
+  email: VARCHAR(100)
+  password: VARCHAR(255)
+  age: INT
+  gender: VARCHAR(20)
+  balance: DECIMAL(15,2)
+  foreign_key(role_id): INT
+}
+
+table(role) {
+  primary_key(role_id): INT
+  name: VARCHAR(50)
+}
+
+table(game) {
+  primary_key(game_id): INT
+  name: VARCHAR(255)
+  description: TEXT
+  release_date: DATE
+  foreign_key(publisher_id): INT
+  mode: VARCHAR(100)
+  price: DECIMAL(10,2)
+  multiplayer: BOOLEAN
+  capacity: INT
+  age_rating: VARCHAR(10)
+  average_rating: DECIMAL(3,2)
+  downloads: INT
+  image: VARCHAR(500)
+  link_download: VARCHAR(500)
+}
+
+table(publisher) {
+  primary_key(publisher_id): INT
+  name: VARCHAR(100)
+}
+
+table(genre) {
+  primary_key(genre_id): INT
+  name: VARCHAR(50)
+}
+
+table(platform) {
+  primary_key(platform_id): INT
+  name: VARCHAR(50)
+}
+
+table(language) {
+  primary_key(language_id): INT
+  name: VARCHAR(50)
+}
+
+table(game_genre) {
+  primary_key(id): INT
+  foreign_key(game_id): INT
+  foreign_key(genre_id): INT
+}
+
+table(game_platform) {
+  primary_key(id): INT
+  foreign_key(game_id): INT
+  foreign_key(platform_id): INT
+}
+
+table(game_language) {
+  primary_key(id): INT
+  foreign_key(game_id): INT
+  foreign_key(language_id): INT
+}
+
+table(specification) {
+  primary_key(spec_id): INT
+  foreign_key(game_id): INT
+  type: ENUM('MIN','REC')
+  cpu: VARCHAR(200)
+  ram: VARCHAR(50)
+  gpu: VARCHAR(200)
+}
+
+table(purchase) {
+  primary_key(purchase_id): INT
+  foreign_key(user_id): INT
+  foreign_key(game_id): INT
+  purchase_date: TIMESTAMP
+  payment_method: VARCHAR(50)
+}
+
+table(review) {
+  primary_key(review_id): INT
+  foreign_key(user_id): INT
+  foreign_key(game_id): INT
+  rating: INT
+  comment: TEXT
+}
+
+table(wishlist) {
+  primary_key(wishlist_id): INT
+  foreign_key(user_id): INT
+  foreign_key(game_id): INT
+  added_date: TIMESTAMP
+}
+
+table(view) {
+  primary_key(view_id): INT
+  foreign_key(user_id): INT
+  foreign_key(game_id): INT
+  view_date: TIMESTAMP
+}
+
+table(balance_transaction) {
+  primary_key(transaction_id): INT
+  foreign_key(user_id): INT
+  amount: DECIMAL(15,2)
+  balance_before: DECIMAL(15,2)
+  balance_after: DECIMAL(15,2)
+  transaction_type: ENUM
+  status: ENUM
+  description: VARCHAR(500)
+  foreign_key(related_game_id): INT
+  foreign_key(reviewed_by): INT
+  reviewed_at: TIMESTAMP
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+' Relationships
+user "1" -- "1" role
+user "1" -- "0..*" purchase
+user "1" -- "0..*" review
+user "1" -- "0..*" wishlist
+user "1" -- "0..*" view
+user "1" -- "0..*" balance_transaction : creates
+
+game "1" -- "0..*" purchase
+game "1" -- "0..*" review
+game "1" -- "0..*" wishlist
+game "1" -- "0..*" view
+game "1" -- "0..*" specification
+game "1" -- "1" publisher
+game "1" -- "1..*" game_genre
+game "1" -- "1..*" game_platform
+game "1" -- "0..*" game_language
+
+genre "1" -- "0..*" game_genre
+platform "1" -- "0..*" game_platform
+language "1" -- "0..*" game_language
+
+balance_transaction "0..*" -- "0..1" game : related_game_id
+balance_transaction "0..*" -- "0..1" user : reviewed_by
+
+note right of game
+  capacity = Dung lượng game (MB/GB)
+  multiplayer = Hỗ trợ multiplayer
+  average_rating = Điểm đánh giá TB
+  downloads = Số lượt tải
+  link_download = Link tải game
+end note
+
+note right of specification
+  type = 'MIN' (tối thiểu) 
+       hoặc 'REC' (khuyến nghị)
+  Mỗi game có 2 specs:
+  - MIN specs
+  - REC specs
+end note
+
+note right of balance_transaction
+  transaction_type:
+  - DEPOSIT: Nạp tiền
+  - PURCHASE: Mua game
+  - REFUND: Hoàn tiền
+  - ADMIN_ADJUST: Admin điều chỉnh
+  
+  status:
+  - PENDING: Chờ duyệt
+  - APPROVED: Đã duyệt
+  - REJECTED: Từ chối
+end note
+
+@enduml
+
+@startuml UseCase_Customer
+' ========================================
+' Use Case Diagram - Customer
+' ========================================
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor Customer as customer
+actor "Payment System" as payment
+actor "AI Recommendation" as ai
+
+rectangle "Game Store System" {
+  usecase "Đăng ký tài khoản" as UC1
+  usecase "Đăng nhập" as UC2
+  usecase "Tìm kiếm game" as UC3
+  usecase "Xem chi tiết game" as UC4
+  usecase "Thêm vào Wishlist" as UC5
+  usecase "Mua game" as UC6
+  usecase "Đánh giá & Review" as UC7
+  usecase "Nạp tiền" as UC8
+  usecase "Xem lịch sử giao dịch" as UC9
+  usecase "Quản lý thông tin cá nhân" as UC10
+  usecase "Nhận gợi ý game" as UC11
+  usecase "Lọc game theo thể loại" as UC12
+  usecase "Xem thư viện game đã mua" as UC13
+  usecase "Xem các đánh giá" as UC14
+}
+
+customer --> UC1
+customer --> UC2
+customer --> UC3
+customer --> UC4
+customer --> UC5
+customer --> UC6
+customer --> UC7
+customer --> UC8
+customer --> UC9
+customer --> UC10
+customer --> UC11
+customer --> UC12
+customer --> UC13
+
+UC6 ..> payment : <<include>>
+UC11 ..> ai : <<include>>
+UC3 ..> UC4 : <<extend>>
+UC4 ..> UC5 : <<extend>>
+UC4 ..> UC6 : <<extend>>
+UC11 ..> UC4 : <<extend>>
+UC6 ..> UC7 : <<extend>>
+UC4 ..> UC14 : <<extend>>
+
+@enduml
+
+@startuml UseCase_Admin
+' ========================================
+' Use Case Diagram - Admin
+' ========================================
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor Admin as admin
+actor "Database" as db
+
+rectangle "Admin Management System" {
+  usecase "Quản lý game" as UC1
+  usecase "Thêm game mới" as UC2
+  usecase "Sửa thông tin game" as UC3
+  usecase "Xóa game" as UC4
+  usecase "Quản lý người dùng" as UC5
+  usecase "Xem thống kê doanh thu" as UC6
+  usecase "Quản lý đánh giá" as UC7
+  usecase "Duyệt yêu cầu nạp tiền" as UC8
+  usecase "Từ chối nạp tiền" as UC9
+  usecase "Quản lý giao dịch" as UC10
+  usecase "Xem báo cáo" as UC11
+}
+
+admin --> UC1
+admin --> UC5
+admin --> UC6
+admin --> UC7
+admin --> UC8
+admin --> UC10
+admin --> UC11
+
+UC1 ..> UC2 : <<extend>>
+UC1 ..> UC3 : <<extend>>
+UC1 ..> UC4 : <<extend>>
+UC8 ..> UC9 : <<extend>>
+
+UC2 ..> db : <<include>>
+UC3 ..> db : <<include>>
+UC4 ..> db : <<include>>
+UC8 ..> db : <<include>>
+
+@enduml
+
+@startuml Activity_Purchase
+' ========================================
+' Activity Diagram - Purchase Game Flow
+' ========================================
+
+|Customer|
+start
+:Duyệt danh sách game;
+:Chọn game muốn mua;
+:Xem chi tiết game;
+
+if (Đã mua game này?) then (yes)
+  :Hiển thị "Đã sở hữu";
+  stop
+else (no)
+  :Nhấn nút "Mua game";
+endif
+
+|System|
+:Kiểm tra đăng nhập;
+
+if (Đã đăng nhập?) then (no)
+  :Redirect đến trang login;
+  stop
+else (yes)
+  :Hiển thị modal thanh toán;
+endif
+
+|Customer|
+:Xem thông tin:
+- Giá game
+- Số dư hiện tại
+- Số dư sau khi mua;
+
+if (Số dư đủ?) then (no)
+  :Hiển thị thông báo\n"Số dư không đủ";
+  :Đề xuất nạp tiền;
+  stop
+else (yes)
+  :Xác nhận mua;
+endif
+
+|System|
+:Trừ số dư;
+:Tạo bản ghi purchase;
+:Tạo transaction record\n(type: PURCHASE, status: APPROVED);
+:Cập nhật balance;
+:Thêm game vào thư viện;
+
+|Customer|
+:Nhận thông báo thành công;
+:Có thể tải/chơi game;
+
+stop
+
+@enduml
+
+@startuml Activity_Deposit
+' ========================================
+' Activity Diagram - Deposit Money Flow
+' ========================================
+
+|Customer|
+start
+:Truy cập trang Profile;
+:Chọn tab "Nạp tiền";
+:Nhập số tiền cần nạp;
+:Nhập ghi chú (optional);
+:Gửi yêu cầu nạp tiền;
+
+|System|
+:Tạo transaction record\n(type: DEPOSIT, status: PENDING);
+:Lưu vào database;
+:Hiển thị thông tin chuyển khoản:
+- Số tài khoản
+- Mã QR
+- Nội dung CK;
+
+|Customer|
+:Thực hiện chuyển khoản\nqua ngân hàng;
+:Chờ admin duyệt;
+
+|Admin|
+:Vào trang "Yêu cầu nạp tiền";
+:Xem danh sách pending;
+:Kiểm tra thông tin CK;
+
+if (Thông tin đúng?) then (yes)
+  :Nhấn "Duyệt";
+  
+  |System|
+  :Cập nhật status = APPROVED;
+  :Cộng tiền vào balance;
+  :Lưu reviewed_by, reviewed_at;
+  :Gửi notification cho user;
+  
+  |Customer|
+  :Nhận thông báo\n"Nạp tiền thành công";
+  :Số dư được cập nhật;
+  
+else (no)
+  :Nhấn "Từ chối";
+  
+  |System|
+  :Cập nhật status = REJECTED;
+  :Lưu lý do từ chối;
+  :Gửi notification cho user;
+  
+  |Customer|
+  :Nhận thông báo\n"Yêu cầu bị từ chối";
+endif
+
+stop
+
+@enduml
+
+@startuml Sequence_Recommendation
+' ========================================
+' Sequence Diagram - AI Recommendation System
+' ========================================
+
+actor User
+participant "Frontend\n(React)" as FE
+participant "Backend\n(Node.js/Express)" as BE
+participant "Python AI\nService" as AI
+database "MySQL\nDatabase" as DB
+database "SQLite\nInteractions" as SQLite
+
+User -> FE: Truy cập trang chủ
+activate FE
+
+FE -> BE: GET /api/recommendations/:userId
+activate BE
+
+BE -> DB: Query user interactions\n(purchases, reviews,\nwishlist, views)
+activate DB
+DB --> BE: User interaction data
+deactivate DB
+
+BE -> AI: POST /recommend\n{user_id, interactions}
+activate AI
+
+AI -> AI: Load pre-trained models\n(SVD, Content, Demographic)
+
+AI -> SQLite: Query interaction history\nwith timestamps
+activate SQLite
+SQLite --> AI: Timestamped interactions
+deactivate SQLite
+
+AI -> AI: Apply temporal decay\nweight × exp(-0.01 × days)
+
+AI -> AI: Build user profile vector\nfrom weighted interactions
+
+== Collaborative Filtering (SVD) ==
+AI -> AI: U × Σ × V^T\nPredict ratings
+
+== Content-Based Filtering ==
+AI -> AI: TF-IDF similarity\nCosine distance
+
+== Demographic Filtering ==
+AI -> AI: Find similar users\nby age & gender
+
+== Keyword Filtering ==
+AI -> AI: Keyword matching\n(if search query exists)
+
+AI -> AI: Ensemble scores:\nfinal = svd×0.45 + content×0.35\n+ demo×0.20 + keyword×0.0
+
+AI -> AI: Rank by final score\nFilter out purchased games
+
+AI --> BE: Top 10 recommended games\n[{game_id, score, reason}]
+deactivate AI
+
+BE -> DB: Fetch game details\nfor recommendations
+activate DB
+DB --> BE: Game info\n(name, price, image, etc.)
+deactivate DB
+
+BE --> FE: Recommendation list\nwith full game data
+deactivate BE
+
+FE -> FE: Render game cards\nwith "Recommended for you" tag
+
+FE --> User: Display personalized\nrecommendations
+deactivate FE
+
+User -> FE: Click on recommended game
+activate FE
+FE -> BE: Track interaction\nPOST /api/track/view
+activate BE
+BE -> SQLite: Log view interaction\nwith timestamp
+activate SQLite
+SQLite --> BE: Success
+deactivate SQLite
+BE --> FE: OK
+deactivate BE
+deactivate FE
+
+note over AI, SQLite
+  Interactions được log liên tục
+  để cải thiện recommendations
+  trong tương lai
+end note
+
+@enduml
+
+@startuml Component_Architecture
+' ========================================
+' Component Diagram - System Architecture
+' ========================================
+
+!define RECTANGLE class
+
+skinparam componentStyle rectangle
+
+package "Frontend - React + TypeScript" {
+  [Customer Pages] as CP
+  [Admin Pages] as AP
+  [Auth Context] as Auth
+  [Material-UI Components] as MUI
+  [Axios HTTP Client] as Axios
+}
+
+package "Backend - Node.js + Express" {
+  [API Routes] as Routes
+  [Controllers] as Ctrl
+  [Models] as Models
+  [Middleware] as MW
+  [JWT Service] as JWT
+}
+
+package "AI Service - Python + Flask" {
+  [Recommendation API] as RecAPI
+  [SVD Model] as SVD
+  [Content-Based Filter] as CBF
+  [Demographic Filter] as Demo
+  [Keyword Filter] as KW
+  [Temporal Analyzer] as Temporal
+}
+
+database "MySQL Database" as MySQL {
+  [user]
+  [game]
+  [purchase]
+  [review]
+  [wishlist]
+  [view]
+  [balance_transaction]
+}
+
+database "SQLite DB" as SQLite {
+  [user_interactions]
+}
+
+cloud "External Services" {
+  [Bank Transfer] as Bank
+}
+
+CP --> Auth
+AP --> Auth
+CP --> MUI
+AP --> MUI
+CP --> Axios
+AP --> Axios
+
+Axios --> Routes : HTTP/REST
+
+Routes --> MW : Auth Check
+MW --> JWT : Verify Token
+Routes --> Ctrl : Business Logic
+Ctrl --> Models : Data Access
+Models --> MySQL : SQL Queries
+
+Ctrl --> RecAPI : HTTP Request
+RecAPI --> SVD
+RecAPI --> CBF
+RecAPI --> Demo
+RecAPI --> KW
+RecAPI --> Temporal
+SVD --> SQLite
+CBF --> SQLite
+Temporal --> SQLite
+
+CP --> Bank : QR Code Payment
+Bank --> AP : Verify Transfer
+
+note right of RecAPI
+  Dynamic Weighting:
+  - SVD: 45% / 15%
+  - Content: 35% / 15%
+  - Demo: 20% / 10%
+  - Keyword: 0% / 60%
+end note
+
+@enduml
+
+@startuml Class_Models
+' ========================================
+' Class Diagram - Backend Models
+' ========================================
+
+class UserModel {
+  +findById(userId): User
+  +findByEmail(email): User
+  +create(userData): userId
+  +updateBalance(userId, newBalance)
+  +updateProfile(userId, data)
+}
+
+class GameModel {
+  +findById(gameId): Game
+  +findAll(): Game[]
+  +findAllWithPublisherAndGenres(): Game[]
+  +create(gameData): gameId
+  +update(gameId, data)
+  +delete(gameId)
+}
+
+class PurchaseModel {
+  +create(userId, gameId): purchaseId
+  +findByUserId(userId): Purchase[]
+  +findByGameId(gameId): Purchase[]
+  +checkOwnership(userId, gameId): boolean
+}
+
+class ReviewModel {
+  +create(userId, gameId, rating, comment): reviewId
+  +findByUserId(userId): Review[]
+  +findByGameId(gameId): Review[]
+  +update(reviewId, data)
+  +delete(reviewId)
+}
+
+class WishlistModel {
+  +add(userId, gameId): wishlistId
+  +remove(userId, gameId)
+  +findByUserId(userId): Wishlist[]
+  +checkExists(userId, gameId): boolean
+}
+
+class ViewModel {
+  +track(userId, gameId)
+  +findByUserId(userId): View[]
+  +getViewCount(gameId): number
+}
+
+class BalanceTransactionModel {
+  +create(transactionData): transactionId
+  +findByUserId(userId): Transaction[]
+  +findPendingDeposits(): Transaction[]
+  +getUserPendingDeposits(userId): Transaction[]
+  +approveDeposit(transactionId, adminId)
+  +rejectDeposit(transactionId, adminId, reason)
+  +getStatsByUserId(userId): Stats
+}
+
+class PublisherModel {
+  +findById(publisherId): Publisher
+  +findAll(): Publisher[]
+  +create(name): publisherId
+}
+
+class GenreModel {
+  +findById(genreId): Genre
+  +findAll(): Genre[]
+  +findByGameId(gameId): Genre[]
+}
+
+class PlatformModel {
+  +findById(platformId): Platform
+  +findAll(): Platform[]
+  +findByGameId(gameId): Platform[]
+}
+
+UserModel "1" -- "0..*" PurchaseModel
+UserModel "1" -- "0..*" ReviewModel
+UserModel "1" -- "0..*" WishlistModel
+UserModel "1" -- "0..*" ViewModel
+UserModel "1" -- "0..*" BalanceTransactionModel
+
+GameModel "1" -- "0..*" PurchaseModel
+GameModel "1" -- "0..*" ReviewModel
+GameModel "1" -- "0..*" WishlistModel
+GameModel "1" -- "0..*" ViewModel
+GameModel "1" -- "1" PublisherModel
+GameModel "1" -- "1..*" GenreModel
+GameModel "1" -- "1..*" PlatformModel
+
+@enduml
+
+@startuml State_Deposit
+' ========================================
+' State Diagram - Deposit Transaction
+' ========================================
+
+[*] --> Created : User submits\ndeposit request
+
+Created --> Pending : System creates\ntransaction record\n(status = PENDING)
+
+Pending --> UnderReview : Admin views\nrequest
+
+UnderReview --> Approved : Admin approves\n& verifies payment
+UnderReview --> Rejected : Admin rejects\n(invalid info)
+
+Approved --> Completed : System adds\nmoney to balance
+
+Rejected --> [*]
+Completed --> [*]
+
+note right of Pending
+  Transaction data:
+  - user_id
+  - amount
+  - balance_before
+  - balance_after (expected)
+  - status: PENDING
+  - description
+end note
+
+note right of Approved
+  Updated fields:
+  - status: APPROVED
+  - reviewed_by: admin_id
+  - reviewed_at: timestamp
+  - User balance updated
+end note
+
+note right of Rejected
+  Updated fields:
+  - status: REJECTED
+  - reviewed_by: admin_id
+  - reviewed_at: timestamp
+  - Balance unchanged
+end note
+
+@enduml
+
+@startuml Deployment_Architecture
+' ========================================
+' Deployment Diagram
+' ========================================
+
+node "Client Browser" {
+  component [React App\n(TypeScript)] as React
+}
+
+node "Web Server\n(Node.js)" {
+  component [Express API\nBackend] as Express
+}
+
+node "AI Server\n(Python)" {
+  component [Flask Service\nRecommendation] as Flask
+}
+
+node "Database Server" {
+  database [MySQL\nMain Database] as MySQL
+  database [SQLite\nInteractions] as SQLite
+}
+
+cloud "CDN / Storage" {
+  storage [Game Images\nStatic Assets] as CDN
+}
+
+React --> Express : HTTPS/REST API\nport 3001
+Express --> Flask : HTTP\nport 5000
+Express --> MySQL : MySQL Protocol\nport 3306
+Flask --> SQLite : SQLite\nLocal File
+React --> CDN : HTTPS\nStatic Assets
+
+note right of Express
+  Environment: Node.js 18+
+  Framework: Express.js
+  Auth: JWT tokens
+  Port: 3001
+end note
+
+note right of Flask
+  Environment: Python 3.8+
+  Framework: Flask
+  Libraries: numpy, pandas,
+  scikit-learn, scipy
+  Port: 5000
+end note
+
+note right of MySQL
+  Storage: Game data,
+  Users, Purchases,
+  Reviews, Transactions
+end note
+
+note right of SQLite
+  Storage: Interaction logs
+  with timestamps for
+  temporal analysis
+end note
+
+@enduml
+
+@startuml Activity_AI_Training
+' ========================================
+' Activity Diagram - AI Model Training
+' ========================================
+
+|Data Engineer|
+start
+
+:Load data từ JSON files\n(game.json, library.json);
+
+:Connect to MySQL database\nExport user interactions;
+
+:Connect to SQLite\nExport timestamped interactions;
+
+|Preprocessing|
+:Create user-item matrix;
+
+:Calculate weighted ratings:
+- Wishlist: 5.0
+- Purchase no review: 3.0
+- Purchase + 5 star: 5.0
+- Purchase + 4 star: 4.0
+- Purchase + 3 star: 3.0
+- Purchase + 2 star: 2.0
+- Purchase + 1 star: 1.0
+- View: 0.5 per view;
+
+:Apply temporal decay:
+weight × exp(-0.01 × days_elapsed);
+
+|SVD Model|
+:Normalize user-item matrix\n(demean by user average);
+
+:Apply SVD decomposition\nU, Σ, V^T = svd(matrix, k=2);
+
+:Reconstruct predicted ratings\nR = U × Σ × V^T + mean;
+
+:Save SVD components;
+
+|Content-Based Model|
+:Extract game features:
+- Genre (One-Hot)
+- Platform (Multi-hot)
+- Publisher (Embedding)
+- Price (Normalized)
+- Keywords (TF-IDF);
+
+:Build TF-IDF vectorizer\nfrom descriptions & tags;
+
+:Calculate cosine similarity\nbetween all games;
+
+:Save content similarity matrix;
+
+|Demographic Model|
+:Group users by age & gender;
+
+:Calculate demographic similarity;
+
+:Build demographic profiles;
+
+|Keyword Model|
+:Extract keywords from:
+- Game descriptions
+- Tags
+- Reviews;
+
+:Build keyword library\nwith TF-IDF scores;
+
+:Create keyword embeddings;
+
+|Validation|
+if (Models trained successfully?) then (yes)
+  :Save all models to disk;
+  :Update model version;
+  :Log training metrics;
+  
+  :Deploy to Flask API;
+  
+  :Test with sample users;
+  
+  if (Performance acceptable?) then (yes)
+    :Activate new models;
+    :Monitor performance;
+    stop
+  else (no)
+    :Rollback to previous version;
+    :Debug issues;
+    stop
+  endif
+  
+else (no)
+  :Log error details;
+  :Alert data team;
+  stop
+endif
+
+@enduml
+
+@startuml Flow_Recommendation
+' ========================================
+' Flowchart - Recommendation Process
+' ========================================
+
+start
+
+:User requests recommendations;
+
+:Load user interaction history\n(purchase, review, wishlist, view);
+
+if (User has interactions?) then (yes)
+  :Load interactions with timestamps;
+  
+  :Calculate days elapsed\nfor each interaction;
+  
+  :Apply temporal decay\nweight × exp(-0.01 × days);
+  
+  :Build weighted user profile;
+  
+  partition "SVD Collaborative Filtering" {
+    :Get user vector from U matrix;
+    :Predict ratings = U × Σ × V^T;
+    :Score = predicted_rating × 0.45;
+  }
+  
+  partition "Content-Based Filtering" {
+    :Extract features from\nuser's liked games;
+    :Calculate similarity with\nall other games;
+    :Score = similarity × 0.35;
+  }
+  
+  partition "Demographic Filtering" {
+    :Find users with similar\nage & gender;
+    :Get games they liked;
+    :Score = demo_score × 0.20;
+  }
+  
+  partition "Keyword Filtering (if applicable)" {
+    if (User entered keyword?) then (yes)
+      :Match keyword with game\ndescriptions using TF-IDF;
+      :Score = keyword_score × 0.60;
+      :Adjust other weights:
+      SVD=0.15, Content=0.15, Demo=0.10;
+    else (no)
+      :Keyword score = 0;
+    endif
+  }
+  
+else (no - Cold Start)
+  :Recommend popular games;
+  :Recommend high-rated games;
+  :Recommend trending games;
+  stop
+endif
+
+:Combine all scores\nfinal = SVD + Content + Demo + Keyword;
+
+:Filter out already purchased games;
+
+:Sort by final score (descending);
+
+:Select top N games (default 10);
+
+:Add recommendation reasons:
+- "Similar to games you liked"
+- "Popular in your age group"
+- "Matches your search";
+
+:Return recommendations to user;
+
+stop
+
+@enduml
+

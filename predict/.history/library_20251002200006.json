@@ -1,0 +1,90 @@
+{
+    "comment": "Search attributes for semantic matching - Vietnamese and English keywords",
+    
+    "genres": {
+      "Action": "hành động hanh dong chiến đấu bắn nhau action fighting combat fast-paced intense kịch tính nam căng thẳng cạnh tranh nhanh thú vị",
+      "Horror": "kinh dị đáng sợ ma quái sợ hãi horror scary frightening creepy spooky kịch tính căng thẳng hồi hộp thót tim",
+      "Shooter": "bắn súng shooter gun battle fps tps first person third person kịch tính nam căng thẳng cạnh tranh nhanh chiến đấu",
+      "Strategy": "chiến thuật chiến lược strategy tactic tactical turn-based real-time người lớn phức tạp chậm thông minh tư duy sâu",
+      "Adventure": "phiêu lưu thám hiểm phieu luu tham hiem kham pha adventure exploration journey story kịch tính câu chuyện hấp dẫn thú vị khám phá",
+      "RPG": "nhập vai rpg role playing character level up skill progression câu chuyện nhân vật phát triển phức tạp sâu sắc",
+      "Puzzle": "giải đố puzzle brain teaser logic thinking problem solving nữ thư giãn trẻ em gia đình thông minh đơn giản tư duy",
+      "Casual": "giải trí thư giãn casual fun relaxing easy simple nữ gia đình trẻ em dễ chơi vui vẻ nhẹ nhàng",
+      "Simulation": "mô phỏng simulation sim realistic life city building giả lập thực tế sáng tạo quản lý phức tạp xây dựng",
+      "Sports": "thể thao sports football soccer basketball racing competition nam cạnh tranh nhanh kỹ năng vận động",
+      "Fighting": "đối kháng fighting combat martial arts street fighter đánh nhau kịch tính nam cạnh tranh đấu võ",
+      "Board": "cờ bàn board game chess checkers monopoly card game gia đình trẻ em người lớn thông minh thư giãn",
+      "Party": "tiệc tùng party multiplayer fun social group friends gia đình vui vẻ cùng nhau hợp tác",
+      "Platformer": "nhảy platformer jump platform mario sonic 2d side-scrolling trẻ em gia đình vui vẻ nhanh né kỹ năng",
+      "Fantasy": "huyền ảo fantasy magic mythical dragon wizard elf tưởng tượng phép thuật huyền bí thú vị",
+      "Sci-Fi": "khoa học viễn tưởng sci-fi science fiction space future technology",
+      "Racing": "đua xe racing car motorcycle speed fast driving",
+      "Stealth": "ẩn nấp stealth sneaking hiding assassin thief",
+      "Survival": "sinh tồn survival crafting building zombie apocalypse",
+      "Tower Defense": "phòng thủ tower defense td strategy waves",
+      "MOBA": "moba moba dota league of legends multiplayer online battle arena",
+      "MMORPG": "mmorpg massively multiplayer online role playing world of warcraft",
+      "Battle Royale": "battle royale fortnite pubg last man standing",
+      "Sandbox": "sandbox open world creative building minecraft",
+      "Roguelike": "roguelike procedural generated permadeath dungeon crawler",
+      "Metroidvania": "metroidvania exploration platformer interconnected world",
+      "Visual Novel": "visual novel story text reading anime manga",
+      "Rhythm": "nhịp điệu rhythm music dance beat saber guitar hero",
+      "Educational": "giáo dục educational learning teaching school kids trẻ em gia đình học tập kiến thức bổ ích",
+      "Trivia": "đố vui trivia quiz knowledge questions answers"
+    },
+    
+    "price_value": {
+      "cheap": "game giá rẻ tiền giá rẻ low price affordable budget kiếm tiền tiết kiệm phải chăng",
+      "expensive": "game giá đắt tiền giá cao expensive premium luxury chất lượng cao đẳng cấp AAA",
+      "free": "game miễn phí free gratis không mất tiền",
+      "on sale": "game giảm giá sale discount promotion khuyến mãi",
+      "worth it": "đáng tiền worth it value for money chất lượng"
+    },
+    
+    "multiplayer_social": {
+      "multiplayer": "đa người chơi nhiều người chơi multiplayer online co-op cooperative gia đình bạn bè hợp tác",
+      "offline": "game offline chơi một người single player solo riêng tư không cần mạng",
+      "online": "game online chơi mạng multiplayer internet",
+      "local co-op": "chơi cùng nhau local co-op couch multiplayer split screen",
+      "competitive": "cạnh tranh competitive esports tournament ranked",
+      "cooperative": "hợp tác cooperative teamwork together",
+      "social": "xã hội social community chat friends"
+    },
+    
+    "platform_technology": {
+      "mobile": "game mobile di động android ios smartphone tablet",
+      "pc": "game pc máy tính windows mac linux desktop",
+      "console": "console playstation xbox nintendo switch",
+      "vr": "vr virtual reality oculus htc vive immersive",
+      "cross-platform": "đa nền tảng cross-platform crossplay"
+    },
+    
+    "emotions_experience": {
+      "exciting": "thú vị exciting thrilling adrenaline rush",
+      "relaxing": "thư giãn relaxing peaceful calm zen",
+      "challenging": "thử thách challenging difficult hard skill",
+      "easy": "dễ easy simple beginner friendly",
+      "addictive": "gây nghiện addictive engaging compelling",
+      "boring": "nhàm chán boring repetitive dull",
+      "funny": "hài hước funny comedy humorous laugh",
+      "sad": "buồn sad emotional touching story",
+      "scary": "đáng sợ scary frightening horror",
+      "romantic": "lãng mạn romantic love relationship",
+      "mysterious": "bí ẩn mysterious puzzle mystery",
+      "epic": "hoành tráng epic grand scale massive",
+      "intimate": "thân mật intimate personal close",
+      "nostalgic": "hoài niệm nostalgic memory childhood",
+      "inspiring": "truyền cảm hứng inspiring motivational uplifting",
+      "thought-provoking": "suy ngẫm thought-provoking deep meaningful",
+      "mindless": "vô tư mindless casual simple fun",
+      "complex": "phức tạp complex deep complicated",
+      "simple": "đơn giản simple easy straightforward",
+      "vietnamese": "tiếng việt vietnamese vietnam local",
+      "english": "tiếng anh english international",
+      "japanese": "tiếng nhật japanese anime manga",
+      "korean": "tiếng hàn korean k-pop",
+      "chinese": "tiếng trung chinese mandarin"
+    }
+  }
+  

@@ -6,6 +6,7 @@ export interface User {
   email: string
   password: string
   age: number | null
+  gender: string | null
   balance: number
   role_id: number
 }
@@ -15,6 +16,7 @@ export interface CreateUserData {
   email: string
   password: string
   age?: number
+  gender?: string
   balance?: number
   role_id: number
 }
@@ -24,6 +26,7 @@ export interface UpdateUserData {
   email?: string
   password?: string
   age?: number
+  gender?: string
   balance?: number
   role_id?: number
 }
@@ -95,8 +98,8 @@ export class UserModel {
   // Create new user
   static async create(data: CreateUserData): Promise<number> {
     const [result] = await pool.execute(
-      'INSERT INTO User (username, email, password, age, balance, role_id) VALUES (?, ?, ?, ?, ?, ?)',
-      [data.username, data.email, data.password, data.age || null, data.balance || 0, data.role_id]
+      'INSERT INTO User (username, email, password, age, gender, balance, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [data.username, data.email, data.password, data.age || null, data.gender || null, data.balance || 0, data.role_id]
     )
     return (result as any).insertId
   }
@@ -121,6 +124,10 @@ export class UserModel {
     if (data.age !== undefined) {
       fields.push('age = ?')
       values.push(data.age)
+    }
+    if (data.gender !== undefined) {
+      fields.push('gender = ?')
+      values.push(data.gender)
     }
     if (data.balance !== undefined) {
       fields.push('balance = ?')

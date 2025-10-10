@@ -3,7 +3,8 @@ import { pool } from '../db'
 export interface Game {
   game_id: number
   name: string
-  release_year: number | null
+  description: string | null
+  release_date: Date | null
   publisher_id: number
   mode: string | null
   price: number
@@ -11,13 +12,15 @@ export interface Game {
   capacity: number | null
   age_rating: string | null
   average_rating: number
-  total_sales: number
-  total_revenue: number
+  downloads: number
+  image: string | null
+  link_download: string | null
 }
 
 export interface CreateGameData {
   name: string
-  release_year?: number
+  description?: string
+  release_date?: Date
   publisher_id: number
   mode?: string
   price: number
@@ -25,13 +28,15 @@ export interface CreateGameData {
   capacity?: number
   age_rating?: string
   average_rating?: number
-  total_sales?: number
-  total_revenue?: number
+  downloads?: number
+  image?: string
+  link_download?: string
 }
 
 export interface UpdateGameData {
   name?: string
-  release_year?: number
+  description?: string
+  release_date?: Date
   publisher_id?: number
   mode?: string
   price?: number
@@ -39,8 +44,9 @@ export interface UpdateGameData {
   capacity?: number
   age_rating?: string
   average_rating?: number
-  total_sales?: number
-  total_revenue?: number
+  downloads?: number
+  image?: string
+  link_download?: string
 }
 
 export interface GameWithPublisher extends Game {
@@ -50,17 +56,16 @@ export interface GameWithPublisher extends Game {
 export interface GameWithDetails extends GameWithPublisher {
   genres: string[]
   platforms: string[]
+  languages: string[]
   min_specs?: {
     cpu: string | null
     ram: string | null
     gpu: string | null
-    storage: string | null
   } | null
   rec_specs?: {
     cpu: string | null
     ram: string | null
     gpu: string | null
-    storage: string | null
   } | null
 }
 
@@ -142,6 +147,74 @@ export class GameModel {
     return rows as GameWithPublisher[]
   }
 
+  // Get all games with publisher and genres
+  static async findAllWithPublisherAndGenres(): Promise<GameWithDetails[]> {
+    const [rows] = await pool.execute(`
+      SELECT g.*, p.name as publisher_name
+      FROM Game g
+      JOIN Publisher p ON g.publisher_id = p.publisher_id
+      ORDER BY g.name
+    `)
+    
+    const games = rows as GameWithPublisher[]
+    const gamesWithGenres: GameWithDetails[] = []
+    
+    for (const game of games) {
+      // Get genres for each game
+      const [genreRows] = await pool.execute(`
+        SELECT gen.name FROM Genre gen
+        JOIN Game_Genre gg ON gen.genre_id = gg.genre_id
+        WHERE gg.game_id = ?
+      `, [game.game_id])
+      const genres = (genreRows as any[]).map((row: any) => row.name)
+
+      // Get platforms for each game
+      const [platformRows] = await pool.execute(`
+        SELECT p.name FROM Platform p
+        JOIN Game_Platform gp ON p.platform_id = gp.platform_id
+        WHERE gp.game_id = ?
+      `, [game.game_id])
+      const platforms = (platformRows as any[]).map((row: any) => row.name)
+
+      // Get languages for each game
+      const [languageRows] = await pool.execute(`
+        SELECT l.name FROM Language l
+        JOIN Game_Language gl ON l.language_id = gl.language_id
+        WHERE gl.game_id = ?
+      `, [game.game_id])
+      const languages = (languageRows as any[]).map((row: any) => row.name)
+
+      // Get specifications
+      const [specRows] = await pool.execute(`
+        SELECT type, cpu, ram, gpu FROM Specification
+        WHERE game_id = ?
+      `, [game.game_id])
+      const specs = specRows as any[]
+
+      const minSpecs = specs.find((spec: any) => spec.type === 'MIN')
+      const recSpecs = specs.find((spec: any) => spec.type === 'REC')
+
+      gamesWithGenres.push({
+        ...game,
+        genres,
+        platforms,
+        languages,
+        min_specs: minSpecs ? {
+          cpu: minSpecs.cpu,
+          ram: minSpecs.ram,
+          gpu: minSpecs.gpu
+        } : null,
+        rec_specs: recSpecs ? {
+          cpu: recSpecs.cpu,
+          ram: recSpecs.ram,
+          gpu: recSpecs.gpu
+        } : null
+      })
+    }
+    
+    return gamesWithGenres
+  }
+
   // Get game with full details
   static async findByIdWithDetails(gameId: number): Promise<GameWithDetails | null> {
     // Get game with publisher
@@ -172,9 +245,17 @@ export class GameModel {
     `, [gameId])
     const platforms = (platformRows as any[]).map((row: any) => row.name)
 
+    // Get languages
+    const [languageRows] = await pool.execute(`
+      SELECT l.name FROM Language l
+      JOIN Game_Language gl ON l.language_id = gl.language_id
+      WHERE gl.game_id = ?
+    `, [gameId])
+    const languages = (languageRows as any[]).map((row: any) => row.name)
+
     // Get specifications
     const [specRows] = await pool.execute(`
-      SELECT type, cpu, ram, gpu, storage FROM Specification
+      SELECT type, cpu, ram, gpu FROM Specification
       WHERE game_id = ?
     `, [gameId])
     const specs = specRows as any[]
@@ -186,28 +267,27 @@ export class GameModel {
       ...game,
       genres,
       platforms,
+      languages,
       min_specs: minSpecs ? {
         cpu: minSpecs.cpu,
         ram: minSpecs.ram,
-        gpu: minSpecs.gpu,
-        storage: minSpecs.storage
+        gpu: minSpecs.gpu
       } : null,
       rec_specs: recSpecs ? {
         cpu: recSpecs.cpu,
         ram: recSpecs.ram,
-        gpu: recSpecs.gpu,
-        storage: recSpecs.storage
+        gpu: recSpecs.gpu
       } : null
     }
   }
 
-  // Get top selling games
-  static async findTopSelling(limit: number = 10): Promise<GameWithPublisher[]> {
+  // Get top downloaded games
+  static async findTopDownloaded(limit: number = 10): Promise<GameWithPublisher[]> {
     const [rows] = await pool.execute(`
       SELECT g.*, p.name as publisher_name
       FROM Game g
       JOIN Publisher p ON g.publisher_id = p.publisher_id
-      ORDER BY g.total_sales DESC
+      ORDER BY g.downloads DESC
       LIMIT ?
     `, [limit])
     return rows as GameWithPublisher[]
@@ -241,11 +321,12 @@ export class GameModel {
   // Create new game
   static async create(data: CreateGameData): Promise<number> {
     const [result] = await pool.execute(`
-      INSERT INTO Game (name, release_year, publisher_id, mode, price, multiplayer, capacity, age_rating, average_rating, total_sales, total_revenue)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Game (name, description, release_date, publisher_id, mode, price, multiplayer, capacity, age_rating, average_rating, downloads, image, link_download)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
       data.name,
-      data.release_year || null,
+      data.description || null,
+      data.release_date || null,
       data.publisher_id,
       data.mode || null,
       data.price,
@@ -253,8 +334,9 @@ export class GameModel {
       data.capacity || null,
       data.age_rating || null,
       data.average_rating || 0,
-      data.total_sales || 0,
-      data.total_revenue || 0
+      data.downloads || 0,
+      data.image || null,
+      data.link_download || null
     ])
     return (result as any).insertId
   }
@@ -268,9 +350,13 @@ export class GameModel {
       fields.push('name = ?')
       values.push(data.name)
     }
-    if (data.release_year !== undefined) {
-      fields.push('release_year = ?')
-      values.push(data.release_year)
+    if (data.description !== undefined) {
+      fields.push('description = ?')
+      values.push(data.description)
+    }
+    if (data.release_date !== undefined) {
+      fields.push('release_date = ?')
+      values.push(data.release_date)
     }
     if (data.publisher_id !== undefined) {
       fields.push('publisher_id = ?')
@@ -300,13 +386,17 @@ export class GameModel {
       fields.push('average_rating = ?')
       values.push(data.average_rating)
     }
-    if (data.total_sales !== undefined) {
-      fields.push('total_sales = ?')
-      values.push(data.total_sales)
+    if (data.downloads !== undefined) {
+      fields.push('downloads = ?')
+      values.push(data.downloads)
     }
-    if (data.total_revenue !== undefined) {
-      fields.push('total_revenue = ?')
-      values.push(data.total_revenue)
+    if (data.image !== undefined) {
+      fields.push('image = ?')
+      values.push(data.image)
+    }
+    if (data.link_download !== undefined) {
+      fields.push('link_download = ?')
+      values.push(data.link_download)
     }
 
     if (fields.length === 0) return false
@@ -328,11 +418,20 @@ export class GameModel {
     return (result as any).affectedRows > 0
   }
 
-  // Update game sales
-  static async updateSales(gameId: number, newSales: number, newRevenue: number): Promise<boolean> {
+  // Update game downloads
+  static async updateDownloads(gameId: number, newDownloads: number): Promise<boolean> {
     const [result] = await pool.execute(
-      'UPDATE Game SET total_sales = ?, total_revenue = ? WHERE game_id = ?',
-      [newSales, newRevenue, gameId]
+      'UPDATE Game SET downloads = ? WHERE game_id = ?',
+      [newDownloads, gameId]
+    )
+    return (result as any).affectedRows > 0
+  }
+  
+  // Increment game downloads
+  static async incrementDownloads(gameId: number): Promise<boolean> {
+    const [result] = await pool.execute(
+      'UPDATE Game SET downloads = downloads + 1 WHERE game_id = ?',
+      [gameId]
     )
     return (result as any).affectedRows > 0
   }

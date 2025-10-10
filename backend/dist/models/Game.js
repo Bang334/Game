@@ -60,6 +60,49 @@ class GameModel {
     `);
         return rows;
     }
+    // Get all games with publisher and genres
+    static async findAllWithPublisherAndGenres() {
+        const [rows] = await db_1.pool.execute(`
+      SELECT g.*, p.name as publisher_name
+      FROM Game g
+      JOIN Publisher p ON g.publisher_id = p.publisher_id
+      ORDER BY g.name
+    `);
+        const games = rows;
+        const gamesWithGenres = [];
+        for (const game of games) {
+            // Get genres for each game
+            const [genreRows] = await db_1.pool.execute(`
+        SELECT gen.name FROM Genre gen
+        JOIN Game_Genre gg ON gen.genre_id = gg.genre_id
+        WHERE gg.game_id = ?
+      `, [game.game_id]);
+            const genres = genreRows.map((row) => row.name);
+            // Get platforms for each game
+            const [platformRows] = await db_1.pool.execute(`
+        SELECT p.name FROM Platform p
+        JOIN Game_Platform gp ON p.platform_id = gp.platform_id
+        WHERE gp.game_id = ?
+      `, [game.game_id]);
+            const platforms = platformRows.map((row) => row.name);
+            // Get languages for each game
+            const [languageRows] = await db_1.pool.execute(`
+        SELECT l.name FROM Language l
+        JOIN Game_Language gl ON l.language_id = gl.language_id
+        WHERE gl.game_id = ?
+      `, [game.game_id]);
+            const languages = languageRows.map((row) => row.name);
+            gamesWithGenres.push({
+                ...game,
+                genres,
+                platforms,
+                languages,
+                min_specs: null,
+                rec_specs: null
+            });
+        }
+        return gamesWithGenres;
+    }
     // Get game with full details
     static async findByIdWithDetails(gameId) {
         // Get game with publisher
@@ -86,9 +129,16 @@ class GameModel {
       WHERE gp.game_id = ?
     `, [gameId]);
         const platforms = platformRows.map((row) => row.name);
+        // Get languages
+        const [languageRows] = await db_1.pool.execute(`
+      SELECT l.name FROM Language l
+      JOIN Game_Language gl ON l.language_id = gl.language_id
+      WHERE gl.game_id = ?
+    `, [gameId]);
+        const languages = languageRows.map((row) => row.name);
         // Get specifications
         const [specRows] = await db_1.pool.execute(`
-      SELECT type, cpu, ram, gpu, storage FROM Specification
+      SELECT type, cpu, ram, gpu FROM Specification
       WHERE game_id = ?
     `, [gameId]);
         const specs = specRows;
@@ -98,27 +148,26 @@ class GameModel {
             ...game,
             genres,
             platforms,
+            languages,
             min_specs: minSpecs ? {
                 cpu: minSpecs.cpu,
                 ram: minSpecs.ram,
-                gpu: minSpecs.gpu,
-                storage: minSpecs.storage
+                gpu: minSpecs.gpu
             } : null,
             rec_specs: recSpecs ? {
                 cpu: recSpecs.cpu,
                 ram: recSpecs.ram,
-                gpu: recSpecs.gpu,
-                storage: recSpecs.storage
+                gpu: recSpecs.gpu
             } : null
         };
     }
-    // Get top selling games
-    static async findTopSelling(limit = 10) {
+    // Get top downloaded games
+    static async findTopDownloaded(limit = 10) {
         const [rows] = await db_1.pool.execute(`
       SELECT g.*, p.name as publisher_name
       FROM Game g
       JOIN Publisher p ON g.publisher_id = p.publisher_id
-      ORDER BY g.total_sales DESC
+      ORDER BY g.downloads DESC
       LIMIT ?
     `, [limit]);
         return rows;
@@ -149,11 +198,12 @@ class GameModel {
     // Create new game
     static async create(data) {
         const [result] = await db_1.pool.execute(`
-      INSERT INTO Game (name, release_year, publisher_id, mode, price, multiplayer, capacity, age_rating, average_rating, total_sales, total_revenue)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO Game (name, description, release_date, publisher_id, mode, price, multiplayer, capacity, age_rating, average_rating, downloads, image, link_download)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
             data.name,
-            data.release_year || null,
+            data.description || null,
+            data.release_date || null,
             data.publisher_id,
             data.mode || null,
             data.price,
@@ -161,8 +211,9 @@ class GameModel {
             data.capacity || null,
             data.age_rating || null,
             data.average_rating || 0,
-            data.total_sales || 0,
-            data.total_revenue || 0
+            data.downloads || 0,
+            data.image || null,
+            data.link_download || null
         ]);
         return result.insertId;
     }
@@ -174,9 +225,13 @@ class GameModel {
             fields.push('name = ?');
             values.push(data.name);
         }
-        if (data.release_year !== undefined) {
-            fields.push('release_year = ?');
-            values.push(data.release_year);
+        if (data.description !== undefined) {
+            fields.push('description = ?');
+            values.push(data.description);
+        }
+        if (data.release_date !== undefined) {
+            fields.push('release_date = ?');
+            values.push(data.release_date);
         }
         if (data.publisher_id !== undefined) {
             fields.push('publisher_id = ?');
@@ -206,13 +261,17 @@ class GameModel {
             fields.push('average_rating = ?');
             values.push(data.average_rating);
         }
-        if (data.total_sales !== undefined) {
-            fields.push('total_sales = ?');
-            values.push(data.total_sales);
+        if (data.downloads !== undefined) {
+            fields.push('downloads = ?');
+            values.push(data.downloads);
         }
-        if (data.total_revenue !== undefined) {
-            fields.push('total_revenue = ?');
-            values.push(data.total_revenue);
+        if (data.image !== undefined) {
+            fields.push('image = ?');
+            values.push(data.image);
+        }
+        if (data.link_download !== undefined) {
+            fields.push('link_download = ?');
+            values.push(data.link_download);
         }
         if (fields.length === 0)
             return false;
@@ -225,9 +284,14 @@ class GameModel {
         const [result] = await db_1.pool.execute('UPDATE Game SET average_rating = ? WHERE game_id = ?', [newRating, gameId]);
         return result.affectedRows > 0;
     }
-    // Update game sales
-    static async updateSales(gameId, newSales, newRevenue) {
-        const [result] = await db_1.pool.execute('UPDATE Game SET total_sales = ?, total_revenue = ? WHERE game_id = ?', [newSales, newRevenue, gameId]);
+    // Update game downloads
+    static async updateDownloads(gameId, newDownloads) {
+        const [result] = await db_1.pool.execute('UPDATE Game SET downloads = ? WHERE game_id = ?', [newDownloads, gameId]);
+        return result.affectedRows > 0;
+    }
+    // Increment game downloads
+    static async incrementDownloads(gameId) {
+        const [result] = await db_1.pool.execute('UPDATE Game SET downloads = downloads + 1 WHERE game_id = ?', [gameId]);
         return result.affectedRows > 0;
     }
     // Delete game

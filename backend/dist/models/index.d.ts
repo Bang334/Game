@@ -6,8 +6,11 @@ export * from './Genre';
 export * from './GameGenre';
 export * from './Platform';
 export * from './GamePlatform';
+export * from './Language';
+export * from './GameLanguage';
 export * from './Specification';
 export * from './Purchase';
 export * from './Wishlist';
 export * from './Review';
+export * from './View';
 //# sourceMappingURL=index.d.ts.map

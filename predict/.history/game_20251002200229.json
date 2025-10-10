@@ -1,0 +1,283 @@
+{
+    "games": [
+      {
+        "id": 1,
+        "name": "Cyberpunk 2077",
+        "description": "An open-world action-adventure RPG set in the dystopian future of Night City. Play as V, a mercenary seeking immortality through a cybernetic implant. Features deep character customization, branching storylines, and immersive cyberpunk atmosphere.",
+        "rating": 4.2,
+        "release_year": 2020,
+        "publisher": "CD Projekt Red",
+        "genre": ["Puzzle", "Casual"],
+        "mode": "Offline",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 3070",
+          "storage": "70GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i9",
+          "ram": "32GB",
+          "gpu": "RTX 4080",
+          "storage": "70GB"
+        },
+        "multiplayer": false,
+        "capacity": 70,
+        "age_rating": "18+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Vietnamese", "Japanese", "Korean"]
+      },
+      {
+        "id": 2,
+        "name": "Candy Crush Saga",
+        "description": "A popular match-three puzzle game where players swap colored candies to create matches and clear levels. Features hundreds of levels, special candies, and social features. Perfect for casual gaming sessions.",
+        "rating": 3.8,
+        "release_year": 2012,
+        "publisher": "King",
+        "genre": ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "1GB",
+          "gpu": "Intel HD",
+          "storage": "100MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "2GB",
+          "gpu": "Intel HD",
+          "storage": "200MB"
+        },
+        "multiplayer": true,
+        "capacity": 0.1,
+        "age_rating": "3+",
+        "platform": ["Mobile", "PC"],
+        "language": ["English", "Vietnamese", "Chinese", "Spanish"]
+      },
+      {
+        "id": 3,
+        "name": "Call of Duty: Modern Warfare",
+        "description": "A military first-person shooter featuring intense multiplayer combat and cinematic single-player campaign. Includes realistic weapons, tactical gameplay, and competitive multiplayer modes with various maps and game types.",
+        "rating": 4.5,
+        "release_year": 2019,
+        "publisher": "Activision",
+        "genre":  ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1060",
+          "storage": "175GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 2070",
+          "storage": "175GB"
+        },
+        "multiplayer": true,
+        "capacity": 175,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"]
+      },
+      {
+        "id": 4,
+        "name": "Minecraft",
+        "description": "A sandbox game where players can build, explore, and survive in procedurally generated worlds made of blocks. Features creative mode for building, survival mode for adventure, and multiplayer servers for social play.",
+        "rating": 4.8,
+        "release_year": 2011,
+        "publisher": "Mojang",
+        "genre":  ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 300000,
+        "min_spec": {
+          "cpu": "Intel i3",
+          "ram": "4GB",
+          "gpu": "GTX 750",
+          "storage": "1GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1050",
+          "storage": "2GB"
+        },
+        "multiplayer": true,
+        "capacity": 1,
+        "age_rating": "7+",
+        "platform": ["PC", "Mobile", "Console"]
+      },
+      {
+        "id": 5,
+        "name": "The Witcher 3",
+        "description": "An epic fantasy RPG following Geralt of Rivia, a monster hunter in a vast open world. Features rich storytelling, complex characters, moral choices, and extensive side quests in a beautifully crafted medieval fantasy setting.",
+        "rating": 4.9,
+        "release_year": 2015,
+        "publisher": "CD Projekt Red",
+        "genre": ["RPG", "Action", "Fantasy"],
+        "mode": "Offline",
+        "price": 800000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "6GB",
+          "gpu": "GTX 770",
+          "storage": "35GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "8GB",
+          "gpu": "GTX 970",
+          "storage": "35GB"
+        },
+        "multiplayer": false,
+        "capacity": 35,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"]
+      },
+      {
+        "id": 6,
+        "name": "Among Us",
+        "description": "A multiplayer social deduction game where players work together on a spaceship while trying to identify impostors among the crew. Features deception, teamwork, and quick rounds perfect for party gaming.",
+        "rating": 4.1,
+        "release_year": 2018,
+        "publisher": "InnerSloth",
+        "genre": ["RPG", "Action", "Fantasy"],
+        "mode": "Online",
+        "price": 50000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "1GB",
+          "gpu": "Intel HD",
+          "storage": "250MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "2GB",
+          "gpu": "Intel HD",
+          "storage": "500MB"
+        },
+        "multiplayer": true,
+        "capacity": 0.25,
+        "age_rating": "10+",
+        "platform": ["Mobile", "PC"]
+      },
+      {
+        "id": 7,
+        "name": "Red Dead Redemption 2",
+        "description": "An open-world western action-adventure game set in the American frontier. Play as Arthur Morgan, an outlaw in the dying days of the Wild West. Features stunning landscapes, realistic horse riding, and immersive storytelling.",
+        "rating": 4.7,
+        "release_year": 2018,
+        "publisher": "Rockstar Games",
+        "genre": ["Action", "Adventure", "Western"],
+        "mode": "Offline",
+        "price": 1500000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1060",
+          "storage": "150GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "12GB",
+          "gpu": "RTX 2060",
+          "storage": "150GB"
+        },
+        "multiplayer": true,
+        "capacity": 150,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"]
+      },
+      {
+        "id": 8,
+        "name": "Tetris",
+        "description": "The classic puzzle game where players arrange falling blocks to create complete lines. Features simple yet addictive gameplay, increasing speed, and timeless appeal. Perfect for quick gaming sessions and nostalgic fun.",
+        "rating": 4.6,
+        "release_year": 1984,
+        "publisher": "EA",
+        "genre": ["Puzzle", "Classic"],
+        "mode": "Offline",
+        "price": 100000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "512MB",
+          "gpu": "Intel HD",
+          "storage": "50MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "1GB",
+          "gpu": "Intel HD",
+          "storage": "100MB"
+        },
+        "multiplayer": false,
+        "capacity": 0.05,
+        "age_rating": "3+",
+        "platform": ["PC", "Mobile"]
+      },
+      {
+        "id": 9,
+        "name": "Elden Ring",
+        "description": "A dark fantasy action RPG featuring challenging combat, vast open world exploration, and deep lore. Created by FromSoftware, it combines Souls-like difficulty with expansive environments and epic boss battles.",
+        "rating": 4.8,
+        "release_year": 2022,
+        "publisher": "FromSoftware",
+        "genre": ["RPG", "Action", "Dark Fantasy"],
+        "mode": "Offline",
+        "price": 1600000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "12GB",
+          "gpu": "GTX 1070",
+          "storage": "60GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 3070",
+          "storage": "60GB"
+        },
+        "multiplayer": true,
+        "capacity": 60,
+        "age_rating": "16+",
+        "platform": ["PC", "PS5", "Xbox"]
+      }
+    ],
+    "users": [
+      {
+        "id": 1,
+        "name": "Gamer Pro",
+        "age": 25,
+        "gender": "male",
+        "favorite_games": [1, 2, 3],
+        "purchased_games": [1, 3, 4]
+      },
+      {
+        "id": 2,
+        "name": "Casual Player",
+        "age": 35,
+        "gender": "female",
+        "favorite_games": [5, 6],
+        "purchased_games": [5, 6]
+      },
+      {
+        "id": 3,
+        "name": "Mobile Gamer",
+        "age": 22,
+        "gender": "male",
+        "favorite_games": [6],
+        "purchased_games": [6]
+      },
+      {
+        "id": 4,
+        "name": "Mobile",
+        "age": 22,
+        "gender": "male",
+        "favorite_games": [1,2],
+        "purchased_games": [1,2]
+      }
+    ]
+  }

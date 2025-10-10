@@ -1,0 +1,758 @@
+{
+    "games": [
+      {
+        "id": 1,
+        "name": "Cyberpunk 2077",
+        "description": "An open-world action-adventure RPG set in the dystopian future of Night City. Play as V, a mercenary seeking immortality through a cybernetic implant. Features deep character customization, branching storylines, and immersive cyberpunk atmosphere.",
+        "rating": 4.2,
+        "release_year": 2020,
+        "publisher": "CD Projekt Red",
+        "genre": ["Puzzle", "Casual"],
+        "mode": "Offline",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 3070"
+        },
+        "rec_spec": {
+          "cpu": "Intel i9",
+          "ram": "32GB",
+          "gpu": "RTX 4080"
+        },
+        "multiplayer": false,
+        "capacity": 70,
+        "age_rating": "18+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Vietnamese", "Japanese", "Korean"]
+      },
+      {
+        "id": 2,
+        "name": "Candy Crush Saga",
+        "description": "A popular match-three puzzle game where players swap colored candies to create matches and clear levels. Features hundreds of levels, special candies, and social features. Perfect for casual gaming sessions.",
+        "rating": 3.8,
+        "release_year": 2012,
+        "publisher": "King",
+        "genre": ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "1GB",
+          "gpu": "Intel HD"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "2GB",
+          "gpu": "Intel HD"
+        },
+        "multiplayer": true,
+        "capacity": 0.1,
+        "age_rating": "3+",
+        "platform": ["Mobile", "PC"],
+        "language": ["English", "Vietnamese", "Chinese", "Spanish"]
+      },
+      {
+        "id": 3,
+        "name": "Call of Duty: Modern Warfare",
+        "description": "A military first-person shooter featuring intense multiplayer combat and cinematic single-player campaign. Includes realistic weapons, tactical gameplay, and competitive multiplayer modes with various maps and game types.",
+        "rating": 4.5,
+        "release_year": 2019,
+        "publisher": "Activision",
+        "genre":  ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1060"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 2070"
+        },
+        "multiplayer": true,
+        "capacity": 175,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"],
+        "language": ["English", "French", "German", "Spanish"]
+      },
+      {
+        "id": 4,
+        "name": "Minecraft",
+        "description": "A sandbox game where players can build, explore, and survive in procedurally generated worlds made of blocks. Features creative mode for building, survival mode for adventure, and multiplayer servers for social play.",
+        "rating": 4.8,
+        "release_year": 2011,
+        "publisher": "Mojang",
+        "genre":  ["Puzzle", "Casual"],
+        "mode": "Online",
+        "price": 300000,
+        "min_spec": {
+          "cpu": "Intel i3",
+          "ram": "4GB",
+          "gpu": "GTX 750"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1050"
+        },
+        "multiplayer": true,
+        "capacity": 1,
+        "age_rating": "7+",
+        "platform": ["PC", "Mobile", "Console"],
+        "language": ["English", "Vietnamese", "Japanese", "Chinese"]
+      },
+      {
+        "id": 5,
+        "name": "The Witcher 3",
+        "description": "An epic fantasy RPG following Geralt of Rivia, a monster hunter in a vast open world. Features rich storytelling, complex characters, moral choices, and extensive side quests in a beautifully crafted medieval fantasy setting.",
+        "rating": 4.9,
+        "release_year": 2015,
+        "publisher": "CD Projekt Red",
+        "genre": ["RPG", "Action", "Fantasy"],
+        "mode": "Offline",
+        "price": 800000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "6GB",
+          "gpu": "GTX 770",
+          "storage": "35GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "8GB",
+          "gpu": "GTX 970",
+          "storage": "35GB"
+        },
+        "multiplayer": false,
+        "capacity": 35,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"],
+        "language": ["English", "Polish", "German", "French"]
+      },
+      {
+        "id": 6,
+        "name": "Among Us",
+        "description": "A multiplayer social deduction game where players work together on a spaceship while trying to identify impostors among the crew. Features deception, teamwork, and quick rounds perfect for party gaming.",
+        "rating": 4.1,
+        "release_year": 2018,
+        "publisher": "InnerSloth",
+        "genre": ["RPG", "Action", "Fantasy"],
+        "mode": "Online",
+        "price": 50000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "1GB",
+          "gpu": "Intel HD",
+          "storage": "250MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "2GB",
+          "gpu": "Intel HD",
+          "storage": "500MB"
+        },
+        "multiplayer": true,
+        "capacity": 0.25,
+        "age_rating": "10+",
+        "platform": ["Mobile", "PC"],
+        "language": ["English", "Vietnamese", "Korean", "Japanese"]
+      },
+      {
+        "id": 7,
+        "name": "Red Dead Redemption 2",
+        "description": "An open-world western action-adventure game set in the American frontier. Play as Arthur Morgan, an outlaw in the dying days of the Wild West. Features stunning landscapes, realistic horse riding, and immersive storytelling.",
+        "rating": 4.7,
+        "release_year": 2018,
+        "publisher": "Rockstar Games",
+        "genre": ["Action", "Adventure", "Western"],
+        "mode": "Offline",
+        "price": 1200000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1060",
+          "storage": "150GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "12GB",
+          "gpu": "RTX 2060",
+          "storage": "150GB"
+        },
+        "multiplayer": true,
+        "capacity": 150,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"],
+        "language": ["English", "Spanish", "French", "Italian"]
+      },
+      {
+        "id": 8,
+        "name": "Tetris",
+        "description": "The classic puzzle game where players arrange falling blocks to create complete lines. Features simple yet addictive gameplay, increasing speed, and timeless appeal. Perfect for quick gaming sessions and nostalgic fun.",
+        "rating": 4.6,
+        "release_year": 1984,
+        "publisher": "EA",
+        "genre": ["Puzzle", "Classic"],
+        "mode": "Offline",
+        "price": 100000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "512MB",
+          "gpu": "Intel HD",
+          "storage": "50MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "1GB",
+          "gpu": "Intel HD",
+          "storage": "100MB"
+        },
+        "multiplayer": false,
+        "capacity": 0.05,
+        "age_rating": "3+",
+        "platform": ["PC", "Mobile"],
+        "language": ["English", "Russian", "Japanese", "Chinese"]
+      },
+      {
+        "id": 9,
+        "name": "Elden Ring",
+        "description": "A dark fantasy action RPG featuring challenging combat, vast open world exploration, and deep lore. Created by FromSoftware, it combines Souls-like difficulty with expansive environments and epic boss battles.",
+        "rating": 4.8,
+        "release_year": 2022,
+        "publisher": "FromSoftware",
+        "genre": ["RPG", "Action", "Dark Fantasy"],
+        "mode": "Offline",
+        "price": 1600000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "12GB",
+          "gpu": "GTX 1070",
+          "storage": "60GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 3070",
+          "storage": "60GB"
+        },
+        "multiplayer": true,
+        "capacity": 60,
+        "age_rating": "16+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Japanese", "Korean", "Chinese"]
+      },
+      {
+        "id": 10,
+        "name": "Grand Theft Auto V",
+        "description": "An open-world action-adventure game set in Los Santos. Play as three different protagonists in an interconnected story of heists, crime, and survival in a satirical recreation of modern Southern California.",
+        "rating": 4.8,
+        "release_year": 2013,
+        "publisher": "Rockstar Games",
+        "genre": ["Action", "Adventure", "Crime"],
+        "mode": "Online",
+        "price": 1400000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 660",
+          "storage": "110GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "GTX 1060",
+          "storage": "110GB"
+        },
+        "multiplayer": true,
+        "capacity": 110,
+        "age_rating": "18+",
+        "platform": ["PC", "PS4", "Xbox"],
+        "language": ["English", "Spanish", "French", "German"]
+      },
+      {
+        "id": 11,
+        "name": "FIFA 24",
+        "description": "The latest installment in the FIFA series featuring updated rosters, improved gameplay mechanics, and enhanced graphics. Experience realistic football simulation with career mode, ultimate team, and online multiplayer.",
+        "rating": 4.3,
+        "release_year": 2023,
+        "publisher": "EA Sports",
+        "genre": ["Sports", "Football", "Simulation"],
+        "mode": "Online",
+        "price": 1800000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1050",
+          "storage": "50GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 3060",
+          "storage": "50GB"
+        },
+        "multiplayer": true,
+        "capacity": 50,
+        "age_rating": "3+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Spanish", "French", "German"]
+      },
+      {
+        "id": 12,
+        "name": "Assassin's Creed Valhalla",
+        "description": "Embark on a legendary Viking saga as Eivor in 9th century England. Build settlements, forge alliances, and lead raids in this epic action RPG that blends history with mythology.",
+        "rating": 4.4,
+        "release_year": 2020,
+        "publisher": "Ubisoft",
+        "genre": ["Action", "Adventure", "RPG"],
+        "mode": "Offline",
+        "price": 1600000,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 960",
+          "storage": "160GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "RTX 2070",
+          "storage": "160GB"
+        },
+        "multiplayer": false,
+        "capacity": 160,
+        "age_rating": "18+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "French", "German", "Italian"]
+      },
+      {
+        "id": 13,
+        "name": "Valorant",
+        "description": "A tactical 5v5 character-based shooter where precise gunplay meets unique agent abilities. Compete in ranked matches and prove your skills in this free-to-play competitive FPS.",
+        "rating": 4.2,
+        "release_year": 2020,
+        "publisher": "Riot Games",
+        "genre": ["Shooter", "Tactical", "Competitive"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel i3",
+          "ram": "4GB",
+          "gpu": "Intel HD 3000",
+          "storage": "8GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1050",
+          "storage": "8GB"
+        },
+        "multiplayer": true,
+        "capacity": 8,
+        "age_rating": "13+",
+        "platform": ["PC"],
+        "language": ["English", "Korean", "Japanese", "Chinese"]
+      },
+      {
+        "id": 14,
+        "name": "Stardew Valley",
+        "description": "A charming farming simulation game where you inherit your grandfather's old farm plot. Grow crops, raise animals, mine, fish, and build relationships with the townspeople in this relaxing indie game.",
+        "rating": 4.9,
+        "release_year": 2016,
+        "publisher": "ConcernedApe",
+        "genre": ["Simulation", "Farming", "Indie"],
+        "mode": "Offline",
+        "price": 400000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "2GB",
+          "gpu": "Intel HD",
+          "storage": "500MB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "4GB",
+          "gpu": "Intel HD",
+          "storage": "500MB"
+        },
+        "multiplayer": true,
+        "capacity": 0.5,
+        "age_rating": "10+",
+        "platform": ["PC", "Mobile", "Console"],
+        "language": ["English", "Vietnamese", "Japanese", "Korean"]
+      },
+      {
+        "id": 15,
+        "name": "League of Legends",
+        "description": "A competitive 5v5 MOBA where two teams of champions battle to destroy the enemy Nexus. Choose from over 160 unique champions and climb the ranked ladder in this free-to-play esports phenomenon.",
+        "rating": 4.1,
+        "release_year": 2009,
+        "publisher": "Riot Games",
+        "genre": ["MOBA", "Strategy", "Competitive"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "2GB",
+          "gpu": "Intel HD",
+          "storage": "16GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 560",
+          "storage": "16GB"
+        },
+        "multiplayer": true,
+        "capacity": 16,
+        "age_rating": "13+",
+        "platform": ["PC"],
+        "language": ["English", "Korean", "Chinese", "Vietnamese"]
+      },
+      {
+        "id": 16,
+        "name": "Overwatch 2",
+        "description": "A team-based hero shooter featuring diverse heroes with unique abilities. Fight for the future in 6v6 battles across iconic locations in this fast-paced competitive FPS.",
+        "rating": 3.9,
+        "release_year": 2022,
+        "publisher": "Blizzard Entertainment",
+        "genre": ["Shooter", "Hero", "Team"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel i3",
+          "ram": "6GB",
+          "gpu": "GTX 600",
+          "storage": "50GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "8GB",
+          "gpu": "GTX 1060",
+          "storage": "50GB"
+        },
+        "multiplayer": true,
+        "capacity": 50,
+        "age_rating": "13+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Korean", "Japanese", "Chinese"]
+      },
+      {
+        "id": 17,
+        "name": "Hollow Knight",
+        "description": "A challenging 2D Metroidvania featuring a mysterious insect knight exploring the fallen kingdom of Hallownest. Discover ancient secrets, battle fierce creatures, and master precise platforming.",
+        "rating": 4.8,
+        "release_year": 2017,
+        "publisher": "Team Cherry",
+        "genre": ["Metroidvania", "Platformer", "Indie"],
+        "mode": "Offline",
+        "price": 450000,
+        "min_spec": {
+          "cpu": "Intel Pentium",
+          "ram": "4GB",
+          "gpu": "Intel HD",
+          "storage": "9GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i3",
+          "ram": "8GB",
+          "gpu": "GTX 560",
+          "storage": "9GB"
+        },
+        "multiplayer": false,
+        "capacity": 9,
+        "age_rating": "10+",
+        "platform": ["PC", "Console"],
+        "language": ["English", "Japanese", "Korean", "Chinese"]
+      },
+      {
+        "id": 18,
+        "name": "Apex Legends",
+        "description": "A free-to-play battle royale shooter set in the Titanfall universe. Choose from unique Legends with special abilities and compete in squads of three in fast-paced matches on diverse maps.",
+        "rating": 4.3,
+        "release_year": 2019,
+        "publisher": "EA",
+        "genre": ["Battle Royale", "Shooter", "Team"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel i3",
+          "ram": "6GB",
+          "gpu": "GTX 650",
+          "storage": "56GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 970",
+          "storage": "56GB"
+        },
+        "multiplayer": true,
+        "capacity": 56,
+        "age_rating": "13+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Japanese", "Korean", "French"]
+      },
+      {
+        "id": 19,
+        "name": "Genshin Impact",
+        "description": "An open-world action RPG featuring anime-style graphics and elemental combat. Explore the fantasy world of Teyvat, collect characters with unique abilities, and uncover the mysteries of this gacha game.",
+        "rating": 4.5,
+        "release_year": 2020,
+        "publisher": "miHoYo",
+        "genre": ["Action", "RPG", "Gacha"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1030",
+          "storage": "30GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i7",
+          "ram": "16GB",
+          "gpu": "GTX 1060",
+          "storage": "30GB"
+        },
+        "multiplayer": true,
+        "capacity": 30,
+        "age_rating": "12+",
+        "platform": ["PC", "Mobile", "PS5"],
+        "language": ["English", "Chinese", "Japanese", "Korean"]
+      },
+      {
+        "id": 20,
+        "name": "Fall Guys",
+        "description": "A colorful battle royale party game featuring jellybean-like characters competing in wacky obstacle courses. Survive elimination rounds and be the last bean standing in this fun multiplayer experience.",
+        "rating": 3.8,
+        "release_year": 2020,
+        "publisher": "Mediatonic",
+        "genre": ["Party", "Battle Royale", "Casual"],
+        "mode": "Online",
+        "price": 0,
+        "min_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 660",
+          "storage": "2GB"
+        },
+        "rec_spec": {
+          "cpu": "Intel i5",
+          "ram": "8GB",
+          "gpu": "GTX 1060",
+          "storage": "2GB"
+        },
+        "multiplayer": true,
+        "capacity": 2,
+        "age_rating": "3+",
+        "platform": ["PC", "PS5", "Xbox"],
+        "language": ["English", "Japanese", "Korean", "Chinese"]
+      }
+    ],
+    "users": [
+      {
+        "id": 1,
+        "name": "Gamer Pro",
+        "age": 25,
+        "gender": "male",
+        "favorite_games": [1, 2, 3],
+        "purchased_games": [1, 3, 4]
+      },
+      {
+        "id": 2,
+        "name": "Casual Player",
+        "age": 35,
+        "gender": "female",
+        "favorite_games": [5, 6],
+        "purchased_games": [5, 6]
+      },
+      {
+        "id": 3,
+        "name": "Mobile Gamer",
+        "age": 22,
+        "gender": "male",
+        "favorite_games": [6],
+        "purchased_games": [6]
+      },
+      {
+        "id": 4,
+        "name": "Mobile",
+        "age": 22,
+        "gender": "male",
+        "favorite_games": [1,2],
+        "purchased_games": [1,2]
+      },
+      {
+        "id": 5,
+        "name": "Action Fan",
+        "age": 28,
+        "gender": "male",
+        "favorite_games": [7, 10, 12],
+        "purchased_games": [7, 10, 12, 9]
+      },
+      {
+        "id": 6,
+        "name": "Rockstar Lover",
+        "age": 26,
+        "gender": "female",
+        "favorite_games": [7, 10],
+        "purchased_games": [7, 10]
+      },
+      {
+        "id": 7,
+        "name": "Competitive Gamer",
+        "age": 20,
+        "gender": "male",
+        "favorite_games": [13, 15, 16],
+        "purchased_games": [13, 15, 16, 18]
+      },
+      {
+        "id": 8,
+        "name": "Esports Pro",
+        "age": 19,
+        "gender": "male",
+        "favorite_games": [13, 15],
+        "purchased_games": [13, 15, 11]
+      },
+      {
+        "id": 9,
+        "name": "Riot Fan",
+        "age": 21,
+        "gender": "female",
+        "favorite_games": [13, 15],
+        "purchased_games": [13, 15]
+      },
+      {
+        "id": 10,
+        "name": "Indie Lover",
+        "age": 24,
+        "gender": "female",
+        "favorite_games": [14, 17],
+        "purchased_games": [14, 17, 6]
+      },
+      {
+        "id": 11,
+        "name": "Chill Gamer",
+        "age": 30,
+        "gender": "male",
+        "favorite_games": [14, 4],
+        "purchased_games": [14, 4, 2]
+      },
+      {
+        "id": 12,
+        "name": "Free Player",
+        "age": 18,
+        "gender": "male",
+        "favorite_games": [13, 15, 18, 19, 20],
+        "purchased_games": [13, 15, 18, 19, 20]
+      },
+      {
+        "id": 13,
+        "name": "Mobile Enthusiast",
+        "age": 23,
+        "gender": "female",
+        "favorite_games": [19, 14, 2],
+        "purchased_games": [19, 14, 2, 6]
+      },
+      {
+        "id": 14,
+        "name": "EA Sports Fan",
+        "age": 27,
+        "gender": "male",
+        "favorite_games": [11, 18],
+        "purchased_games": [11, 18, 8]
+      },
+      {
+        "id": 15,
+        "name": "RPG Master",
+        "age": 29,
+        "gender": "male",
+        "favorite_games": [5, 9, 12, 19],
+        "purchased_games": [5, 9, 12, 19, 1]
+      },
+      {
+        "id": 16,
+        "name": "Shooter Expert",
+        "age": 25,
+        "gender": "female",
+        "favorite_games": [3, 13, 16, 18],
+        "purchased_games": [3, 13, 16, 18]
+      },
+      {
+        "id": 17,
+        "name": "Casual Family",
+        "age": 35,
+        "gender": "female",
+        "favorite_games": [2, 8, 14, 20],
+        "purchased_games": [2, 8, 14, 20]
+      },
+      {
+        "id": 18,
+        "name": "Hardcore Gamer",
+        "age": 24,
+        "gender": "male",
+        "favorite_games": [5, 7, 9, 17],
+        "purchased_games": [5, 7, 9, 17, 12]
+      },
+      {
+        "id": 19,
+        "name": "Ubisoft Fan",
+        "age": 26,
+        "gender": "male",
+        "favorite_games": [12],
+        "purchased_games": [12, 7]
+      },
+      {
+        "id": 20,
+        "name": "Puzzle Solver",
+        "age": 32,
+        "gender": "female",
+        "favorite_games": [2, 8],
+        "purchased_games": [2, 8, 4]
+      },
+      {
+        "id": 21,
+        "name": "Asian Gamer",
+        "age": 22,
+        "gender": "male",
+        "favorite_games": [15, 19, 13],
+        "purchased_games": [15, 19, 13, 16]
+      },
+      {
+        "id": 22,
+        "name": "Console Player",
+        "age": 28,
+        "gender": "male",
+        "favorite_games": [10, 11, 16],
+        "purchased_games": [10, 11, 16, 20]
+      },
+      {
+        "id": 23,
+        "name": "Retro Gamer",
+        "age": 31,
+        "gender": "male",
+        "favorite_games": [8, 4],
+        "purchased_games": [8, 4, 14]
+      },
+      {
+        "id": 24,
+        "name": "Team Player",
+        "age": 20,
+        "gender": "female",
+        "favorite_games": [15, 16, 20],
+        "purchased_games": [15, 16, 20, 6]
+      },
+      {
+        "id": 25,
+        "name": "Strategy Mind",
+        "age": 33,
+        "gender": "male",
+        "favorite_games": [15, 11],
+        "purchased_games": [15, 11, 5]
+      }
+    ]
+  }

@@ -7,7 +7,6 @@ export interface Specification {
   cpu: string | null
   ram: string | null
   gpu: string | null
-  storage: string | null
 }
 
 export interface CreateSpecificationData {
@@ -16,14 +15,12 @@ export interface CreateSpecificationData {
   cpu?: string
   ram?: string
   gpu?: string
-  storage?: string
 }
 
 export interface UpdateSpecificationData {
   cpu?: string
   ram?: string
   gpu?: string
-  storage?: string
 }
 
 export class SpecificationModel {
@@ -75,15 +72,14 @@ export class SpecificationModel {
   // Create new specification
   static async create(data: CreateSpecificationData): Promise<number> {
     const [result] = await pool.execute(`
-      INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+      VALUES (?, ?, ?, ?, ?)
     `, [
       data.game_id,
       data.type,
       data.cpu || null,
       data.ram || null,
-      data.gpu || null,
-      data.storage || null
+      data.gpu || null
     ])
     return (result as any).insertId
   }
@@ -104,10 +100,6 @@ export class SpecificationModel {
     if (data.gpu !== undefined) {
       fields.push('gpu = ?')
       values.push(data.gpu)
-    }
-    if (data.storage !== undefined) {
-      fields.push('storage = ?')
-      values.push(data.storage)
     }
 
     if (fields.length === 0) return false
@@ -157,28 +149,26 @@ export class SpecificationModel {
       // Insert minimum specifications if provided
       if (minSpecs) {
         await connection.execute(`
-          INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-          VALUES (?, 'MIN', ?, ?, ?, ?)
+          INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+          VALUES (?, 'MIN', ?, ?, ?)
         `, [
           gameId,
           minSpecs.cpu || null,
           minSpecs.ram || null,
-          minSpecs.gpu || null,
-          minSpecs.storage || null
+          minSpecs.gpu || null
         ])
       }
 
       // Insert recommended specifications if provided
       if (recSpecs) {
         await connection.execute(`
-          INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-          VALUES (?, 'REC', ?, ?, ?, ?)
+          INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+          VALUES (?, 'REC', ?, ?, ?)
         `, [
           gameId,
           recSpecs.cpu || null,
           recSpecs.ram || null,
-          recSpecs.gpu || null,
-          recSpecs.storage || null
+          recSpecs.gpu || null
         ])
       }
 

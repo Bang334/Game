@@ -5,7 +5,6 @@ export interface Specification {
     cpu: string | null;
     ram: string | null;
     gpu: string | null;
-    storage: string | null;
 }
 export interface CreateSpecificationData {
     game_id: number;
@@ -13,13 +12,11 @@ export interface CreateSpecificationData {
     cpu?: string;
     ram?: string;
     gpu?: string;
-    storage?: string;
 }
 export interface UpdateSpecificationData {
     cpu?: string;
     ram?: string;
     gpu?: string;
-    storage?: string;
 }
 export declare class SpecificationModel {
     static findAll(): Promise<Specification[]>;

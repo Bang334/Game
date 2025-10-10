@@ -37,6 +37,10 @@ export declare class ReviewModel {
         count: number;
     }[]>;
     static create(data: CreateReviewData): Promise<number>;
+    static createOrUpdate(data: CreateReviewData): Promise<{
+        review_id: number;
+        isNew: boolean;
+    }>;
     static update(reviewId: number, data: UpdateReviewData): Promise<boolean>;
     static delete(reviewId: number): Promise<boolean>;
     static deleteByUserAndGame(userId: number, gameId: number): Promise<boolean>;

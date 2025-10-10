@@ -3,17 +3,22 @@ export interface Purchase {
     user_id: number;
     game_id: number;
     purchase_date: Date;
-    price: number;
+    payment_method: string;
 }
 export interface CreatePurchaseData {
     user_id: number;
     game_id: number;
-    price: number;
+    payment_method?: string;
 }
 export interface PurchaseWithDetails extends Purchase {
     username: string;
     game_name: string;
+    image: string | null;
+    description: string | null;
     publisher_name: string;
+    price: number;
+    average_rating: number;
+    link_download: string | null;
 }
 export declare class PurchaseModel {
     static findAll(): Promise<Purchase[]>;
@@ -25,13 +30,9 @@ export declare class PurchaseModel {
     static userHasPurchased(userId: number, gameId: number): Promise<boolean>;
     static getPurchaseStats(): Promise<{
         total_purchases: number;
-        total_revenue: number;
-        average_price: number;
     }>;
     static getUserPurchaseStats(userId: number): Promise<{
         total_purchases: number;
-        total_spent: number;
-        average_price: number;
     }>;
     static create(data: CreatePurchaseData): Promise<number>;
     static delete(purchaseId: number): Promise<boolean>;
@@ -41,7 +42,6 @@ export declare class PurchaseModel {
         game_name: string;
         publisher_name: string;
         purchase_count: number;
-        total_revenue: number;
     }[]>;
 }
 //# sourceMappingURL=Purchase.d.ts.map

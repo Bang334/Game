@@ -22,8 +22,11 @@ __exportStar(require("./Genre"), exports);
 __exportStar(require("./GameGenre"), exports);
 __exportStar(require("./Platform"), exports);
 __exportStar(require("./GamePlatform"), exports);
+__exportStar(require("./Language"), exports);
+__exportStar(require("./GameLanguage"), exports);
 __exportStar(require("./Specification"), exports);
 __exportStar(require("./Purchase"), exports);
 __exportStar(require("./Wishlist"), exports);
 __exportStar(require("./Review"), exports);
+__exportStar(require("./View"), exports);
 //# sourceMappingURL=index.js.map

@@ -34,15 +34,14 @@ class SpecificationModel {
     // Create new specification
     static async create(data) {
         const [result] = await db_1.pool.execute(`
-      INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+      VALUES (?, ?, ?, ?, ?)
     `, [
             data.game_id,
             data.type,
             data.cpu || null,
             data.ram || null,
-            data.gpu || null,
-            data.storage || null
+            data.gpu || null
         ]);
         return result.insertId;
     }
@@ -61,10 +60,6 @@ class SpecificationModel {
         if (data.gpu !== undefined) {
             fields.push('gpu = ?');
             values.push(data.gpu);
-        }
-        if (data.storage !== undefined) {
-            fields.push('storage = ?');
-            values.push(data.storage);
         }
         if (fields.length === 0)
             return false;
@@ -92,27 +87,25 @@ class SpecificationModel {
             // Insert minimum specifications if provided
             if (minSpecs) {
                 await connection.execute(`
-          INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-          VALUES (?, 'MIN', ?, ?, ?, ?)
+          INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+          VALUES (?, 'MIN', ?, ?, ?)
         `, [
                     gameId,
                     minSpecs.cpu || null,
                     minSpecs.ram || null,
-                    minSpecs.gpu || null,
-                    minSpecs.storage || null
+                    minSpecs.gpu || null
                 ]);
             }
             // Insert recommended specifications if provided
             if (recSpecs) {
                 await connection.execute(`
-          INSERT INTO Specification (game_id, type, cpu, ram, gpu, storage)
-          VALUES (?, 'REC', ?, ?, ?, ?)
+          INSERT INTO Specification (game_id, type, cpu, ram, gpu)
+          VALUES (?, 'REC', ?, ?, ?)
         `, [
                     gameId,
                     recSpecs.cpu || null,
                     recSpecs.ram || null,
-                    recSpecs.gpu || null,
-                    recSpecs.storage || null
+                    recSpecs.gpu || null
                 ]);
             }
             await connection.commit();

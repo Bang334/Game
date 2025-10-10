@@ -49,7 +49,7 @@ class UserModel {
     }
     // Create new user
     static async create(data) {
-        const [result] = await db_1.pool.execute('INSERT INTO User (username, email, password, age, balance, role_id) VALUES (?, ?, ?, ?, ?, ?)', [data.username, data.email, data.password, data.age || null, data.balance || 0, data.role_id]);
+        const [result] = await db_1.pool.execute('INSERT INTO User (username, email, password, age, gender, balance, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)', [data.username, data.email, data.password, data.age || null, data.gender || null, data.balance || 0, data.role_id]);
         return result.insertId;
     }
     // Update user
@@ -71,6 +71,10 @@ class UserModel {
         if (data.age !== undefined) {
             fields.push('age = ?');
             values.push(data.age);
+        }
+        if (data.gender !== undefined) {
+            fields.push('gender = ?');
+            values.push(data.gender);
         }
         if (data.balance !== undefined) {
             fields.push('balance = ?');

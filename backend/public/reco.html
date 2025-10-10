@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Adaptive Game Recommendations – AI Learning System</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:#0f172a;background:#0b1220}
+    .container{max-width:1100px;margin:0 auto;padding:16px}
+    header h1{color:#e2e8f0;margin:8px 0 4px}
+    .subtitle{color:#94a3b8;margin:0 0 12px}
+    .toolbar{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+    .btn{padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#111827;color:#e2e8f0;cursor:pointer}
+    .btn.primary{background:#2563eb;border-color:#1d4ed8}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .pill{background:#1f2937;color:#e2e8f0;border:1px solid #334155;border-radius:999px;padding:4px 8px;font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:16px}
+    .gcard{background:#0b1220;border:1px solid #334155;border-radius:10px;padding:12px}
+    .ghead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .gtitle{font-size:18px;color:#e2e8f0;font-weight:600;margin:0}
+    .price{color:#93c5fd;font-weight:600}
+    .gsub{color:#cbd5e1;font-size:13px;margin:2px 0 8px}
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+    .chip{padding:4px 8px;border-radius:999px;background:#1f2937;border:1px solid #334155;color:#e2e8f0;font-size:12px}
+    .spec{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .spec-col{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px}
+    .spec h4{margin:0 0 6px;color:#e2e8f0;font-size:14px}
+    .rowline{display:flex;justify-content:space-between;color:#cbd5e1;font-size:13px;margin:2px 0}
+    .scores{font-size:12px;color:#cbd5e1;display:flex;gap:12px;margin-top:8px}
+    .meta{color:#94a3b8}
+    .feedback-bar{display:flex;gap:8px;margin-top:12px;padding-top:8px;border-top:1px solid #334155}
+    .feedback-btn{padding:6px 12px;border-radius:6px;border:1px solid #334155;background:#1f2937;color:#e2e8f0;cursor:pointer;font-size:12px;transition:all 0.2s}
+    .feedback-btn:hover{background:#374151;border-color:#4b5563}
+    .feedback-btn.clicked{background:#10b981;border-color:#059669;color:#ffffff}
+    .feedback-btn.purchased{background:#f59e0b;border-color:#d97706}
+    .feedback-btn.wishlisted{background:#8b5cf6;border-color:#7c3aed}
+    .feedback-btn.skipped{background:#ef4444;border-color:#dc2626}
+    .adaptive-toggle{display:flex;align-items:center;gap:8px}
+    .switch{position:relative;width:44px;height:24px;background:#374151;border-radius:12px;cursor:pointer;transition:background 0.3s}
+    .switch.active{background:#10b981}
+    .switch-slider{position:absolute;top:2px;left:2px;width:20px;height:20px;background:#ffffff;border-radius:50%;transition:transform 0.3s}
+    .switch.active .switch-slider{transform:translateX(20px)}
+    .adaptive-status{padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600}
+    .adaptive-status.on{background:#10b981;color:#ffffff}
+    .adaptive-status.off{background:#6b7280;color:#ffffff}
+    .loading{opacity:0.6;pointer-events:none}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid #e2e8f0;border-top:2px solid #2563eb;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <header class="container">
+    <h1>🤖 Adaptive Game Recommendations</h1>
+    <p class="subtitle">AI Learning System - Recommendations improve based on your interactions</p>
+  </header>
+
+  <main class="container">
+    <section class="card toolbar">
+      <div class="meta" id="meta">Chưa tải</div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div class="adaptive-toggle">
+          <span>🧠 Adaptive Mode:</span>
+          <div class="switch" id="adaptiveSwitch">
+            <div class="switch-slider"></div>
+          </div>
+          <span class="adaptive-status off" id="adaptiveStatus">OFF</span>
+        </div>
+        <input id="query" placeholder="từ khoá (vd: ban sung)" class="btn" style="min-width:240px" />
+        <button class="btn primary" id="loadBtn">🔄 Tải games</button>
+        <button class="btn" id="recommendBtn" disabled>🎯 Gợi ý game</button>
+        <span id="pageInfo" class="pill">Trang 0/0</span>
+        <button class="btn" id="prevBtn" disabled>◀ Trước</button>
+        <button class="btn" id="nextBtn" disabled>Sau ▶</button>
+      </div>
+    </section>
+
+    <section class="grid" id="cards"></section>
+  </main>
+
+  <script>
+    const PAGE_SIZE = 2;
+    // Backend base URL: same-origin if served via http(s), otherwise fallback to localhost:3001
+    const BACKEND = (location.protocol.startsWith('http') && location.host)
+      ? `${location.protocol}//${location.host}`
+      : 'http://localhost:3001';
+    let currentPage = 1;
+    let ranked = [];
+    let adaptiveMode = false;
+    let sessionStartTime = Date.now();
+    let currentUserId = 1;
+
+    const meta = document.getElementById('meta');
+    const cards = document.getElementById('cards');
+    const loadBtn = document.getElementById('loadBtn');
+    const recommendBtn = document.getElementById('recommendBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const pageInfo = document.getElementById('pageInfo');
+    const queryInput = document.getElementById('query');
+    const adaptiveSwitch = document.getElementById('adaptiveSwitch');
+    const adaptiveStatus = document.getElementById('adaptiveStatus');
+
+    loadBtn.addEventListener('click', async () => {
+      await loadGames();
+    });
+    recommendBtn.addEventListener('click', async () => {
+      await loadRecommendations();
+    });
+    prevBtn.addEventListener('click', ()=>{ if(currentPage>1){ currentPage--; render(); }});
+    nextBtn.addEventListener('click', ()=>{ if(currentPage<totalPages()){ currentPage++; render(); }});
+    
+    // Adaptive mode toggle
+    adaptiveSwitch.addEventListener('click', () => {
+      adaptiveMode = !adaptiveMode;
+      adaptiveSwitch.classList.toggle('active', adaptiveMode);
+      adaptiveStatus.textContent = adaptiveMode ? 'ON' : 'OFF';
+      adaptiveStatus.className = `adaptive-status ${adaptiveMode ? 'on' : 'off'}`;
+      
+      // Auto-reload when switching modes
+      if (ranked.length > 0) {
+        loadRecommendations();
+      }
+    });
+
+    // Load games without recommendations (fast)
+    async function loadGames(){
+      try{
+        disableUI(true);
+        const url = `${BACKEND}/api/reco/games?user_id=${currentUserId}`;
+        const resp = await fetch(url, { cache: 'no-store' });
+        if(!resp.ok) throw new Error('HTTP '+resp.status);
+        const data = await resp.json();
+
+        // Get all games without recommendations
+        ranked = Array.isArray(data.games) ? data.games : [];
+        
+        currentPage = 1;
+        render();
+        recommendBtn.disabled = false; // Enable recommend button
+        const sessionTime = Math.round((Date.now() - sessionStartTime) / 1000);
+        meta.textContent = `Đã tải: ${ranked.length} games | Sẵn sàng gợi ý | Session: ${sessionTime}s`;
+        showToast('🎮 Games loaded! Click "Gợi ý game" for AI recommendations', 'info');
+      }catch(err){
+        alert('Không tải được games: '+err);
+      }finally{
+        disableUI(false);
+      }
+    }
+
+    // Load recommendations with AI (slower but smart)
+    async function loadRecommendations(){
+      try{
+        disableUI(true);
+        recommendBtn.disabled = true;
+        recommendBtn.innerHTML = '<span class="spinner"></span> Đang gợi ý...';
+        
+        const q = encodeURIComponent(queryInput.value || '');
+        const adaptiveParam = adaptiveMode ? '&adaptive=true' : '';
+        const modelParam = '&use_saved_model=true'; // Use saved model for speed
+        const url = q 
+          ? `${BACKEND}/api/reco?user_id=${currentUserId}&query=${q}${adaptiveParam}${modelParam}` 
+          : `${BACKEND}/api/reco?user_id=${currentUserId}${adaptiveParam}${modelParam}`;
+        const resp = await fetch(url, { cache: 'no-store' });
+        if(!resp.ok) throw new Error('HTTP '+resp.status);
+        const data = await resp.json();
+
+        // Prefer items_detailed if available (for details), fallback to items.
+        const baseDetailed = Array.isArray(data.items_detailed) ? data.items_detailed : [];
+        const baseSimple = Array.isArray(data.items) ? data.items : [];
+        const base = baseDetailed.length ? baseDetailed : baseSimple;
+
+        // Build a map of id -> item, prefer detailed entries when both exist.
+        const map = new Map([...baseSimple, ...baseDetailed].map(x => [x.id, x]));
+
+        // IDs: selected first, then remaining appended after. Fallback to base order if missing.
+        const combinedIdsRaw = [
+          ...(Array.isArray(data.retrieval_selected_ids) ? data.retrieval_selected_ids : []),
+          ...(Array.isArray(data.retrieval_remaining_ids) ? data.retrieval_remaining_ids : []),
+        ];
+        const combinedIds = combinedIdsRaw.length ? combinedIdsRaw : base.map(x => x.id);
+
+        // Ensure unique (no limit on candidates)
+        const ids = Array.from(new Set(combinedIds));
+
+        // Map ids to items present in map (filter missing).
+        ranked = ids.map(id => map.get(id)).filter(Boolean);
+
+        currentPage = 1;
+        render();
+        const modeText = adaptiveMode ? '🤖 Adaptive' : '⚙️ Static';
+        const sessionTime = Math.round((Date.now() - sessionStartTime) / 1000);
+        meta.textContent = `Đã gợi ý: ${ranked.length} games | Mode: ${modeText} | Session: ${sessionTime}s`;
+        showToast('🎯 AI recommendations ready!', 'success');
+      }catch(err){
+        alert('Không tải được gợi ý: '+err);
+      }finally{
+        disableUI(false);
+        recommendBtn.disabled = false;
+        recommendBtn.innerHTML = '🎯 Gợi ý game';
+      }
+    }
+
+    function disableUI(dis){
+      loadBtn.disabled = dis; 
+      recommendBtn.disabled = dis || ranked.length === 0; 
+      prevBtn.disabled = dis || currentPage<=1; 
+      nextBtn.disabled = dis || currentPage>=totalPages();
+    }
+
+    function totalPages(){
+      return Math.max(1, Math.ceil(ranked.length / PAGE_SIZE));
+    }
+
+    function render(){
+      const pTotal = totalPages();
+      pageInfo.textContent = `Trang ${Math.min(currentPage,pTotal)}/${pTotal}`;
+      prevBtn.disabled = currentPage<=1;
+      nextBtn.disabled = currentPage>=pTotal;
+
+      const start = (currentPage-1)*PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const pageItems = ranked.slice(start, end);
+      cards.innerHTML = '';
+      pageItems.forEach(it => cards.appendChild(renderCard(it)));
+    }
+
+    function renderCard(it){
+      const d = it.details || {}; // từ API đã ghép sẵn details
+      const c = document.createElement('div'); c.className = 'gcard';
+      const head = document.createElement('div'); head.className = 'ghead';
+      const title = document.createElement('h3'); title.className = 'gtitle'; title.textContent = `${d.name || it.name || 'No name'} (#${it.id})`;
+      const price = document.createElement('div'); price.className = 'price'; price.textContent = d.price!==undefined?formatPrice(d.price):'—';
+      head.appendChild(title); head.appendChild(price);
+
+      const sub = document.createElement('div'); sub.className = 'gsub';
+      const year = d.release_year ?? '—';
+      const pub = d.publisher || '—';
+      const mode = d.mode || '—';
+      const multi = d.multiplayer ? 'Multiplayer' : 'Single';
+      sub.textContent = `Năm: ${year} | Publisher: ${pub} | Chế độ: ${mode} | ${multi}`;
+
+      const chips = document.createElement('div'); chips.className = 'chips';
+      (Array.isArray(d.genre)?d.genre:[]).forEach(g => chips.appendChild(chip(g)));
+      normalizePlatforms(d.platform).forEach(p => chips.appendChild(chip(p)));
+
+      const spec = document.createElement('div'); spec.className = 'spec';
+      const col1 = document.createElement('div'); col1.className = 'spec-col';
+      const col2 = document.createElement('div'); col2.className = 'spec-col';
+      col1.appendChild(h4('Yêu cầu (Recommended)'));
+      col1.appendChild(kv('CPU', path(d,'rec_spec.cpu')));
+      col1.appendChild(kv('GPU', path(d,'rec_spec.gpu')));
+      col1.appendChild(kv('RAM', path(d,'rec_spec.ram')));
+      col1.appendChild(kv('Storage', path(d,'rec_spec.storage')));
+      col2.appendChild(h4('Tối thiểu (Minimum)'));
+      col2.appendChild(kv('CPU', path(d,'min_spec.cpu')));
+      col2.appendChild(kv('GPU', path(d,'min_spec.gpu')));
+      col2.appendChild(kv('RAM', path(d,'min_spec.ram')));
+      col2.appendChild(kv('Storage', path(d,'min_spec.storage')));
+      spec.appendChild(col1); spec.appendChild(col2);
+
+      const extra = document.createElement('div'); extra.className = 'scores';
+      extra.innerHTML = `
+        <span>Điểm tổng: <strong>${fmt(it.score_total)}</strong></span>
+        <span>🔍 KW: ${fmt(it.score_kw)}</span>
+        <span>🤖 Model: ${fmt(it.score_model)}</span>
+        <span>👥 Demographics: ${fmt(it.score_demo)}</span>
+        <span>Age: ${escapeHtml(d.age_rating||'—')}</span>
+        <span>Capacity: ${escapeHtml(String(d.capacity ?? '—'))} GB</span>
+      `;
+      
+      // Add feedback buttons for adaptive mode
+      if (adaptiveMode) {
+        const feedbackBar = document.createElement('div'); 
+        feedbackBar.className = 'feedback-bar';
+        feedbackBar.innerHTML = `
+          <button class="feedback-btn" onclick="sendFeedback(${it.id}, 'click')">👆 Click</button>
+          <button class="feedback-btn" onclick="sendFeedback(${it.id}, 'purchase')">💰 Buy</button>
+          <button class="feedback-btn" onclick="sendFeedback(${it.id}, 'wishlist')">❤️ Wishlist</button>
+          <button class="feedback-btn" onclick="sendFeedback(${it.id}, 'skip')">❌ Skip</button>
+        `;
+        c.appendChild(feedbackBar);
+      }
+
+      c.appendChild(head);
+      c.appendChild(sub);
+      c.appendChild(chips);
+      c.appendChild(spec);
+      c.appendChild(extra);
+      return c;
+    }
+
+    function chip(text){ const s=document.createElement('span'); s.className='chip'; s.textContent=text; return s; }
+    function h4(text){ const h=document.createElement('h4'); h.textContent=text; return h; }
+    function kv(k, v){ const r=document.createElement('div'); r.className='rowline'; const lk=document.createElement('span'); lk.textContent=k; const rv=document.createElement('span'); rv.textContent=v||'—'; r.appendChild(lk); r.appendChild(rv); return r; }
+    function path(o,p){ try{ return p.split('.').reduce((a,k)=> a&&a[k]!==undefined?a[k]:undefined, o);}catch{return undefined} }
+    function normalizePlatforms(p){ const out=[]; if(Array.isArray(p)){ p.forEach(s=>String(s).split(',').forEach(t=>{t=t.trim(); if(t) out.push(t)})) } else if(typeof p==='string'){ p.split(',').forEach(t=>{t=t.trim(); if(t) out.push(t)}) } return out }
+    function formatPrice(x){ const n=Number(x); if(Number.isNaN(n)) return String(x); return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(n) }
+    function fmt(x){ if(x===null||x===undefined||Number.isNaN(Number(x))) return '-'; return Number(x).toFixed(3) }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])) }
+    
+    // Adaptive Learning Functions
+    async function sendFeedback(gameId, action, details = '') {
+      if (!adaptiveMode) {
+        alert('🚫 Adaptive mode is not enabled!');
+        return;
+      }
+      
+      try {
+        // Visual feedback
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        btn.classList.add(action === 'click' ? 'clicked' : 
+                           action === 'purchase' ? 'purchased' : 
+                           action === 'wishlist' ? 'wishlisted' : 'skipped');
+        
+        const payload = {
+          user_id: currentUserId,
+          game_id: gameId,
+          action: action,
+          details: details,
+          session_time: Math.round((Date.now() - sessionStartTime) / 1000),
+          page: currentPage
+        };
+        
+        const response = await fetch(`${BACKEND}/api/reco/feedback`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Success feedback
+        btn.textContent = '✓ Done';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+        
+        // Show success message
+        showToast(`✅ Feedback sent: ${action} for game ${gameId}`, 'success');
+        
+        // Auto-reload recommendations after feedback to see adaptive changes
+        if (action === 'purchase' || action === 'wishlist') {
+          setTimeout(() => {
+            showToast('🔄 Reloading with updated AI weights...', 'info');
+            loadRecommendations();
+          }, 1500);
+        }
+        
+      } catch (err) {
+        console.error('Feedback error:', err);
+        showToast(`❌ Error sending feedback: ${err.message}`, 'error');
+        
+        // Reset button
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.classList.remove('clicked', 'purchased', 'wishlisted', 'skipped');
+      }
+    }
+    
+    function showToast(message, type = 'info') {
+      // Create toast notification
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+        max-width: 400px;
+        word-wrap: break-word;
+      `;
+      
+      const colors = {
+        'success': '#10b981',
+        'error': '#ef4444', 
+        'info': '#3b82f6',
+        'warning': '#f59e0b'
+      };
+      
+      toast.style.backgroundColor = colors[type] || colors.info;
+      toast.textContent = message;
+      
+      // Add animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.appendChild(toast);
+      
+      // Auto remove after 3 seconds
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Initialize
+    console.log('🤖 Adaptive Game Recommendation System Loaded');
+    console.log('Toggle Adaptive Mode to enable AI learning features');
+    
+    // Tự tải games lần đầu (nhanh)
+    loadGames();
+    
+    // Log session start
+    console.log(`🚀 Session started for User ${currentUserId} at ${new Date().toLocaleTimeString()}`);
+    showToast('🎉 Welcome to Adaptive Game Recommendations!', 'info');
+  </script>
+</body>
+</html>

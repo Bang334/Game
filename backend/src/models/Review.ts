@@ -156,6 +156,31 @@ export class ReviewModel {
     return (result as any).insertId
   }
 
+  // Create or update review (UPSERT)
+  static async createOrUpdate(data: CreateReviewData): Promise<{ review_id: number, isNew: boolean }> {
+    const [result] = await pool.execute(
+      `INSERT INTO Review (user_id, game_id, rating, comment) 
+       VALUES (?, ?, ?, ?) 
+       ON DUPLICATE KEY UPDATE 
+       rating = VALUES(rating), 
+       comment = VALUES(comment),
+       review_date = CURRENT_TIMESTAMP`,
+      [data.user_id, data.game_id, data.rating, data.comment || null]
+    )
+    
+    const insertId = (result as any).insertId
+    const affectedRows = (result as any).affectedRows
+    
+    // If affectedRows is 1, it's a new insert
+    // If affectedRows is 2, it's an update
+    const isNew = affectedRows === 1
+    
+    return { 
+      review_id: insertId || await this.findByUserAndGame(data.user_id, data.game_id).then(r => r?.review_id || 0),
+      isNew 
+    }
+  }
+
   // Update review
   static async update(reviewId: number, data: UpdateReviewData): Promise<boolean> {
     const fields: string[] = []

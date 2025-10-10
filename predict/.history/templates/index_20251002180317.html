@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Game Recommendation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .recommendations {
+            margin-top: 30px;
+        }
+
+        .user-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-info h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .game-card {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .game-rating {
+            background: #ffd700;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .game-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item strong {
+            color: #555;
+        }
+
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .genre-tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .scores {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .score-value {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .hardware-status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .hardware-compatible {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .hardware-incompatible {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .scores {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 Game Recommendation System</h1>
+            <p>Hệ thống gợi ý game sử dụng thuật toán SVD và Content-based Filtering</p>
+        </div>
+
+        <div class="content">
+            <div class="form-section">
+                <h2>⚙️ Cấu hình gợi ý</h2>
+                <form id="recommendationForm">
+                    <div class="form-group">
+                        <label for="userId">👤 Chọn người dùng:</label>
+                        <select id="userId" required>
+                            <option value="">-- Chọn người dùng --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cpu">🖥️ CPU (tùy chọn):</label>
+                            <select id="cpu">
+                                <option value="">-- Chọn CPU --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gpu">🎮 GPU (tùy chọn):</label>
+                            <select id="gpu">
+                                <option value="">-- Chọn GPU --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ram">💾 RAM (tùy chọn):</label>
+                            <select id="ram">
+                                <option value="">-- Chọn RAM --</option>
+                                <option value="4GB">4GB</option>
+                                <option value="8GB">8GB</option>
+                                <option value="16GB">16GB</option>
+                                <option value="32GB">32GB</option>
+                                <option value="64GB">64GB</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="topN">📊 Số lượng gợi ý:</label>
+                        <select id="topN">
+                            <option value="5">5 games</option>
+                            <option value="10">10 games</option>
+                            <option value="15">15 games</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn">🚀 Tạo gợi ý</button>
+                </form>
+            </div>
+
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Đang tạo gợi ý game cho bạn...</p>
+            </div>
+
+            <div id="error" class="error" style="display: none;"></div>
+
+            <div id="results" class="recommendations" style="display: none;">
+                <div id="userInfo" class="user-info"></div>
+                <div id="gamesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load initial data
+        async function loadInitialData() {
+            try {
+                // Load users
+                const usersResponse = await fetch('/api/users');
+                const users = await usersResponse.json();
+                const userSelect = document.getElementById('userId');
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = `${user.name} (${user.age} tuổi, ${user.gender})`;
+                    userSelect.appendChild(option);
+                });
+
+                // Load CPU options
+                const cpuResponse = await fetch('/api/cpu_options');
+                const cpuOptions = await cpuResponse.json();
+                const cpuSelect = document.getElementById('cpu');
+                cpuOptions.forEach(cpu => {
+                    const option = document.createElement('option');
+                    option.value = cpu;
+                    option.textContent = cpu;
+                    cpuSelect.appendChild(option);
+                });
+
+                // Load GPU options
+                const gpuResponse = await fetch('/api/gpu_options');
+                const gpuOptions = await gpuResponse.json();
+                const gpuSelect = document.getElementById('gpu');
+                gpuOptions.forEach(gpu => {
+                    const option = document.createElement('option');
+                    option.value = gpu;
+                    option.textContent = gpu;
+                    gpuSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error('Error loading initial data:', error);
+                showError('Lỗi khi tải dữ liệu ban đầu');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('recommendationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                user_id: document.getElementById('userId').value,
+                cpu: document.getElementById('cpu').value,
+                gpu: document.getElementById('gpu').value,
+                ram: document.getElementById('ram').value,
+                top_n: document.getElementById('topN').value
+            };
+
+            showLoading();
+            hideError();
+            hideResults();
+
+            try {
+                const response = await fetch('/api/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data);
+                } else {
+                    showError(data.error || 'Có lỗi xảy ra');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Lỗi kết nối đến server');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            document.getElementById('error').style.display = 'none';
+        }
+
+        function hideResults() {
+            document.getElementById('results').style.display = 'none';
+        }
+
+        function displayResults(data) {
+            const userInfo = data.user_info;
+            const recommendations = data.recommendations;
+
+            // Display user info
+            const userInfoDiv = document.getElementById('userInfo');
+            userInfoDiv.innerHTML = `
+                <h3>👤 Thông tin người dùng: ${userInfo.name}</h3>
+                <p><strong>Tuổi:</strong> ${userInfo.age} | <strong>Giới tính:</strong> ${userInfo.gender}</p>
+                <p><strong>Game yêu thích:</strong> ${userInfo.favorite_games.join(', ')}</p>
+                <p><strong>Game đã mua:</strong> ${userInfo.purchased_games.join(', ')}</p>
+            `;
+
+            // Display recommendations
+            const gamesListDiv = document.getElementById('gamesList');
+            gamesListDiv.innerHTML = '<h3>🎯 Gợi ý game cho bạn:</h3>';
+
+            recommendations.forEach((game, index) => {
+                const gameCard = document.createElement('div');
+                gameCard.className = 'game-card';
+                
+                const genreTags = game.genre.map(g => `<span class="genre-tag">${g}</span>`).join('');
+                
+                const scoresHtml = `
+                    <div class="scores">
+                        <div class="score-item">
+                            <div class="score-value">${game.hybrid_score.toFixed(3)}</div>
+                            <div class="score-label">Hybrid Score</div>
+                        </div>
+                        ${game.svd_score !== 0 ? `
+                        <div class="score-item">
+                            <div class="score-value">${game.svd_score.toFixed(3)}</div>
+                            <div class="score-label">SVD Score</div>
+                        </div>` : ''}
+                        ${game.content_score !== 0 ? `
+                        <div class="score-item">
+                            <div class="score-value">${game.content_score.toFixed(3)}</div>
+                            <div class="score-label">Content Score</div>
+                        </div>` : ''}
+                    </div>
+                `;
+
+                const hardwareHtml = game.can_run !== undefined ? `
+                    <div class="hardware-status ${game.can_run ? 'hardware-compatible' : 'hardware-incompatible'}">
+                        ${game.can_run ? '✅' : '❌'} ${game.performance_level}
+                    </div>
+                ` : '';
+
+                gameCard.innerHTML = `
+                    <div class="game-header">
+                        <div>
+                            <div class="game-title">${index + 1}. ${game.game_name}</div>
+                            <div class="genre-tags">${genreTags}</div>
+                        </div>
+                        <div class="game-rating">⭐ ${game.actual_rating}/5.0</div>
+                    </div>
+                    
+                    <div class="game-info">
+                        <div class="info-item">
+                            <strong>💰 Giá:</strong> ${game.price.toLocaleString()} VND
+                        </div>
+                        <div class="info-item">
+                            <strong>🎮 Game ID:</strong> ${game.game_id}
+                        </div>
+                    </div>
+                    
+                    ${scoresHtml}
+                    ${hardwareHtml}
+                `;
+
+                gamesListDiv.appendChild(gameCard);
+            });
+
+            document.getElementById('results').style.display = 'block';
+        }
+
+        // Load initial data when page loads
+        loadInitialData();
+    </script>
+</body>
+</html>

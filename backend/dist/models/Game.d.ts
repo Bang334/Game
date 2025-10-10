@@ -1,7 +1,8 @@
 export interface Game {
     game_id: number;
     name: string;
-    release_year: number | null;
+    description: string | null;
+    release_date: Date | null;
     publisher_id: number;
     mode: string | null;
     price: number;
@@ -9,12 +10,14 @@ export interface Game {
     capacity: number | null;
     age_rating: string | null;
     average_rating: number;
-    total_sales: number;
-    total_revenue: number;
+    downloads: number;
+    image: string | null;
+    link_download: string | null;
 }
 export interface CreateGameData {
     name: string;
-    release_year?: number;
+    description?: string;
+    release_date?: Date;
     publisher_id: number;
     mode?: string;
     price: number;
@@ -22,12 +25,14 @@ export interface CreateGameData {
     capacity?: number;
     age_rating?: string;
     average_rating?: number;
-    total_sales?: number;
-    total_revenue?: number;
+    downloads?: number;
+    image?: string;
+    link_download?: string;
 }
 export interface UpdateGameData {
     name?: string;
-    release_year?: number;
+    description?: string;
+    release_date?: Date;
     publisher_id?: number;
     mode?: string;
     price?: number;
@@ -35,8 +40,9 @@ export interface UpdateGameData {
     capacity?: number;
     age_rating?: string;
     average_rating?: number;
-    total_sales?: number;
-    total_revenue?: number;
+    downloads?: number;
+    image?: string;
+    link_download?: string;
 }
 export interface GameWithPublisher extends Game {
     publisher_name: string;
@@ -44,17 +50,16 @@ export interface GameWithPublisher extends Game {
 export interface GameWithDetails extends GameWithPublisher {
     genres: string[];
     platforms: string[];
+    languages: string[];
     min_specs?: {
         cpu: string | null;
         ram: string | null;
         gpu: string | null;
-        storage: string | null;
     } | null;
     rec_specs?: {
         cpu: string | null;
         ram: string | null;
         gpu: string | null;
-        storage: string | null;
     } | null;
 }
 export declare class GameModel {
@@ -66,14 +71,16 @@ export declare class GameModel {
     static findByGenre(genreId: number): Promise<Game[]>;
     static findByPlatform(platformId: number): Promise<Game[]>;
     static findAllWithPublisher(): Promise<GameWithPublisher[]>;
+    static findAllWithPublisherAndGenres(): Promise<GameWithDetails[]>;
     static findByIdWithDetails(gameId: number): Promise<GameWithDetails | null>;
-    static findTopSelling(limit?: number): Promise<GameWithPublisher[]>;
+    static findTopDownloaded(limit?: number): Promise<GameWithPublisher[]>;
     static findTopRated(limit?: number): Promise<GameWithPublisher[]>;
     static findByPriceRange(minPrice: number, maxPrice: number): Promise<GameWithPublisher[]>;
     static create(data: CreateGameData): Promise<number>;
     static update(gameId: number, data: UpdateGameData): Promise<boolean>;
     static updateRating(gameId: number, newRating: number): Promise<boolean>;
-    static updateSales(gameId: number, newSales: number, newRevenue: number): Promise<boolean>;
+    static updateDownloads(gameId: number, newDownloads: number): Promise<boolean>;
+    static incrementDownloads(gameId: number): Promise<boolean>;
     static delete(gameId: number): Promise<boolean>;
 }
 //# sourceMappingURL=Game.d.ts.map

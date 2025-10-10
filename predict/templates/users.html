@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Người dùng - Game Recommendation AI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-users me-2"></i>
+                Danh sách người dùng
+            </h2>
+            <span class="badge bg-primary fs-6">{{ users|length }} người dùng</span>
+        </div>
+
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-4 mb-4">
+                <div class="card game-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                 style="width: 50px; height: 50px;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">{{ user.name }}</h5>
+                                <small class="text-muted">ID: {{ user.id }}</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-info me-2">
+                                <i class="fas fa-birthday-cake me-1"></i>
+                                {{ user.age }} tuổi
+                            </span>
+                            <span class="badge bg-secondary">
+                                <i class="fas fa-{{ 'mars' if user.gender == 'male' else 'venus' }} me-1"></i>
+                                {{ user.gender }}
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6><i class="fas fa-heart text-danger me-2"></i>Games yêu thích:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id in user.favorite_games %}
+                                <span class="badge bg-danger">{{ game_id }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6><i class="fas fa-shopping-cart text-success me-2"></i>Games đã mua:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id in user.purchased_games %}
+                                <span class="badge bg-success">{{ game_id }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% if user.view_history %}
+                        <div class="mb-3">
+                            <h6><i class="fas fa-eye text-primary me-2"></i>Lịch sử xem:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id, count in user.view_history.items() %}
+                                <span class="badge bg-primary">{{ game_id }}({{ count }})</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="d-grid">
+                            <a href="/user/{{ user.id }}" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>
+                                Xem gợi ý
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

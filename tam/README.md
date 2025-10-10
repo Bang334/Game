@@ -1,1 +1,0 @@
-# Game Store\n\nMonorepo: React + TypeScript (frontend) and Node.js + TypeScript (backend).\n\n## Run\n- Backend: cd backend && npm run dev\n- Frontend: cd frontend && npm run dev\n\n## Structure\n- frontend/: React app with Customer/Admin routes\n- backend/: Express API with Customer/Admin routes\n\nConfigure VITE_API_URL in frontend/.env if backend port changes.

@@ -11,7 +11,7 @@ exports.pool = promise_1.default.createPool({
     port: Number(process.env.DB_PORT ?? 3307),
     user: process.env.DB_USER ?? 'root',
     password: process.env.DB_PASSWORD ?? '123456',
-    database: process.env.DB_NAME ?? 'gamestore',
+    database: process.env.DB_NAME ?? 'storegame',
     connectionLimit: 10,
     decimalNumbers: true,
 });

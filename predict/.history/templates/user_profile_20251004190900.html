@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.name }} - Game Recommendation AI{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- User Header -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-4" 
+                                 style="width: 80px; height: 80px;">
+                                <i class="fas fa-user fa-2x"></i>
+                            </div>
+                            <div>
+                                <h2 class="mb-1">{{ user.name }}</h2>
+                                <p class="text-muted mb-2">ID: {{ user.id }}</p>
+                                <div>
+                                    <span class="badge bg-info me-2">
+                                        <i class="fas fa-birthday-cake me-1"></i>
+                                        {{ user.age }} tuổi
+                                    </span>
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-{{ 'mars' if user.gender == 'male' else 'venus' }} me-1"></i>
+                                        {{ user.gender }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <button class="btn btn-outline-primary" onclick="updateLearningData({{ user.id }})">
+                            <i class="fas fa-sync-alt me-2"></i>
+                            Cập nhật AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- User Info -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Thông tin người dùng
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6><i class="fas fa-heart text-danger me-2"></i>Games yêu thích:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id in user.favorite_games %}
+                                <span class="badge bg-danger">{{ game_id }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6><i class="fas fa-shopping-cart text-success me-2"></i>Games đã mua:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id in user.purchased_games %}
+                                <span class="badge bg-success">{{ game_id }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {% if user.view_history %}
+                        <div class="mb-3">
+                            <h6><i class="fas fa-eye text-primary me-2"></i>Lịch sử xem:</h6>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for game_id, count in user.view_history.items() %}
+                                <span class="badge bg-primary">{{ game_id }}({{ count }})</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- AI Learning Data -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-brain me-2"></i>
+                            Dữ liệu AI học được
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="learningData">
+                            <div class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Đang tải dữ liệu AI...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="col-md-8">
+                <!-- Keyword Search -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">🔍 Search by Keywords</h5>
+                        <form id="keywordSearchForm" class="d-flex">
+                            <input type="text" id="keywordInput" class="form-control me-2" 
+                                   placeholder="Enter keywords (e.g., action, adventure, multiplayer)" 
+                                   value="{{ request.args.get('keyword', '') }}">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </form>
+                        <small class="text-muted">Search for games by genre, features, or any keywords</small>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-magic me-2"></i>
+                            Gợi ý thông minh
+                        </h5>
+                        <span class="badge bg-primary">{{ recommendations|length }} games</span>
+                    </div>
+                    <div class="card-body">
+                        {% if recommendations %}
+                        <div class="row">
+                            {% for rec in recommendations %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card recommendation-card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="card-title mb-0">{{ rec.game_name }}</h6>
+                                            <span class="badge bg-primary score-badge">
+                                                {{ "%.3f"|format(rec.hybrid_score) }}
+                                            </span>
+                                        </div>
+                                        
+                                        <div class="mb-2">
+                                            <small class="text-muted">Scores:</small>
+                                            <div class="d-flex gap-2 mt-1">
+                                                <span class="badge bg-danger">SVD: {{ "%.3f"|format(rec.svd_score) }}</span>
+                                                <span class="badge bg-success">Content: {{ "%.3f"|format(rec.content_score) }}</span>
+                                                <span class="badge bg-info">Demo: {{ "%.3f"|format(rec.demographic_score) }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <small class="text-muted">
+                                                <i class="fas fa-star me-1"></i>{{ rec.actual_rating }}
+                                                <i class="fas fa-dollar-sign me-1 ms-2"></i>{{ "{:,}".format(rec.price) }}
+                                                <i class="fas fa-download me-1 ms-2"></i>{{ "{:,}".format(rec.downloads) }}
+                                            </small>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-outline-primary interaction-btn" 
+                                                    onclick="trackInteraction({{ user.id }}, {{ rec.game_id }}, 'view')">
+                                                <i class="fas fa-eye me-1"></i>Xem
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-success interaction-btn" 
+                                                    onclick="trackInteraction({{ user.id }}, {{ rec.game_id }}, 'like')">
+                                                <i class="fas fa-heart me-1"></i>Thích
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning interaction-btn" 
+                                                    onclick="trackInteraction({{ user.id }}, {{ rec.game_id }}, 'purchase')">
+                                                <i class="fas fa-shopping-cart me-1"></i>Mua
+                                            </button>
+                                        </div>
+
+                                        <!-- Feedback Section -->
+                                        <div class="mt-2">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-success" 
+                                                        onclick="submitFeedback({{ user.id }}, {{ rec.game_id }}, 'helpful', 5)">
+                                                    <i class="fas fa-thumbs-up"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" 
+                                                        onclick="submitFeedback({{ user.id }}, {{ rec.game_id }}, 'not_helpful', 1)">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-exclamation-circle fa-3x text-muted mb-3"></i>
+                            <h5>Không có gợi ý nào</h5>
+                            <p class="text-muted">Hệ thống đang học từ dữ liệu của bạn...</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Load learning data
+        loadLearningData({{ user.id }});
+    });
+
+    function loadLearningData(userId) {
+        fetch(`/api/learning/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            displayLearningData(data);
+        })
+        .catch(error => {
+            console.error('Error loading learning data:', error);
+            $('#learningData').html(`
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Chưa có dữ liệu học cho user này
+                </div>
+            `);
+        });
+    }
+
+    function displayLearningData(data) {
+        if (data.message) {
+            $('#learningData').html(`
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    ${data.message}
+                </div>
+            `);
+            return;
+        }
+
+        let html = '';
+        
+        if (data.preferences) {
+            html += '<h6><i class="fas fa-heart me-2"></i>Preferences:</h6>';
+            for (const [key, value] of Object.entries(data.preferences)) {
+                html += `<div class="mb-2">
+                    <strong>${key}:</strong> ${Array.isArray(value) ? value.join(', ') : value}
+                </div>`;
+            }
+        }
+
+        if (data.behavior_patterns) {
+            html += '<h6 class="mt-3"><i class="fas fa-chart-line me-2"></i>Behavior Patterns:</h6>';
+            for (const [key, value] of Object.entries(data.behavior_patterns)) {
+                if (typeof value === 'object') {
+                    html += `<div class="mb-2">
+                        <strong>${key}:</strong> ${JSON.stringify(value, null, 2)}
+                    </div>`;
+                } else {
+                    html += `<div class="mb-2">
+                        <strong>${key}:</strong> ${value}
+                    </div>`;
+                }
+            }
+        }
+
+        if (data.interaction_history && data.interaction_history.length > 0) {
+            html += '<h6 class="mt-3"><i class="fas fa-history me-2"></i>Recent Interactions:</h6>';
+            html += '<div class="list-group">';
+            data.interaction_history.slice(-5).forEach(interaction => {
+                html += `
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <span>Game ${interaction.game_id} - ${interaction.type}</span>
+                            <small class="text-muted">${new Date(interaction.timestamp).toLocaleString()}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+
+        $('#learningData').html(html || '<p class="text-muted">Chưa có dữ liệu học</p>');
+    }
+</script>
+{% endblock %}

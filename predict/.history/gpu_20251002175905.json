@@ -1,0 +1,142 @@
+{
+    "comment": "GPU Benchmark Scores - Higher is better (3DMark Time Spy equivalent)",
+    
+    "_nvidia_rtx_40_series": {
+      "NVIDIA GeForce RTX 4090": 36000,
+      "NVIDIA GeForce RTX 4080": 28000,
+      "NVIDIA GeForce RTX 4070 Ti": 22000,
+      "NVIDIA GeForce RTX 4070": 19000,
+      "NVIDIA GeForce RTX 4060 Ti": 16000,
+      "NVIDIA GeForce RTX 4060": 13500,
+      "RTX 4090": 36000,
+      "RTX 4080": 28000,
+      "RTX 4070 Ti": 22000,
+      "RTX 4070": 19000,
+      "RTX 4060 Ti": 16000,
+      "RTX 4060": 13500
+    },
+    
+    "_nvidia_rtx_30_series": {
+      "NVIDIA GeForce RTX 3090": 19500,
+      "NVIDIA GeForce RTX 3080": 17000,
+      "NVIDIA GeForce RTX 3070": 13500,
+      "NVIDIA GeForce RTX 3060 Ti": 11500,
+      "NVIDIA GeForce RTX 3060": 8500,
+      "NVIDIA GeForce RTX 3050": 6000,
+      "RTX 3090": 19500,
+      "RTX 3080": 17000,
+      "RTX 3070": 13500,
+      "RTX 3060 Ti": 11500,
+      "RTX 3060": 8500,
+      "RTX 3050": 6000
+    },
+    
+    "_nvidia_rtx_20_series": {
+      "NVIDIA GeForce RTX 2080 Ti": 13500,
+      "NVIDIA GeForce RTX 2080": 11000,
+      "NVIDIA GeForce RTX 2070": 9000,
+      "NVIDIA GeForce RTX 2060": 7500,
+      "RTX 2080 Ti": 13500,
+      "RTX 2080": 11000,
+      "RTX 2070": 9000,
+      "RTX 2060": 7500
+    },
+    
+    "_nvidia_gtx_16_series": {
+      "NVIDIA GeForce GTX 1660 Ti": 6000,
+      "NVIDIA GeForce GTX 1660": 5500,
+      "NVIDIA GeForce GTX 1650": 4000,
+      "GTX 1660 Ti": 6000,
+      "GTX 1660": 5500,
+      "GTX 1650": 4000
+    },
+    
+    "_nvidia_gtx_10_series": {
+      "NVIDIA GeForce GTX 1080 Ti": 9500,
+      "NVIDIA GeForce GTX 1080": 7500,
+      "NVIDIA GeForce GTX 1070": 6000,
+      "NVIDIA GeForce GTX 1060": 4200,
+      "NVIDIA GeForce GTX 1050 Ti": 3000,
+      "NVIDIA GeForce GTX 1050": 2500,
+      "GTX 1080 Ti": 9500,
+      "GTX 1080": 7500,
+      "GTX 1070": 6000,
+      "GTX 1060": 4200,
+      "GTX 1050 Ti": 3000,
+      "GTX 1050": 2500
+    },
+    
+    "_nvidia_gtx_older": {
+      "NVIDIA GeForce GTX 980": 4500,
+      "NVIDIA GeForce GTX 970": 3800,
+      "NVIDIA GeForce GTX 960": 2800,
+      "NVIDIA GeForce GTX 950": 2200,
+      "NVIDIA GeForce GTX 750 Ti": 1500,
+      "NVIDIA GeForce GTX 750": 1200,
+      "NVIDIA GeForce GTX 650": 800,
+      "GTX 980": 4500,
+      "GTX 970": 3800,
+      "GTX 960": 2800,
+      "GTX 950": 2200,
+      "GTX 750Ti": 1500,
+      "GTX 750": 1200,
+      "GTX 650": 800
+    },
+    
+    "_amd_rx_7000_series": {
+      "AMD Radeon RX 7900 XTX": 24000,
+      "AMD Radeon RX 7900 XT": 20000,
+      "AMD Radeon RX 7800 XT": 16000,
+      "AMD Radeon RX 7700 XT": 13000,
+      "AMD Radeon RX 7600": 9000,
+      "RX 7900 XTX": 24000,
+      "RX 7900 XT": 20000,
+      "RX 7800 XT": 16000,
+      "RX 7700 XT": 13000,
+      "RX 7600": 9000
+    },
+    
+    "_amd_rx_6000_series": {
+      "AMD Radeon RX 6950 XT": 15500,
+      "AMD Radeon RX 6900 XT": 15000,
+      "AMD Radeon RX 6800 XT": 13000,
+      "AMD Radeon RX 6800": 11500,
+      "AMD Radeon RX 6700 XT": 9500,
+      "AMD Radeon RX 6600 XT": 7500,
+      "AMD Radeon RX 6600": 6500,
+      "AMD Radeon RX 6500 XT": 4000,
+      "RX 6950 XT": 15500,
+      "RX 6900 XT": 15000,
+      "RX 6800 XT": 13000,
+      "RX 6800": 11500,
+      "RX 6700 XT": 9500,
+      "RX 6600 XT": 7500,
+      "RX 6600": 6500,
+      "RX 6500 XT": 4000
+    },
+    
+    "_amd_rx_5000_series": {
+      "AMD Radeon RX 5700 XT": 7000,
+      "AMD Radeon RX 5700": 6200,
+      "AMD Radeon RX 5600 XT": 5500,
+      "AMD Radeon RX 5500 XT": 4000,
+      "RX 5700 XT": 7000,
+      "RX 5700": 6200,
+      "RX 5600 XT": 5500,
+      "RX 5500 XT": 4000
+    },
+    
+    "_integrated_graphics": {
+      "Intel UHD Graphics 770": 1200,
+      "Intel UHD Graphics 730": 1000,
+      "Intel UHD Graphics 630": 800,
+      "Intel HD Graphics 530": 600,
+      "Intel HD Graphics": 500,
+      "AMD Radeon Vega 8": 1800,
+      "AMD Radeon Vega 7": 1500,
+      "AMD Radeon Graphics": 1000,
+      "Intel HD": 500,
+      "Intel UHD": 800
+    }
+  }
+  
