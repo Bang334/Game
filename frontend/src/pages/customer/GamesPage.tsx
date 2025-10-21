@@ -4,10 +4,7 @@ import axios from 'axios';
 import {
   Box,
   Typography,
-  Grid,
   Card,
-  CardContent,
-  CardMedia,
   Button,
   TextField,
   InputAdornment,
@@ -22,7 +19,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Slider,
+  Slider as MuiSlider,
   FormGroup,
   FormControlLabel,
   Checkbox,
@@ -34,9 +31,13 @@ import {
   Clear as ClearIcon,
   NavigateBefore as NavigateBeforeIcon,
   NavigateNext as NavigateNextIcon,
+  Download as DownloadIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import SlickSlider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 interface Game {
   game_id: number;
@@ -48,16 +49,47 @@ interface Game {
   genres?: string[];
   platforms?: string[];
   publisher_name?: string;
+  publisher?: string;
   score?: number; // AI recommendation score
 }
 
+/**
+ * GamesPage Component
+ * 
+ * === SEARCH & FILTER LOGIC ===
+ * 
+ * 1. AI Search (gọi API với keyword):
+ *    - User nhập keyword vào ô "🤖 Tìm kiếm AI"
+ *    - Nếu KHÔNG có local filters → Gọi API: /api/reco/games?query=...
+ *    - Nếu CÓ local filters → KHÔNG gọi API (chỉ filter local)
+ *    - Lưu kết quả vào allRecommendations (cache)
+ * 
+ * 2. Local Filters (filter trong list đã có):
+ *    - User nhập vào ô "🔍 Lọc trong list"
+ *    - Hoặc dùng Filter Dialog (genre, price, platform, rating)
+ *    - KHÔNG gọi API - filter trực tiếp trong allRecommendations
+ *    - Nhanh, real-time
+ * 
+ * 3. Use Cases:
+ *    Case A: User search "action" → API fetch 100 games action
+ *    Case B: User filter "EA publisher" → Filter 100 games → show 15 EA games
+ *    Case C: User search "Call of Duty" → Filter by name → show 3 games
+ *    Case D: User clear filters → Show toàn bộ 100 games đã fetch
+ * 
+ * === BENEFITS ===
+ * - Performance: Local filter không cần gọi API
+ * - Cost: Giảm số lần gọi AI service
+ * - UX: Filter tức thì, không loading
+ * - Smart: Chỉ gọi API khi thực sự cần
+ */
 const GamesPage = () => {
   const [games, setGames] = useState<Game[]>([]);
-  const [allRecommendations, setAllRecommendations] = useState<Game[]>([]); // Store all recommendations
+  const [allRecommendations, setAllRecommendations] = useState<Game[]>([]); // Store all recommendations from API
+  const [topDownloadGames, setTopDownloadGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
+  const [carouselLoading, setCarouselLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [aiSearchQuery, setAiSearchQuery] = useState(''); // AI search query for recommendations
-  const [cachedQuery, setCachedQuery] = useState(''); // Track the query used for current cache
   const [filterOpen, setFilterOpen] = useState(false);
   const [genres, setGenres] = useState<string[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
@@ -66,14 +98,16 @@ const GamesPage = () => {
   const [priceRange, setPriceRange] = useState<number[]>([0, 2000000]);
   const [ratingRange, setRatingRange] = useState<number[]>([0, 5]);
   const [sortBy, setSortBy] = useState('name');
-  const [purchasedGames, setPurchasedGames] = useState<number[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalGames, setTotalGames] = useState(0);
   const ITEMS_PER_PAGE = 20; // Items per page for both guest and recommendations
   const navigate = useNavigate();
   const { currentUser, loading: authLoading } = useAuth();
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Fetch top download games once on mount
+    fetchTopDownloadGames();
+  }, []);
 
   useEffect(() => {
     // Don't fetch anything while auth is still loading
@@ -89,14 +123,11 @@ const GamesPage = () => {
     setAllRecommendations([]); // Clear all recommendations
     setLoading(true);
     setPage(1); // Reset to page 1
-    setTotalPages(1);
-    setTotalGames(0);
     
     if (currentUser) {
       // For logged-in users: fetch AI recommendations (no pagination)
       console.log('✅ Fetching AI recommendations...');
       fetchRecommendedGames();
-      fetchPurchasedGames();
       fetchGenres();
       fetchPlatforms();
     } else {
@@ -136,6 +167,7 @@ const GamesPage = () => {
     }
     
     if (publisherParam) {
+      // Set publisher filter instead of search term
       setSearchTerm(publisherParam);
     }
     
@@ -153,10 +185,6 @@ const GamesPage = () => {
         }
       });
       setGames(response.data.games || []);
-      if (response.data.pagination) {
-        setTotalPages(response.data.pagination.totalPages);
-        setTotalGames(response.data.pagination.totalGames);
-      }
     } catch (error) {
       console.error('Error fetching games:', error);
       setGames([]);
@@ -180,6 +208,20 @@ const GamesPage = () => {
       setPlatforms(response.data.platforms.map((p: any) => p.name));
     } catch (error) {
       console.error('Error fetching platforms:', error);
+    }
+  };
+
+  const fetchTopDownloadGames = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/customer/games/top/downloaded', {
+        params: { limit: 10 }
+      });
+      setTopDownloadGames(response.data.games || []);
+    } catch (error) {
+      console.error('Error fetching top download games:', error);
+      setTopDownloadGames([]);
+    } finally {
+      setCarouselLoading(false);
     }
   };
 
@@ -254,16 +296,10 @@ const GamesPage = () => {
       if (cached && cached.length > 0) {
         const allGames = cached;
         setAllRecommendations(allGames);
-        setTotalGames(allGames.length);
-        
-        const totalPagesCount = Math.ceil(allGames.length / ITEMS_PER_PAGE);
-        setTotalPages(totalPagesCount);
         
         const startIndex = (page - 1) * ITEMS_PER_PAGE;
         const endIndex = startIndex + ITEMS_PER_PAGE;
         setGames(allGames.slice(startIndex, endIndex));
-        
-        setCachedQuery(searchQuery);
         setLoading(false);
         
         console.log(`✅ Loaded ${allGames.length} recommendations from cache`);
@@ -311,28 +347,21 @@ const GamesPage = () => {
       
       // 💾 Save to cache
       saveToCache(currentUser.user_id, searchQuery, allGames);
-      setCachedQuery(searchQuery);
       
       setAllRecommendations(allGames); // Store all recommendations
-      setTotalGames(allGames.length);
-      
-      // Calculate pagination for recommendations
-      const totalPagesCount = Math.ceil(allGames.length / ITEMS_PER_PAGE);
-      setTotalPages(totalPagesCount);
       
       // Slice games for current page
       const startIndex = (page - 1) * ITEMS_PER_PAGE;
       const endIndex = startIndex + ITEMS_PER_PAGE;
       setGames(allGames.slice(startIndex, endIndex));
       
-      console.log(`\n✅ Total recommendations: ${allGames.length}, Pages: ${totalPagesCount}, Current page: ${page}`);
+      console.log(`\n✅ Total recommendations: ${allGames.length}, Current page: ${page}`);
       console.log('\n=== FRONTEND RECOMMENDATION COMPLETED ===\n');
       
     } catch (error) {
       console.error('\n--- FRONTEND API ERROR ---');
       console.error('Error fetching recommendations:', error);
-      console.error('Error response:', error.response?.data);
-      console.error('Error status:', error.response?.status);
+
       
       // Fallback to regular games if recommendation fails
       console.log('Falling back to regular games...');
@@ -342,17 +371,15 @@ const GamesPage = () => {
     }
   };
 
-  const fetchPurchasedGames = async () => {
-    if (!currentUser) return;
-    
-    try {
-      const response = await axios.get('http://localhost:3001/api/customer/purchases');
-      const purchases = response.data.purchases || [];
-      const gameIds = purchases.map((purchase: any) => purchase.game_id);
-      setPurchasedGames(gameIds);
-    } catch (error) {
-      console.error('Error fetching purchased games:', error);
-    }
+
+  // Check if user has any local filters active
+  const hasLocalFilters = () => {
+    return searchTerm !== '' ||
+           selectedGenres.length > 0 ||
+           selectedPlatforms.length > 0 ||
+           priceRange[0] !== 0 || priceRange[1] !== 2000000 ||
+           ratingRange[0] !== 0 || ratingRange[1] !== 5 ||
+           sortBy !== 'name';
   };
 
   // Handle AI search for recommendations
@@ -360,6 +387,25 @@ const GamesPage = () => {
     if (!currentUser) return;
     
     console.log('🔍 AI Search triggered with query:', aiSearchQuery);
+    
+    // Case 1: User có filter local → Chỉ filter trong list đã có (không gọi API)
+    if (hasLocalFilters()) {
+      console.log('📋 Local filters active - filtering existing recommendations');
+      console.log('Filters:', {
+        searchTerm,
+        selectedGenres,
+        selectedPlatforms,
+        priceRange,
+        ratingRange,
+        sortBy
+      });
+      // Không làm gì - filter logic đã chạy tự động qua allFilteredGames
+      setPage(1); // Reset to page 1
+      return;
+    }
+    
+    // Case 2: Không có filter local → Gọi API với keyword mới
+    console.log('🔄 No local filters - calling API with keyword:', aiSearchQuery);
     setLoading(true);
     setPage(1); // Reset to page 1
     // Force refresh when user explicitly searches (forceRefresh = true)
@@ -367,10 +413,13 @@ const GamesPage = () => {
     setLoading(false);
   };
 
-  const filteredGames = games.filter(game => {
+  const sourceGames = currentUser ? allRecommendations : games;
+  
+  const allFilteredGames = sourceGames.filter(game => {
     // Search filter (includes name and publisher)
     const matchesSearch = game.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (game.publisher_name && game.publisher_name.toLowerCase().includes(searchTerm.toLowerCase()));
+      (game.publisher_name && game.publisher_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (game.publisher && game.publisher.toLowerCase().includes(searchTerm.toLowerCase()));
     
     // Genre filter
     const matchesGenre = selectedGenres.length === 0 || 
@@ -407,6 +456,15 @@ const GamesPage = () => {
         return a.name.localeCompare(b.name);
     }
   });
+
+  // Apply pagination to filtered games
+  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const filteredGames = allFilteredGames.slice(startIndex, endIndex);
+  
+  // Update total games and pages based on filtered results
+  const totalFilteredGames = allFilteredGames.length;
+  const totalFilteredPages = Math.ceil(totalFilteredGames / ITEMS_PER_PAGE);
 
   const handleGameClick = async (gameId: number) => {
     // Navigate to game detail first
@@ -465,113 +523,170 @@ const GamesPage = () => {
     setPage(1); // Reset to page 1 when filter changes
   };
 
-  // Show loading when: auth loading OR data loading OR (user logged in but no games yet)
-  if (authLoading || loading || (currentUser && games.length === 0)) {
-    return (
-      <Container maxWidth="lg">
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-          <CircularProgress size={60} />
-        </Box>
-      </Container>
-    );
-  }
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [selectedGenres, selectedPlatforms, priceRange, ratingRange, searchTerm, sortBy]);
 
+  // Reset page when no games match filters
+  useEffect(() => {
+    if (totalFilteredGames === 0 && page > 1) {
+      setPage(1);
+    }
+  }, [totalFilteredGames, page]);
+
+  // Don't block the entire page - show progressive loading
   return (
     <Container maxWidth="lg">
       <Box sx={{ py: 4 }}>
         {/* Header */}
         <Box sx={{ mb: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-            <Typography variant="h3" component="h1" sx={{ fontWeight: 800 }}>
-              {currentUser ? 'Gợi ý dành cho bạn' : 'Tất cả Games'}
-          </Typography>
-            {currentUser && (
-              <Chip 
-                label="AI Recommended" 
-                color="primary" 
-                size="small"
-                sx={{ fontWeight: 600 }}
-              />
-            )}
-          </Box>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-            {currentUser 
-              ? aiSearchQuery 
-                ? `Tìm kiếm "${aiSearchQuery}" trong ${totalGames} games được gợi ý (Trang ${page}/${totalPages})`
-                : `Những game phù hợp nhất dựa trên sở thích và lịch sử của bạn (${totalGames} games được gợi ý - Trang ${page}/${totalPages})`
-              : 'Khám phá thư viện game đa dạng với hàng nghìn tựa game chất lượng cao'
-            }
+          <Typography 
+            variant="h3" 
+            component="h1" 
+            sx={{ 
+              fontWeight: 800,
+              mb: 2,
+              color: 'white',
+              textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+            }}
+          >
+            {currentUser ? '✨ Gợi ý dành cho bạn' : '🎮 Khám phá Games'}
           </Typography>
 
+          {/* Search Info Display */}
+          {currentUser && (
+            <Box sx={{ mb: 2, display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }} >
+              {aiSearchQuery && (
+                <Chip 
+                  label={`🤖 AI: "${aiSearchQuery}"`}
+                  onDelete={async () => {
+                    setAiSearchQuery('');
+                    setLoading(true);
+                    setPage(1);
+                    await fetchRecommendedGames();
+                    setLoading(false);
+                  }}
+                  color="primary"
+                  variant="outlined"
+                />
+              )}
+              
+              {hasLocalFilters() && (
+                <Chip 
+                  label={`🔍 Đã lọc: ${[
+                    searchTerm && 'Tên',
+                    selectedGenres.length > 0 && `${selectedGenres.length} thể loại`,
+                    selectedPlatforms.length > 0 && `${selectedPlatforms.length} nền tảng`,
+                    (priceRange[0] !== 0 || priceRange[1] !== 2000000) && 'Giá',
+                    (ratingRange[0] !== 0 || ratingRange[1] !== 5) && 'Rating',
+                    sortBy !== 'name' && 'Sort'
+                  ].filter(Boolean).join(', ')}`}
+                  onDelete={() => {
+                    handleClearFilters();
+                  }}
+                  color="secondary"
+                  variant="outlined"
+                />
+              )}
+              
+              {(aiSearchQuery || hasLocalFilters()) && (
+                <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
+                  💡 Tip: AI Search gọi API mới, Local Filter lọc trong list đã có
+                </Typography>
+              )}
+            </Box>
+          )}
+
           {/* Search and Filters */}
-          <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
             {currentUser ? (
               // AI Search for logged-in users
               <>
-                <TextField
-                  fullWidth
-                  placeholder="Tìm kiếm game theo từ khóa (VD: puzzle, action, rpg)..."
-                  value={aiSearchQuery}
-                  onChange={(e) => setAiSearchQuery(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      handleAiSearch();
-                    }
-                  }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{ maxWidth: 500 }}
-                />
+                <Box sx={{ display: 'flex', gap: 1, flex: 1, minWidth: 300 }}>
+                  {/* AI Search Box */}
+                  <TextField
+                    placeholder="🤖 Tìm kiếm AI (gọi API)..."
+                    value={aiSearchQuery}
+                    onChange={(e) => setAiSearchQuery(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        handleAiSearch();
+                      }
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SearchIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    size="small"
+                    sx={{ flex: 1 }}
+                  />
+                  
+                  {/* Local Filter Search Box */}
+                  <TextField
+                    placeholder="🔍 Lọc trong list (tên/publisher)..."
+                    value={searchTerm}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setPage(1);
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FilterIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    size="small"
+                    sx={{ flex: 1 }}
+                  />
+                </Box>
+                
                 <Button
                   variant="contained"
                   onClick={handleAiSearch}
                   disabled={loading}
                   sx={{ minWidth: 120 }}
                 >
-                  {loading ? 'Đang tìm...' : 'Tìm kiếm AI'}
+                  {loading ? 'Đang tìm...' : '🤖 AI Search'}
                 </Button>
-                {aiSearchQuery && (
-                  <Button
-                    variant="outlined"
-                    onClick={async () => {
-                      setAiSearchQuery('');
-                      setLoading(true);
-                      setPage(1);
-                      await fetchRecommendedGames(); // Fetch without query (will use cache if available)
-                      setLoading(false);
-                    }}
-                  >
-                    Xóa
-                  </Button>
-                )}
+                
                 <Button
                   variant="outlined"
-                  color="warning"
+                  onClick={handleFilterOpen}
+                  startIcon={<FilterIcon />}
+                  sx={{ minWidth: 100 }}
+                >
+                  Bộ lọc
+                </Button>
+                
+                <Button
+                  variant="outlined"
                   onClick={async () => {
                     if (currentUser) {
                       clearUserCache(currentUser.user_id);
                       setLoading(true);
                       setPage(1);
                       setAiSearchQuery('');
-                      await fetchRecommendedGames('', true); // Force refresh after clearing cache
+                      setSearchTerm('');
+                      handleClearFilters();
+                      await fetchRecommendedGames('', true);
                       setLoading(false);
                     }
                   }}
-                  sx={{ fontSize: '0.75rem', padding: '6px 10px' }}
+                  startIcon={<span>🔄</span>}
+                  size="small"
                 >
-                  🔄 Làm mới
+                  Làm mới
                 </Button>
               </>
             ) : (
               // Regular search for guests
               <>
                 <TextField
-                  fullWidth
                   placeholder="Tìm kiếm games..."
                   value={searchTerm}
                   onChange={(e) => {
@@ -585,13 +700,13 @@ const GamesPage = () => {
                       </InputAdornment>
                     ),
                   }}
-                  sx={{ maxWidth: 400 }}
+                  size="small"
+                  sx={{ minWidth: 300, flex: 1 }}
                 />
                 <Button
                   variant="outlined"
                   startIcon={<FilterIcon />}
                   onClick={handleFilterOpen}
-                  sx={{ minWidth: 120 }}
                 >
                   Bộ lọc
                 </Button>
@@ -600,14 +715,266 @@ const GamesPage = () => {
           </Box>
         </Box>
 
-        {/* All Games Grid */}
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-            {currentUser ? 'Games được gợi ý cho bạn' : 'Tất cả Games'}
-          </Typography>
+        {/* Top Download Carousel */}
+        <Box sx={{ mb: 6 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+            <DownloadIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+            <Typography variant="h4" sx={{ fontWeight: 700 }}>
+              Top Download
+            </Typography>
+            {!carouselLoading && topDownloadGames.length > 0 && (
+              <Chip 
+                label={`${topDownloadGames.length} games`} 
+                color="primary" 
+                size="small"
+              />
+            )}
+          </Box>
+          
+          {carouselLoading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
+              <CircularProgress size={40} />
+              <Typography variant="body1" sx={{ ml: 2 }} color="text.secondary">
+                Đang tải top download games...
+              </Typography>
+            </Box>
+          ) : topDownloadGames.length > 0 ? (
+            <SlickSlider
+              dots={true}
+              infinite={true}
+              speed={500}
+              slidesToShow={4}
+              slidesToScroll={1}
+              autoplay={true}
+              autoplaySpeed={3000}
+              responsive={[
+                {
+                  breakpoint: 1536,
+                  settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                  }
+                },
+                {
+                  breakpoint: 1200,
+                  settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                  }
+                },
+                {
+                  breakpoint: 900,
+                  settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                  }
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                  }
+                }
+              ]}
+            >
+              {topDownloadGames.map((game, index) => (
+                <Box key={game.game_id} sx={{ px: 1.5 }}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: '0 12px 30px rgba(0,0,0,0.2)',
+                      }
+                    }}
+                    onClick={() => handleGameClick(game.game_id)}
+                  >
+                    {/* Rank Badge */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 10,
+                        left: 10,
+                        zIndex: 2,
+                        bgcolor: index < 3 ? '#FFD700' : 'rgba(0,0,0,0.7)',
+                        color: index < 3 ? '#000' : '#fff',
+                        width: 40,
+                        height: 40,
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 800,
+                        fontSize: '1.2rem',
+                        border: index < 3 ? '2px solid #FFA500' : 'none',
+                      }}
+                    >
+                      {index + 1}
+                    </Box>
+
+                    <Box
+                      sx={{
+                        height: 220, // Tăng từ 200 lên 220 (+10%)
+                        backgroundImage: game.image ? `url(${game.image})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        position: 'relative',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'flex-end',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {/* Overlay */}
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)',
+                        }}
+                      />
+
+                      {/* Content */}
+                      <Box sx={{ position: 'relative', zIndex: 1, p: 2.2, color: 'white' }}> {/* Tăng padding từ 2 lên 2.2 (+10%) */}
+                        <Typography 
+                          variant="h6" 
+                          sx={{ 
+                            fontWeight: 600, 
+                            mb: 1.1, // Tăng margin từ 1 lên 1.1 (+10%)
+                            textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                            lineHeight: 1.2,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            fontSize: '1.1rem', // Tăng font size (+10%)
+                          }}
+                        >
+                          {game.name}
+                        </Typography>
+
+                        {/* Genres */}
+                        <Box sx={{ mb: 2.2, minHeight: 26.4 }}> {/* Tăng margin và minHeight (+10%) */}
+                          {game.genres && game.genres.length > 0 ? (
+                            <>
+                              {game.genres.slice(0, 2).map((genre) => (
+                                <Chip
+                                  key={genre}
+                                  label={genre}
+                                  size="small"
+                                  sx={{ 
+                                    mr: 0.55, // Tăng margin (+10%)
+                                    mb: 0.55, // Tăng margin (+10%)
+                                    backgroundColor: 'rgba(255,255,255,0.2)',
+                                    color: 'white',
+                                    border: '1px solid rgba(255,255,255,0.3)',
+                                    fontSize: '0.77rem', // Tăng font size (+10%)
+                                    height: 22, // Tăng height (+10%)
+                                  }}
+                                />
+                              ))}
+                              {game.genres.length > 2 && (
+                                <Chip
+                                  label={`+${game.genres.length - 2}`}
+                                  size="small"
+                                  sx={{ 
+                                    backgroundColor: 'rgba(255,255,255,0.2)',
+                                    color: 'white',
+                                    fontSize: '0.77rem', // Tăng font size (+10%)
+                                    height: 22, // Tăng height (+10%)
+                                  }}
+                                />
+                              )}
+                            </>
+                          ) : (
+                            <Typography 
+                              variant="caption" 
+                              sx={{ 
+                                color: 'rgba(255,255,255,0.7)',
+                                fontStyle: 'italic',
+                                fontSize: '0.77rem', // Tăng font size (+10%)
+                              }}
+                            >
+                              Chưa có thể loại
+                            </Typography>
+                          )}
+                        </Box>
+
+                        {/* Price and Rating */}
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Typography 
+                            variant="h6" 
+                            sx={{ 
+                              color: '#ffd700', 
+                              fontWeight: 700,
+                              textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                              fontSize: '0.9rem',
+                            }}
+                          >
+                            {game.price === 0 ? 'Miễn phí' : `${(game.price / 1000).toFixed(0)}K`}
+                          </Typography>
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                            }}
+                          >
+                            ⭐ {game.average_rating ? Number(game.average_rating).toFixed(1) : 'N/A'}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Card>
+                </Box>
+              ))}
+            </SlickSlider>
+          ) : (
+            <Box sx={{ textAlign: 'center', py: 4 }}>
+              <Typography variant="body1" color="text.secondary">
+                Không có dữ liệu top download
+              </Typography>
+            </Box>
+          )}
         </Box>
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(5, 1fr)' }, gap: 2 }}>
-          {filteredGames.map((game) => (
+
+        {/* All Games Grid */}
+        <Box sx={{ mb: 3 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Typography variant="h4" sx={{ fontWeight: 700 }}>
+              {currentUser ? '🎯 Dành riêng cho bạn' : '🎮 Tất cả Games'}
+            </Typography>
+            {!loading && totalFilteredGames > 0 && (
+              <Chip 
+                label={`${totalFilteredGames} games`}
+                size="small"
+                variant="outlined"
+                color="primary"
+              />
+            )}
+          </Box>
+        </Box>
+        
+        {/* Show loading spinner for games list */}
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
+            <CircularProgress size={50} />
+            <Typography variant="h6" sx={{ ml: 2 }} color="text.secondary">
+              {currentUser ? 'Đang tải gợi ý AI cho bạn...' : 'Đang tải danh sách games...'}
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(5, 1fr)' }, gap: 2.2 }}> {/* Tăng gap từ 2 lên 2.2 (+10%) */}
+              {filteredGames.map((game) => (
             <Card
               key={game.game_id}
               sx={{
@@ -625,7 +992,7 @@ const GamesPage = () => {
             >
               <Box
                 sx={{
-                  height: 180,
+                  height: 198, // Tăng từ 180 lên 198 (+10%)
                   backgroundImage: game.image ? `url(${game.image})` : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -649,25 +1016,26 @@ const GamesPage = () => {
                 />
                 
                 {/* Content overlay */}
-                <Box sx={{ position: 'relative', zIndex: 1, p: 2, color: 'white' }}>
+                <Box sx={{ position: 'relative', zIndex: 1, p: 2.2, color: 'white' }}> {/* Tăng padding từ 2 lên 2.2 (+10%) */}
                 <Typography 
                     variant="h6" 
                     sx={{ 
                       fontWeight: 600, 
-                      mb: 1,
+                      mb: 1.1, // Tăng margin từ 1 lên 1.1 (+10%)
                       textShadow: '0 2px 4px rgba(0,0,0,0.8)',
                       lineHeight: 1.2,
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
+                      fontSize: '1.1rem', // Tăng font size (+10%)
                     }}
                   >
                     {game.name}
                 </Typography>
 
                 {/* Genres */}
-                  <Box sx={{ mb: 2, minHeight: 24 }}>
+                  <Box sx={{ mb: 2.2, minHeight: 26.4 }}> {/* Tăng margin và minHeight (+10%) */}
                     {game.genres && game.genres.length > 0 ? (
                       <>
                         {game.genres.slice(0, 2).map((genre) => (
@@ -676,13 +1044,13 @@ const GamesPage = () => {
                       label={genre}
                       size="small"
                             sx={{ 
-                              mr: 0.5, 
-                              mb: 0.5,
+                              mr: 0.55, // Tăng margin (+10%)
+                              mb: 0.55, // Tăng margin (+10%)
                               backgroundColor: 'rgba(255,255,255,0.2)',
                               color: 'white',
                               border: '1px solid rgba(255,255,255,0.3)',
-                              fontSize: '0.7rem',
-                              height: 20,
+                              fontSize: '0.77rem', // Tăng font size (+10%)
+                              height: 22, // Tăng height (+10%)
                               '&:hover': {
                                 backgroundColor: 'rgba(255,255,255,0.3)',
                               }
@@ -694,13 +1062,13 @@ const GamesPage = () => {
                             label={`+${game.genres.length - 2}`}
                             size="small"
                             sx={{ 
-                              mr: 0.5, 
-                              mb: 0.5,
+                              mr: 0.55, // Tăng margin (+10%)
+                              mb: 0.55, // Tăng margin (+10%)
                               backgroundColor: 'rgba(255,255,255,0.2)',
                               color: 'white',
                               border: '1px solid rgba(255,255,255,0.3)',
-                              fontSize: '0.7rem',
-                              height: 20,
+                              fontSize: '0.77rem', 
+                              height: 22, // Tăng height (+10%)
                             }}
                           />
                         )}
@@ -712,6 +1080,7 @@ const GamesPage = () => {
                           color: 'rgba(255,255,255,0.7)',
                           fontStyle: 'italic',
                           textShadow: '0 1px 2px rgba(0,0,0,0.8)',
+                          fontSize: '0.77rem', // Tăng font size (+10%)
                         }}
                       >
                         Chưa có thể loại
@@ -762,16 +1131,18 @@ const GamesPage = () => {
           ))}
         </Box>
 
-        {filteredGames.length === 0 && (
-          <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography variant="h6" color="text.secondary">
-              Không tìm thấy game nào phù hợp với bộ lọc
-            </Typography>
-          </Box>
+            {filteredGames.length === 0 && (
+              <Box sx={{ textAlign: 'center', py: 8, gridColumn: '1 / -1' }}>
+                <Typography variant="h6" color="text.secondary">
+                  Không tìm thấy game nào phù hợp với bộ lọc
+                </Typography>
+              </Box>
+            )}
+          </>
         )}
 
         {/* Pagination - Show for both guests and logged-in users when there are multiple pages */}
-        {totalPages > 1 && (
+        {!loading && totalFilteredPages > 1 && (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 4, mb: 2, gap: 2 }}>
             <Button
               variant="outlined"
@@ -783,17 +1154,17 @@ const GamesPage = () => {
             </Button>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Typography variant="body1">
-                Trang {page} / {totalPages}
+                Trang {page} / {totalFilteredPages}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                ({totalGames} games)
+                ({totalFilteredGames} games)
               </Typography>
             </Box>
             <Button
               variant="outlined"
               endIcon={<NavigateNextIcon />}
               onClick={() => setPage(page + 1)}
-              disabled={page === totalPages}
+              disabled={page === totalFilteredPages}
             >
               Trang sau
             </Button>
@@ -839,7 +1210,7 @@ const GamesPage = () => {
               <Typography variant="h6" gutterBottom>
                 Khoảng giá: {priceRange[0].toLocaleString('vi-VN')} - {priceRange[1].toLocaleString('vi-VN')} VND
               </Typography>
-              <Slider
+              <MuiSlider
                 value={priceRange}
                 onChange={(_, newValue) => {
                   setPriceRange(newValue as number[]);
@@ -859,7 +1230,7 @@ const GamesPage = () => {
               <Typography variant="h6" gutterBottom>
                 Đánh giá: {ratingRange[0]} - {ratingRange[1]} sao
               </Typography>
-              <Slider
+              <MuiSlider
                 value={ratingRange}
                 onChange={(_, newValue) => {
                   setRatingRange(newValue as number[]);

@@ -1,1 +1,1 @@
-{"version":3,"file":"purchaseController.d.ts","sourceRoot":"","sources":["../../src/controllers/purchaseController.ts"],"names":[],"mappings":""}
+{"version":3,"file":"purchaseController.d.ts","sourceRoot":"","sources":["../../src/controllers/purchaseController.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAA;AAI3C,qBAAa,kBAAkB;IAC7B;;OAEG;WACU,gBAAgB,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;IAgCzD;;OAEG;WACU,cAAc,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;IA0EvD;;OAEG;WACU,eAAe,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;CAsCzD"}

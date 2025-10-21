@@ -26,14 +26,18 @@ import RatingModal from '../../components/RatingModal';
 
 interface Game {
   game_id: number;
+  id?: number; // For similar games from API
   name: string;
   price: number;
   image?: string;
   description?: string;
   release_date?: string;
   average_rating?: number;
+  rating?: number; // For similar games from API
   publisher_name?: string;
+  publisher?: string; // For similar games from API
   genres?: string[];
+  genre?: string[]; // For similar games from API
   platforms?: string[];
   languages?: string[];
   multiplayer?: boolean;
@@ -81,6 +85,8 @@ const GameDetailPage = () => {
   const [game, setGame] = useState<Game | null>(null);
   const [loading, setLoading] = useState(true);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [similarGames, setSimilarGames] = useState<Game[]>([]);
+  const [similarGamesLoading, setSimilarGamesLoading] = useState(true);
   const [hasPurchased, setHasPurchased] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [purchaseLoading, setPurchaseLoading] = useState(false);
@@ -93,6 +99,7 @@ const GameDetailPage = () => {
     if (id) {
       fetchGameDetail(id);
       fetchReviews(id);
+      fetchSimilarGames(id);
       if (currentUser) {
         checkPurchaseStatus(id);
         checkWishlistStatus(id);
@@ -129,6 +136,32 @@ const GameDetailPage = () => {
     }
   };
 
+  const fetchSimilarGames = async (gameId: string) => {
+    try {
+      setSimilarGamesLoading(true);
+      
+      // Gọi backend API để lấy similar games
+      const user_id = currentUser?.user_id || '';
+      const url = user_id 
+        ? `http://localhost:3001/api/customer/games/${gameId}/similar?user_id=${user_id}`
+        : `http://localhost:3001/api/customer/games/${gameId}/similar`;
+      
+      const response = await axios.get(url);
+      
+      // Lấy 8 games tương tự
+      if (response.data.success && response.data.similar_games) {
+        setSimilarGames(response.data.similar_games);
+      } else {
+        setSimilarGames([]);
+      }
+    } catch (error) {
+      console.error('Error fetching similar games:', error);
+      setSimilarGames([]);
+    } finally {
+      setSimilarGamesLoading(false);
+    }
+  };
+
   const checkPurchaseStatus = async (gameId: string) => {
     if (!currentUser) return;
     
@@ -154,6 +187,7 @@ const GameDetailPage = () => {
       console.error('Error checking wishlist status:', error);
     }
   };
+
 
   const fetchUserReview = async (gameId: string) => {
     if (!currentUser) return;
@@ -197,8 +231,17 @@ const GameDetailPage = () => {
     }
   };
 
+
   const handlePurchase = () => {
-    if (!currentUser || !game || hasPurchased) return;
+    if (!game || hasPurchased) return;
+    
+    // Nếu chưa đăng nhập, redirect đến login với returnUrl
+    if (!currentUser) {
+      const currentPath = window.location.pathname;
+      navigate(`/login?returnUrl=${encodeURIComponent(currentPath)}`);
+      return;
+    }
+    
     setShowPaymentModal(true);
   };
 
@@ -561,7 +604,7 @@ const GameDetailPage = () => {
                       color="primary"
                       startIcon={<CartIcon />}
                       onClick={handlePurchase}
-                      disabled={purchaseLoading || !currentUser}
+                      disabled={purchaseLoading}
                       sx={{ 
                         py: 1.5, 
                         px: 3,
@@ -611,7 +654,7 @@ const GameDetailPage = () => {
                       })
                     }}
                   >
-                      {isInWishlist ? 'Unwishlist' : 'Wishlist'}
+                    {isInWishlist ? 'Unwishlist' : 'Wishlist'}
                   </Button>
                   )}
                   </Box>
@@ -888,6 +931,181 @@ const GameDetailPage = () => {
           </CardContent>
         </Card>
       </Box>
+
+      {/* Similar Games Section */}
+      {!similarGamesLoading && similarGames.length > 0 && (
+        <Box sx={{ mt: 6 }}>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
+            💡 Có thể bạn cũng thích
+          </Typography>
+          
+          <Box sx={{ 
+            display: 'grid', 
+            gridTemplateColumns: { 
+              xs: '1fr', 
+              sm: 'repeat(2, 1fr)', 
+              md: 'repeat(3, 1fr)', 
+              lg: 'repeat(4, 1fr)' 
+            }, 
+            gap: 3 
+          }}>
+            {similarGames.map((similarGame) => (
+              <Card
+                key={similarGame.id}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+                  }
+                }}
+                onClick={() => {
+                  navigate(`/games/${similarGame.id}`);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              >
+                <Box
+                  sx={{
+                    height: 200,
+                    backgroundImage: similarGame.image 
+                      ? `url(${similarGame.image})` 
+                      : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Overlay */}
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)',
+                    }}
+                  />
+                  
+                  {/* Content */}
+                  <Box sx={{ position: 'relative', zIndex: 1, p: 2, color: 'white' }}>
+                    <Typography 
+                      variant="h6" 
+                      sx={{ 
+                        fontWeight: 600, 
+                        mb: 1,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                        lineHeight: 1.2,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {similarGame.name}
+                    </Typography>
+
+                    {/* Genres */}
+                    <Box sx={{ mb: 2, minHeight: 24 }}>
+                      {(similarGame.genres || similarGame.genre) && (similarGame.genres || similarGame.genre)!.length > 0 ? (
+                        <>
+                          {(similarGame.genres || similarGame.genre)!.slice(0, 2).map((genre) => (
+                            <Chip
+                              key={genre}
+                              label={genre}
+                              size="small"
+                              sx={{ 
+                                mr: 0.5, 
+                                mb: 0.5,
+                                backgroundColor: 'rgba(255,255,255,0.2)',
+                                color: 'white',
+                                border: '1px solid rgba(255,255,255,0.3)',
+                                fontSize: '0.7rem',
+                                height: 20,
+                              }}
+                            />
+                          ))}
+                          {(similarGame.genres || similarGame.genre)!.length > 2 && (
+                            <Chip
+                              label={`+${(similarGame.genres || similarGame.genre)!.length - 2}`}
+                              size="small"
+                              sx={{ 
+                                backgroundColor: 'rgba(255,255,255,0.2)',
+                                color: 'white',
+                                fontSize: '0.7rem',
+                                height: 20,
+                              }}
+                            />
+                          )}
+                        </>
+                      ) : null}
+                    </Box>
+
+                    {/* Similarity & Compatibility Scores */}
+                    {(similarGame as any).similarity_score && (
+                      <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+                        <Chip
+                          label={`Similarity: ${Math.round((similarGame as any).similarity_score * 100)}%`}
+                          size="small"
+                          sx={{
+                            backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                            color: 'white',
+                            fontSize: '0.65rem',
+                            height: 18,
+                          }}
+                        />
+                        {(similarGame as any).compatibility_score && (
+                          <Chip
+                            label={`Compatibility: ${Math.round((similarGame as any).compatibility_score * 100)}%`}
+                            size="small"
+                            sx={{
+                              backgroundColor: 'rgba(33, 150, 243, 0.8)',
+                              color: 'white',
+                              fontSize: '0.65rem',
+                              height: 18,
+                            }}
+                          />
+                        )}
+                      </Box>
+                    )}
+
+                    {/* Price and Rating */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography 
+                        variant="h6" 
+                        sx={{ 
+                          color: '#ffd700', 
+                          fontWeight: 700,
+                          textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                          fontSize: '0.9rem',
+                        }}
+                      >
+                        {similarGame.price === 0 ? 'Miễn phí' : `${(similarGame.price / 1000).toFixed(0)}K`}
+                      </Typography>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          textShadow: '0 2px 4px rgba(0,0,0,0.8)',
+                        }}
+                      >
+                        ⭐ {similarGame.rating ? Number(similarGame.rating).toFixed(1) : 'N/A'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Card>
+            ))}
+          </Box>
+        </Box>
+      )}
 
       {/* Payment Modal */}
       {game && currentUser && (

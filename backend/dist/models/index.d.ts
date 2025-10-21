@@ -13,4 +13,5 @@ export * from './Purchase';
 export * from './Wishlist';
 export * from './Review';
 export * from './View';
+export * from './BalanceTransaction';
 //# sourceMappingURL=index.d.ts.map

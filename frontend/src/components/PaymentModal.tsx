@@ -16,8 +16,7 @@ import {
 import {
   AccountBalance,
   CreditCard,
-  Gamepad,
-  Person
+  Gamepad
 } from '@mui/icons-material';
 
 interface PaymentModalProps {
@@ -125,7 +124,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             </Card>
           </Box>
 
-          {/* Payment Information */}
+          {/* Balance Information */}
           <Box flex={1}>
             <Card variant="outlined" sx={{ height: '100%' }}>
               <CardContent>
@@ -138,66 +137,51 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
                 <Box mb={2}>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Chủ tài khoản:
-                  </Typography>
-                  <Typography variant="body1" fontWeight="bold">
-                    Nguyễn Sỹ Kim Bằng
-                  </Typography>
-                </Box>
-
-                <Box mb={2}>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Số tài khoản:
-                  </Typography>
-                  <Typography variant="body1" fontWeight="bold" fontFamily="monospace">
-                    1029727303
-                  </Typography>
-                </Box>
-
-                <Box mb={2}>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Ngân hàng:
-                  </Typography>
-                  <Typography variant="body1" fontWeight="bold">
-                    Vietcombank
-                  </Typography>
-                </Box>
-
-                <Box mb={2}>
-                  <Typography variant="body2" color="text.secondary" gutterBottom>
                     Phương thức thanh toán:
                   </Typography>
-                  <Typography variant="body1" fontWeight="bold">
-                    Chuyển khoản ngân hàng
+                  <Typography variant="body1" fontWeight="bold" color="primary">
+                    Trừ từ số dư tài khoản
                   </Typography>
                 </Box>
 
                 <Box mb={2}>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Nội dung chuyển khoản:
+                    Số dư hiện tại:
                   </Typography>
-                  <Typography variant="body1" fontWeight="bold" fontFamily="monospace">
-                    MUA GAME {game.game_id} - {user.username}
+                  <Typography variant="h6" color="primary" fontWeight="bold">
+                    {formatPrice(userBalance)}
                   </Typography>
                 </Box>
 
-                {/* QR Code */}
-                <Box textAlign="center" mt={2}>
+                <Box mb={2}>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
-                    Quét mã QR để chuyển khoản:
+                    Số tiền cần trừ:
                   </Typography>
-                  <Box 
-                    component="img"
-                    src="/qr.png"
-                    alt="QR Code"
-                    sx={{
-                      width: 120,
-                      height: 120,
-                      border: '1px solid #e0e0e0',
-                      borderRadius: 1
-                    }}
-                  />
+                  <Typography variant="h6" color="error.main" fontWeight="bold">
+                    -{formatPrice(game.price)}
+                  </Typography>
                 </Box>
+
+                <Box mb={2}>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Số dư sau khi mua:
+                  </Typography>
+                  <Typography 
+                    variant="h6" 
+                    color={canAfford ? "success.main" : "error.main"}
+                    fontWeight="bold"
+                  >
+                    {canAfford ? formatPrice(remainingBalance) : "Không đủ tiền"}
+                  </Typography>
+                </Box>
+
+                {!canAfford && (
+                  <Box mt={2} p={2} bgcolor="error.light" borderRadius={1}>
+                    <Typography variant="body2" color="error.contrastText" fontWeight="bold">
+                      ⚠️ Số dư không đủ! Cần thêm {formatPrice(game.price - userBalance)} để mua game này.
+                    </Typography>
+                  </Box>
+                )}
               </CardContent>
             </Card>
           </Box>
@@ -205,76 +189,44 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
         <Divider sx={{ my: 2 }} />
 
-        {/* User Balance Information */}
-        <Card variant="outlined">
-          <CardContent>
-            <Box display="flex" alignItems="center" gap={2} mb={2}>
-              <Person color="primary" />
-              <Typography variant="h6" fontWeight="bold">
-                Thông Tin Tài Khoản
-              </Typography>
-            </Box>
-            
-            <Box display="flex" gap={4}>
-              <Box flex={1}>
-                <Typography variant="body2" color="text.secondary">
-                  Tài khoản hiện tại:
-                </Typography>
-                <Typography variant="h6" color="primary">
-                  {formatPrice(userBalance)}
-                </Typography>
-              </Box>
-              <Box flex={1}>
-                <Typography variant="body2" color="text.secondary">
-                  Số dư sau khi mua:
-                </Typography>
-                <Typography 
-                  variant="h6" 
-                  color={canAfford ? "success.main" : "error.main"}
-                >
-                  {canAfford ? formatPrice(remainingBalance) : "Không đủ tiền"}
-                </Typography>
-              </Box>
-            </Box>
-
-            {!canAfford && (
-              <Box mt={2} p={2} bgcolor="error.light" borderRadius={1}>
-                <Typography variant="body2" color="error.contrastText">
-                  ⚠️ Số dư tài khoản không đủ để mua game này. 
-                  Vui lòng nạp tiền vào tài khoản trước khi mua.
-                </Typography>
-              </Box>
-            )}
-
-            {canAfford && (
-              <Box mt={2} p={2} bgcolor="warning.light" borderRadius={1}>
-                <Typography variant="body2" color="warning.contrastText" fontWeight="bold">
-                  ⚠️ CẢNH BÁO: Bạn có chắc chắn muốn sử dụng {formatPrice(game.price)} để mua game "{game.name}" không?
-                  <br />
-                  <br />
-                  Giao dịch này KHÔNG THỂ HOÀN TÁC sau khi xác nhận!
-                  <br />
-                  Số dư sẽ bị trừ ngay lập tức và game sẽ được thêm vào thư viện của bạn.
-                </Typography>
-              </Box>
-            )}
-          </CardContent>
-        </Card>
-
         {/* Payment Instructions */}
         <Box mt={2} p={2} bgcolor="info.light" borderRadius={1}>
           <Typography variant="body2" color="info.contrastText">
             <strong>Hướng dẫn thanh toán:</strong>
             <br />
-            1. Chuyển khoản đúng số tiền {formatPrice(game.price)} vào tài khoản trên
+            1. Số tiền sẽ được trừ trực tiếp từ số dư tài khoản của bạn
             <br />
-            2. Nội dung chuyển khoản: MUA GAME {game.game_id} - {user.username}
+            2. Nếu không đủ tiền, vui lòng nạp tiền vào tài khoản trước
             <br />
-            3. Sau khi chuyển khoản, nhấn "Xác nhận mua" để hoàn tất giao dịch
+            3. Nhấn "Xác nhận mua" để hoàn tất giao dịch
             <br />
             4. Game sẽ được thêm vào thư viện của bạn ngay lập tức
           </Typography>
         </Box>
+
+        {/* Warning for insufficient balance */}
+        {!canAfford && (
+          <Box mt={2} p={2} bgcolor="error.light" borderRadius={1}>
+            <Typography variant="body2" color="error.contrastText" fontWeight="bold">
+              ⚠️ Số dư tài khoản không đủ để mua game này. 
+              Vui lòng nạp tiền vào tài khoản trước khi mua.
+            </Typography>
+          </Box>
+        )}
+
+        {/* Warning for sufficient balance */}
+        {canAfford && (
+          <Box mt={2} p={2} bgcolor="warning.light" borderRadius={1}>
+            <Typography variant="body2" color="warning.contrastText" fontWeight="bold">
+              ⚠️ CẢNH BÁO: Bạn có chắc chắn muốn sử dụng {formatPrice(game.price)} để mua game "{game.name}" không?
+              <br />
+              <br />
+              Giao dịch này KHÔNG THỂ HOÀN TÁC sau khi xác nhận!
+              <br />
+              Số dư sẽ bị trừ ngay lập tức và game sẽ được thêm vào thư viện của bạn.
+            </Typography>
+          </Box>
+        )}
       </DialogContent>
 
       <DialogActions sx={{ p: 3, pt: 0 }}>
@@ -285,24 +237,41 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         >
           Hủy
         </Button>
-        <Button 
-          onClick={onConfirm}
-          variant="contained"
-          disabled={!canAfford || loading}
-          startIcon={<CreditCard />}
-          sx={{
-            background: canAfford 
-              ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              : undefined,
-            '&:hover': {
-              background: canAfford 
-                ? 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)'
-                : undefined
-            }
-          }}
-        >
-          {loading ? 'Đang xử lý...' : 'Xác nhận mua'}
-        </Button>
+        
+        {!canAfford ? (
+          <Button 
+            onClick={() => {
+              // Navigate to deposit page
+              window.location.href = '/profile';
+            }}
+            variant="contained"
+            color="primary"
+            startIcon={<AccountBalance />}
+            sx={{
+              background: 'linear-gradient(135deg, #4caf50 0%, #45a049 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #45a049 0%, #3d8b40 100%)'
+              }
+            }}
+          >
+            Nạp tiền vào tài khoản
+          </Button>
+        ) : (
+          <Button 
+            onClick={onConfirm}
+            variant="contained"
+            disabled={loading}
+            startIcon={<CreditCard />}
+            sx={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)'
+              }
+            }}
+          >
+            {loading ? 'Đang xử lý...' : 'Xác nhận mua'}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

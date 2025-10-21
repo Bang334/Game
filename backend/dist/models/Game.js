@@ -92,13 +92,29 @@ class GameModel {
         WHERE gl.game_id = ?
       `, [game.game_id]);
             const languages = languageRows.map((row) => row.name);
+            // Get specifications
+            const [specRows] = await db_1.pool.execute(`
+        SELECT type, cpu, ram, gpu FROM Specification
+        WHERE game_id = ?
+      `, [game.game_id]);
+            const specs = specRows;
+            const minSpecs = specs.find((spec) => spec.type === 'MIN');
+            const recSpecs = specs.find((spec) => spec.type === 'REC');
             gamesWithGenres.push({
                 ...game,
                 genres,
                 platforms,
                 languages,
-                min_specs: null,
-                rec_specs: null
+                min_specs: minSpecs ? {
+                    cpu: minSpecs.cpu,
+                    ram: minSpecs.ram,
+                    gpu: minSpecs.gpu
+                } : null,
+                rec_specs: recSpecs ? {
+                    cpu: recSpecs.cpu,
+                    ram: recSpecs.ram,
+                    gpu: recSpecs.gpu
+                } : null
             });
         }
         return gamesWithGenres;
@@ -163,25 +179,29 @@ class GameModel {
     }
     // Get top downloaded games
     static async findTopDownloaded(limit = 10) {
+        // Ensure limit is a safe integer to prevent SQL injection
+        const safeLimit = Math.max(1, Math.min(100, Math.floor(limit)));
         const [rows] = await db_1.pool.execute(`
       SELECT g.*, p.name as publisher_name
       FROM Game g
       JOIN Publisher p ON g.publisher_id = p.publisher_id
       ORDER BY g.downloads DESC
-      LIMIT ?
-    `, [limit]);
+      LIMIT ${safeLimit}
+    `);
         return rows;
     }
     // Get top rated games
     static async findTopRated(limit = 10) {
+        // Ensure limit is a safe integer to prevent SQL injection
+        const safeLimit = Math.max(1, Math.min(100, Math.floor(limit)));
         const [rows] = await db_1.pool.execute(`
       SELECT g.*, p.name as publisher_name
       FROM Game g
       JOIN Publisher p ON g.publisher_id = p.publisher_id
       WHERE g.average_rating > 0
       ORDER BY g.average_rating DESC
-      LIMIT ?
-    `, [limit]);
+      LIMIT ${safeLimit}
+    `);
         return rows;
     }
     // Get games by price range
@@ -194,6 +214,68 @@ class GameModel {
       ORDER BY g.price
     `, [minPrice, maxPrice]);
         return rows;
+    }
+    // Get similar games based on a game
+    static async findSimilarGames(gameId, limit = 8) {
+        // First, get the target game's details
+        const targetGame = await this.findByIdWithDetails(gameId);
+        if (!targetGame)
+            return [];
+        const safeLimit = Math.max(1, Math.min(20, Math.floor(limit)));
+        // Find games with similar genres, similar price range, and good ratings
+        const priceMin = Math.max(0, targetGame.price * 0.5); // 50% lower
+        const priceMax = targetGame.price * 1.5; // 50% higher
+        const [rows] = await db_1.pool.execute(`
+      SELECT DISTINCT g.*, p.name as publisher_name,
+        (SELECT COUNT(*) FROM Game_Genre gg1 
+         JOIN Game_Genre gg2 ON gg1.genre_id = gg2.genre_id
+         WHERE gg1.game_id = g.game_id AND gg2.game_id = ?) as genre_match_count
+      FROM Game g
+      JOIN Publisher p ON g.publisher_id = p.publisher_id
+      WHERE g.game_id != ?
+        AND g.price BETWEEN ? AND ?
+        AND EXISTS (
+          SELECT 1 FROM Game_Genre gg1
+          JOIN Game_Genre gg2 ON gg1.genre_id = gg2.genre_id
+          WHERE gg1.game_id = g.game_id AND gg2.game_id = ?
+        )
+      ORDER BY genre_match_count DESC, g.average_rating DESC, g.downloads DESC
+      LIMIT ${safeLimit}
+    `, [gameId, gameId, priceMin, priceMax, gameId]);
+        const games = rows;
+        const gamesWithDetails = [];
+        for (const game of games) {
+            // Get genres
+            const [genreRows] = await db_1.pool.execute(`
+        SELECT gen.name FROM Genre gen
+        JOIN Game_Genre gg ON gen.genre_id = gg.genre_id
+        WHERE gg.game_id = ?
+      `, [game.game_id]);
+            const genres = genreRows.map((row) => row.name);
+            // Get platforms
+            const [platformRows] = await db_1.pool.execute(`
+        SELECT p.name FROM Platform p
+        JOIN Game_Platform gp ON p.platform_id = gp.platform_id
+        WHERE gp.game_id = ?
+      `, [game.game_id]);
+            const platforms = platformRows.map((row) => row.name);
+            // Get languages
+            const [languageRows] = await db_1.pool.execute(`
+        SELECT l.name FROM Language l
+        JOIN Game_Language gl ON l.language_id = gl.language_id
+        WHERE gl.game_id = ?
+      `, [game.game_id]);
+            const languages = languageRows.map((row) => row.name);
+            gamesWithDetails.push({
+                ...game,
+                genres,
+                platforms,
+                languages,
+                min_specs: null,
+                rec_specs: null
+            });
+        }
+        return gamesWithDetails;
     }
     // Create new game
     static async create(data) {

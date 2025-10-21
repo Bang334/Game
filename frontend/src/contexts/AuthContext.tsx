@@ -14,8 +14,8 @@ interface RegisterData {
   username: string;
   email: string;
   password: string;
-  age?: number;
-  gender?: string;
+  age: number; // Required field
+  gender: string; // Required field (only 'male' or 'female')
 }
 
 interface AuthContextType {
@@ -148,7 +148,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         : errorCode === 'USERNAME_ALREADY_EXISTS'
         ? 'Tên đăng nhập đã tồn tại'
         : errorCode === 'MISSING_FIELDS'
-        ? 'Vui lòng nhập đầy đủ thông tin'
+        ? 'Vui lòng nhập đầy đủ thông tin (bao gồm tuổi và giới tính)'
+        : errorCode === 'INVALID_AGE'
+        ? 'Tuổi không hợp lệ (phải từ 1 đến 120)'
+        : errorCode === 'INVALID_GENDER'
+        ? 'Giới tính không hợp lệ (chỉ chọn Nam hoặc Nữ)'
         : 'Đăng ký thất bại';
       setError(message);
       enqueueSnackbar(message, { variant: 'error' });

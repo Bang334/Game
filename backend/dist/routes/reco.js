@@ -173,7 +173,7 @@ async function syncDataToGameJson() {
  */
 router.get('/games', async (req, res) => {
     try {
-        const { user_id, query } = req.query;
+        const { user_id, query, days } = req.query;
         if (!user_id) {
             return res.status(400).json({
                 success: false,
@@ -183,17 +183,19 @@ router.get('/games', async (req, res) => {
         }
         const userId = parseInt(user_id);
         const searchQuery = query ? query.trim() : '';
+        const recentDays = days ? parseInt(days) : 7; // Default: 7 days
         console.log('\n=== RECOMMENDATION REQUEST ===');
         console.log('User ID:', userId);
         console.log('Search Query:', searchQuery || '(none)');
+        console.log('Recent Days:', recentDays);
         // Sync data first (this ensures game.json is up-to-date)
         console.log('Syncing data to game.json...');
         const syncSuccess = await syncDataToGameJson();
         if (!syncSuccess) {
             console.log('⚠️  Sync failed, but continuing with existing game.json');
         }
-        // Build Python command with optional query parameter
-        let pythonCommand = `python "${PYTHON_SCRIPT}" --user ${userId} --chart 0`;
+        // Build Python command with optional query parameter and recent_days
+        let pythonCommand = `python "${PYTHON_SCRIPT}" --user ${userId} --chart 0 --days ${recentDays}`;
         if (searchQuery) {
             pythonCommand += ` --query "${searchQuery}"`;
         }

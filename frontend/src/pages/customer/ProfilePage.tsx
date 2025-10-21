@@ -389,10 +389,38 @@ const ProfilePage = () => {
     );
   }
 
+  const textFieldStyle = {
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'rgba(255, 255, 255, 0.05)',
+      color: 'white',
+      '& fieldset': {
+        borderColor: 'rgba(255, 255, 255, 0.2)',
+      },
+      '&:hover fieldset': {
+        borderColor: 'rgba(255, 255, 255, 0.3)',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'rgba(255, 255, 255, 0.5)',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: 'rgba(255, 255, 255, 0.7)',
+      '&.Mui-focused': {
+        color: 'rgba(255, 255, 255, 0.9)',
+      },
+    },
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header with Avatar */}
-      <Card sx={{ mb: 3 }}>
+      <Card sx={{ 
+        mb: 3,
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+      }}>
         <CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
             <Avatar 
@@ -406,27 +434,42 @@ const ProfilePage = () => {
               {profile?.username?.charAt(0).toUpperCase()}
             </Avatar>
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, color: 'white' }}>
                 {profile?.username}
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <Chip 
                   icon={<EmailIcon />} 
                   label={profile?.email} 
-                  variant="outlined" 
+                  variant="outlined"
+                  sx={{ 
+                    color: 'white',
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    '& .MuiChip-icon': { color: 'white' }
+                  }}
                 />
                 {profile?.age && (
                   <Chip 
                     icon={<CakeIcon />} 
                     label={`${profile.age} tuổi`} 
-                    variant="outlined" 
+                    variant="outlined"
+                    sx={{ 
+                      color: 'white',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      '& .MuiChip-icon': { color: 'white' }
+                    }}
                   />
                 )}
                 {profile?.gender && (
                   <Chip 
                     icon={<GenderIcon />} 
                     label={profile.gender === 'male' ? 'Nam' : profile.gender === 'female' ? 'Nữ' : 'Khác'} 
-                    variant="outlined" 
+                    variant="outlined"
+                    sx={{ 
+                      color: 'white',
+                      borderColor: 'rgba(255, 255, 255, 0.3)',
+                      '& .MuiChip-icon': { color: 'white' }
+                    }}
                   />
                 )}
                 {profile?.balance !== undefined && (
@@ -443,8 +486,13 @@ const ProfilePage = () => {
       </Card>
 
       {/* Tabs */}
-      <Card>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Card sx={{
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+      }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }}>
           <Tabs 
             value={tabValue} 
             onChange={handleTabChange}
@@ -454,6 +502,13 @@ const ProfilePage = () => {
                 minHeight: 64,
                 fontSize: '1rem',
                 fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.7)',
+                '&.Mui-selected': {
+                  color: 'white',
+                }
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: 'white',
               }
             }}
           >
@@ -470,7 +525,7 @@ const ProfilePage = () => {
         <TabPanel value={tabValue} index={0}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-              <Typography variant="h5" sx={{ fontWeight: 600 }}>
+              <Typography variant="h5" sx={{ fontWeight: 600, color: 'white' }}>
                 Thông tin cá nhân
               </Typography>
               {!editMode ? (
@@ -509,6 +564,7 @@ const ProfilePage = () => {
                   value={profile?.username || ''}
                   disabled
                   variant="outlined"
+                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -518,6 +574,7 @@ const ProfilePage = () => {
                   value={profile?.email || ''}
                   disabled
                   variant="outlined"
+                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -530,6 +587,7 @@ const ProfilePage = () => {
                   disabled={!editMode}
                   variant="outlined"
                   inputProps={{ min: 1, max: 120 }}
+                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -541,6 +599,7 @@ const ProfilePage = () => {
                   onChange={(e) => setEditedProfile(prev => ({ ...prev, gender: e.target.value }))}
                   disabled={!editMode}
                   variant="outlined"
+                  sx={textFieldStyle}
                 >
                   <MenuItem value="">Không chọn</MenuItem>
                   <MenuItem value="male">Nam</MenuItem>

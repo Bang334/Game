@@ -76,6 +76,7 @@ export declare class GameModel {
     static findTopDownloaded(limit?: number): Promise<GameWithPublisher[]>;
     static findTopRated(limit?: number): Promise<GameWithPublisher[]>;
     static findByPriceRange(minPrice: number, maxPrice: number): Promise<GameWithPublisher[]>;
+    static findSimilarGames(gameId: number, limit?: number): Promise<GameWithDetails[]>;
     static create(data: CreateGameData): Promise<number>;
     static update(gameId: number, data: UpdateGameData): Promise<boolean>;
     static updateRating(gameId: number, newRating: number): Promise<boolean>;

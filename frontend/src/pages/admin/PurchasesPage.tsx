@@ -535,11 +535,11 @@ const AdminPurchasesPage = () => {
                         🎮
                       </Avatar>
                       <Box>
-                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        <Typography variant="body2" sx={{ fontWeight: 600, color: 'primary.main' }}>
                           {purchase.game.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {formatPrice(purchase.game.price)}
+                        <Typography variant="caption" color="text.secondary">
+                          ID: #{purchase.game_id} • {formatPrice(purchase.game.price)}
                         </Typography>
                       </Box>
                     </Box>

@@ -57,9 +57,27 @@ WEIGHTS_WITH_KEYWORD = {
     'keyword': DEFAULT_KEYWORD_WEIGHT_WITH_KEYWORD
 }
 
+# Dictionary trọng số cho COLD START user (không có lịch sử) - KHÔNG có keyword
+WEIGHTS_COLD_START_NO_KEYWORD = {
+    'svd': 0.70,  # Tăng SVD (collaborative filtering từ user tương tự)
+    'content': 0.00,  # Không có lịch sử → không tính content
+    'demographic': 0.30,  # Tăng demographic (dựa trên age/gender)
+    'keyword': 0.00
+}
+
+# Dictionary trọng số cho COLD START user (không có lịch sử) - CÓ keyword
+WEIGHTS_COLD_START_WITH_KEYWORD = {
+    'svd': 0.30,  # Giữ SVD
+    'content': 0.00,  # Không có lịch sử → không tính content
+    'demographic': 0.10,  # Giữ demographic
+    'keyword': 0.60  # Keyword vẫn quan trọng nhất khi tìm kiếm
+}
+
 # Kiểm tra tổng trọng số = 1.0
 assert sum(WEIGHTS_NO_KEYWORD.values()) == 1.0, "Tổng trọng số không có keyword phải = 1.0"
 assert sum(WEIGHTS_WITH_KEYWORD.values()) == 1.0, "Tổng trọng số có keyword phải = 1.0"
+assert sum(WEIGHTS_COLD_START_NO_KEYWORD.values()) == 1.0, "Tổng trọng số cold start không có keyword phải = 1.0"
+assert sum(WEIGHTS_COLD_START_WITH_KEYWORD.values()) == 1.0, "Tổng trọng số cold start có keyword phải = 1.0"
 
 class GameRecommendationSystem:
     def __init__(self):
@@ -88,11 +106,11 @@ class GameRecommendationSystem:
                 self.users_data = data['users']
             
             # Load CPU data
-            with open('cpu.json', 'r', encoding='utf-8') as f:
+            with open('game_recommendation_system/cpu.json', 'r', encoding='utf-8') as f:
                 self.cpu_data = json.load(f)
             
             # Load GPU data
-            with open('gpu.json', 'r', encoding='utf-8') as f:
+            with open('game_recommendation_system/gpu.json', 'r', encoding='utf-8') as f:
                 self.gpu_data = json.load(f)
             
             # Load library data (keyword mapping)
@@ -484,14 +502,14 @@ class GameRecommendationSystem:
             purchased_games_dict = user_data.get('purchased_games', {})
             view_history = user_data.get('view_history', {})
             
-            # Convert purchased_games dict to list of game_ids
-            purchased_games = list(purchased_games_dict.keys())
+            # Convert purchased_games dict to list of game_ids (convert to int)
+            purchased_games = [int(game_id) for game_id in purchased_games_dict.keys()]
             
-            # Tạo danh sách games với trọng số từ view history
+            # Tạo danh sách games với trọng số từ view history (convert to int)
             view_games_weighted = []
             for game_id, view_count in view_history.items():
                 # Lặp lại game_id theo số lần xem để tăng trọng số
-                view_games_weighted.extend([game_id] * view_count)
+                view_games_weighted.extend([int(game_id)] * view_count)
             
             # KHÔNG dùng set() để giữ trùng lặp - games vừa thích vừa mua vừa xem sẽ xuất hiện nhiều lần
             interacted_games = favorite_games + purchased_games + view_games_weighted
@@ -556,8 +574,22 @@ class GameRecommendationSystem:
     
     def calculate_demographic_similarity(self, user1, user2):
         """Tính độ tương đồng về tuổi và giới tính"""
+        # ⚠️ Kiểm tra age/gender có None/null không
+        age1 = user1.get('age')
+        age2 = user2.get('age')
+        gender1 = user1.get('gender')
+        gender2 = user2.get('gender')
+        
+        # Nếu age hoặc gender của target user là None → demographic_similarity = 0
+        if age1 is None or gender1 is None:
+            return 0.0
+        
+        # Nếu age hoặc gender của other user là None → không thể so sánh
+        if age2 is None or gender2 is None:
+            return 0.0
+        
         # Tính chênh lệch tuổi
-        age_diff = abs(user1['age'] - user2['age'])
+        age_diff = abs(age1 - age2)
         
         # Trọng số tuổi: giảm 0.2 mỗi năm chênh lệch, cách 5 tuổi = 0
         # 1 tuổi: 1 - 0.2 = 0.8
@@ -568,7 +600,7 @@ class GameRecommendationSystem:
         age_weight = max(0.0, 1 - (age_diff * 0.2))
         
         # Trọng số giới tính: cùng giới tính = 1.0, khác giới tính = 0.5
-        gender_weight = 1.0 if user1['gender'] == user2['gender'] else 0.5
+        gender_weight = 1.0 if gender1 == gender2 else 0.5
         
         # Kết hợp cả hai trọng số
         demographic_similarity = age_weight * gender_weight
@@ -581,6 +613,12 @@ class GameRecommendationSystem:
             # Lấy thông tin user hiện tại
             target_user = next((u for u in self.users_data if u['id'] == user_id), None)
             if not target_user:
+                return []
+            
+            # ⚠️ Kiểm tra age/gender của target user
+            if target_user.get('age') is None or target_user.get('gender') is None:
+                # Age hoặc gender = None → demographic score = 0 cho tất cả games
+                # Trả về empty list, hybrid sẽ tính: demographic_score = 0, weight vẫn giữ nguyên
                 return []
             
             # Lấy games đã tương tác của target user
@@ -899,20 +937,38 @@ class GameRecommendationSystem:
         # Initialize db_interactions
         db_interactions = None
         
-        # ⭐ TRY SQLite DATABASE FIRST (if available and recent_days specified)
-        if self.use_sqlite and recent_days:
+        # ⭐ TRY SQLite DATABASE FIRST (if available)
+        if self.use_sqlite:
+            # Lấy từ SQLite (all time hoặc recent_days)
             db_interactions = self.get_user_interactions_from_db(user_id, recent_days)
-            if db_interactions:
+            
+            # Kiểm tra XEM CÓ DATA thật không (không chỉ kiểm tra dict)
+            has_db_data = (
+                db_interactions and (
+                    db_interactions['favorite_games'] or 
+                    db_interactions['purchased_games'] or 
+                    db_interactions['view_history']
+                )
+            )
+            
+            if has_db_data:
+                # ✓ Dùng data từ SQLite (CÓ DATA THẬT)
                 favorite_games = db_interactions['favorite_games']
                 purchased_games = list(db_interactions['purchased_games'].keys())
                 view_history = db_interactions['view_history']
             else:
-                # Fallback to JSON
+                # ⚠️ SQLite KHÔNG CÓ DATA cho user này
+                # → Fallback to JSON (CHỈ cho testing, KHÔNG dùng cho adaptive boosting)
+                print(f"⚠️  Warning: User {user_id} không có trong SQLite → Dùng data test từ JSON (không boost)")
                 favorite_games = user_data.get('favorite_games', [])
                 purchased_games = list(user_data.get('purchased_games', {}).keys())
                 view_history = user_data.get('view_history', {})
+                
+                # ❌ KHÔNG tính preferences cho test users (để tránh boost với data fake)
+                # Nếu muốn enable boost cho test users, comment dòng dưới
+                return None  # → adaptive boosting sẽ bị disable
         else:
-            # Use data from JSON (all time or no SQLite)
+            # ❌ Không có SQLite → Use data from JSON
             favorite_games = user_data.get('favorite_games', [])
             purchased_games_dict = user_data.get('purchased_games', {})
             purchased_games = list(purchased_games_dict.keys())
@@ -1339,6 +1395,10 @@ class GameRecommendationSystem:
         # Phân tích preferences strength
         preferences = self.analyze_user_preferences(user_id)
         
+        # ⚠️ Nếu không có preferences (user không có trong SQLite) → Không điều chỉnh weights
+        if not preferences:
+            return None
+        
         # Tính độ mạnh của preferences (có publisher/genre preferences mạnh không?)
         publisher_strength = max(preferences['publishers'].values()) if preferences['publishers'] else 0
         genre_strength = max(preferences['genres'].values()) if preferences['genres'] else 0
@@ -1423,6 +1483,20 @@ class GameRecommendationSystem:
                         Ví dụ: recent_days=7 → chỉ dùng data 7 ngày vừa qua
         """
         
+        # ⭐ COLD START: Kiểm tra xem user có lịch sử tương tác không
+        is_cold_start = False
+        user_data = next((u for u in self.users_data if u['id'] == user_id), None)
+        if user_data:
+            favorite_games = user_data.get('favorite_games', [])
+            purchased_games = list(user_data.get('purchased_games', {}).keys())
+            view_history = user_data.get('view_history', {})
+            
+            # Nếu user CHƯA có bất kỳ lịch sử nào → COLD START
+            if not favorite_games and not purchased_games and not view_history:
+                is_cold_start = True
+                print(f"\n❄️ COLD START: User {user_id} chưa có lịch sử tương tác")
+                print(f"   → Tính SVD + Demographic + Keyword, bỏ qua Content (set = 0)")
+        
         # Lấy recommendations từ cả ba phương pháp
         svd_recs = self.get_svd_recommendations(user_id, top_n)
         content_recs = self.get_content_recommendations(user_id, top_n)
@@ -1502,42 +1576,46 @@ class GameRecommendationSystem:
                     'downloads': game.get('downloads', 0)
                 }
         
-        # Tính content score cho các games chưa có content score
-        for game_id in all_games:
-            if all_games[game_id]['content_score'] == 0:
-                # Tính content score dựa trên similarity với games user đã tương tác
-                user_data = next((u for u in self.users_data if u['id'] == user_id), None)
-                if user_data and self.content_similarity_matrix is not None:
-                    # Lấy games user đã tương tác
-                    favorite_games = user_data.get('favorite_games', [])
-                    purchased_games_dict = user_data.get('purchased_games', {})
-                    purchased_games = list(purchased_games_dict.keys())
-                    view_history = user_data.get('view_history', {})
-                    
-                    # Tạo danh sách games với trọng số từ view history
-                    view_games_weighted = []
-                    for gid, view_count in view_history.items():
-                        view_games_weighted.extend([gid] * view_count)
-                    
-                    interacted_games = favorite_games + purchased_games + view_games_weighted
-                    
-                    if interacted_games:
-                        # Tính similarity với games user đã tương tác
-                        similarities = []
-                        game_idx = game_id - 1
-                        if 0 <= game_idx < len(self.content_similarity_matrix):
-                            for interacted_game_id in interacted_games:
-                                try:
-                                    interacted_idx = int(interacted_game_id) - 1
-                                    if 0 <= interacted_idx < len(self.content_similarity_matrix):
-                                        sim_score = self.content_similarity_matrix[game_idx][interacted_idx]
-                                        similarities.append(sim_score)
-                                except (ValueError, TypeError):
-                                    continue
+        # Tính content score cho các games chưa có content score (SKIP nếu cold start)
+        if not is_cold_start:
+            for game_id in all_games:
+                if all_games[game_id]['content_score'] == 0:
+                    # Tính content score dựa trên similarity với games user đã tương tác
+                    user_data = next((u for u in self.users_data if u['id'] == user_id), None)
+                    if user_data and self.content_similarity_matrix is not None:
+                        # Lấy games user đã tương tác
+                        favorite_games = user_data.get('favorite_games', [])
+                        purchased_games_dict = user_data.get('purchased_games', {})
+                        purchased_games = list(purchased_games_dict.keys())
+                        view_history = user_data.get('view_history', {})
                         
-                        if similarities:
-                            content_score = np.mean(similarities)
-                            all_games[game_id]['content_score'] = content_score
+                        # Tạo danh sách games với trọng số từ view history
+                        view_games_weighted = []
+                        for gid, view_count in view_history.items():
+                            view_games_weighted.extend([gid] * view_count)
+                        
+                        interacted_games = favorite_games + purchased_games + view_games_weighted
+                        
+                        if interacted_games:
+                            # Tính similarity với games user đã tương tác
+                            similarities = []
+                            game_idx = game_id - 1
+                            if 0 <= game_idx < len(self.content_similarity_matrix):
+                                for interacted_game_id in interacted_games:
+                                    try:
+                                        interacted_idx = int(interacted_game_id) - 1
+                                        if 0 <= interacted_idx < len(self.content_similarity_matrix):
+                                            sim_score = self.content_similarity_matrix[game_idx][interacted_idx]
+                                            similarities.append(sim_score)
+                                    except (ValueError, TypeError):
+                                        continue
+                            
+                            if similarities:
+                                content_score = np.mean(similarities)
+                                all_games[game_id]['content_score'] = content_score
+        else:
+            # Cold start: content_score = 0 cho tất cả games
+            print("   ⚠️  Skipping content score calculation (cold start user)")
         
         # Tính keyword score cho tất cả games
         for game_id in all_games:
@@ -1564,21 +1642,30 @@ class GameRecommendationSystem:
         else:
             svd_min = svd_max = svd_range = 0
         
-        # Chọn trọng số dựa trên có keyword hay không
-        if keyword and keyword.strip():
-            weights = WEIGHTS_WITH_KEYWORD
+        # Chọn trọng số dựa trên cold start và keyword
+        if is_cold_start:
+            if keyword and keyword.strip():
+                weights = WEIGHTS_COLD_START_WITH_KEYWORD
+                print(f"   📊 Using COLD START weights (with keyword): SVD={weights['svd']:.0%}, Content={weights['content']:.0%}, Demographic={weights['demographic']:.0%}, Keyword={weights['keyword']:.0%}")
+            else:
+                weights = WEIGHTS_COLD_START_NO_KEYWORD
+                print(f"   📊 Using COLD START weights (no keyword): SVD={weights['svd']:.0%}, Content={weights['content']:.0%}, Demographic={weights['demographic']:.0%}")
         else:
-            weights = WEIGHTS_NO_KEYWORD
+            if keyword and keyword.strip():
+                weights = WEIGHTS_WITH_KEYWORD
+            else:
+                weights = WEIGHTS_NO_KEYWORD
         
-        # 🔧 DYNAMIC WEIGHT ADJUSTMENT dựa trên user behavior
-        # Tạm tính recommendations để analyze behavior
-        temp_recs = sorted(all_games.values(), key=lambda x: x.get('svd_score', 0) + x.get('content_score', 0), reverse=True)[:50]
-        adjusted_weights = self.adjust_weights_based_on_behavior(user_id, temp_recs)
-        
-        # Áp dụng adjusted weights nếu có
-        if adjusted_weights and keyword and keyword.strip():
-            print(f"✅ Applying adjusted weights based on user behavior")
-            weights = adjusted_weights
+        # 🔧 DYNAMIC WEIGHT ADJUSTMENT dựa trên user behavior (SKIP nếu cold start)
+        if not is_cold_start:
+            # Tạm tính recommendations để analyze behavior
+            temp_recs = sorted(all_games.values(), key=lambda x: x.get('svd_score', 0) + x.get('content_score', 0), reverse=True)[:50]
+            adjusted_weights = self.adjust_weights_based_on_behavior(user_id, temp_recs)
+            
+            # Áp dụng adjusted weights nếu có
+            if adjusted_weights and keyword and keyword.strip():
+                print(f"✅ Applying adjusted weights based on user behavior")
+                weights = adjusted_weights
         
         svd_weight = weights['svd']
         content_weight = weights['content']
@@ -1624,7 +1711,7 @@ class GameRecommendationSystem:
         if user_data:
             # Chỉ loại bỏ games đã thích và mua, KHÔNG loại bỏ games đã xem
             favorite_games = set(user_data.get('favorite_games', []))
-            purchased_games = set(user_data.get('purchased_games', {}).keys())
+            purchased_games = set(int(k) for k in user_data.get('purchased_games', {}).keys())
             excluded_games = favorite_games.union(purchased_games)
             
             # Chỉ loại bỏ games đã thích và mua
@@ -1633,8 +1720,8 @@ class GameRecommendationSystem:
         else:
             filtered_games = all_games
         
-        # ⭐ ADAPTIVE BOOSTING SYSTEM ⭐
-        if enable_adaptive:
+        # ⭐ ADAPTIVE BOOSTING SYSTEM ⭐ (SKIP nếu cold start)
+        if enable_adaptive and not is_cold_start:
             # Phân tích user preferences (có thể filter theo recent_days)
             user_preferences = self.analyze_user_preferences(user_id, recent_days=recent_days)
             
@@ -1679,13 +1766,14 @@ class GameRecommendationSystem:
             matching_count = sum(1 for rec in sorted_recommendations if rec['keyword_score'] > 0)
             print(f"\n🔍 Keyword: '{keyword}' - {matching_count} games match (sorted to top)")
         
-        # Thêm link_download và image vào kết quả cuối cùng (fields phụ, không ảnh hưởng dự đoán)
+        # Thêm link_download, image, và cold_start flag vào kết quả cuối cùng
         final_recommendations = sorted_recommendations[:top_n]
         for rec in final_recommendations:
             game = next((g for g in self.games_data if g['id'] == rec['game_id']), None)
             if game:
                 rec['link_download'] = game.get('link_download', '')
                 rec['image'] = game.get('image', '')
+                rec['cold_start'] = is_cold_start  # Flag để frontend biết đây là cold start
         
         return final_recommendations
     
@@ -1698,6 +1786,12 @@ class GameRecommendationSystem:
         if not recommendations:
             print("No data to create chart")
             return None
+        
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
         
         # Get top N games to draw (avoid too crowded)
         top_recs = recommendations[:top_n]
@@ -1799,8 +1893,8 @@ class GameRecommendationSystem:
         plt.figtext(0.5, 0.02, weights_text, ha='center', fontsize=10, 
                     style='italic', bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgray", alpha=0.5))
         
-        # Save chart
-        chart_filename = 'game_scores_chart.png'  # Tên file cố định
+        # Save chart vào folder charts
+        chart_filename = os.path.join(charts_dir, 'game_scores_chart.png')
         plt.savefig(chart_filename, dpi=300, bbox_inches='tight')
         print(f"Chart saved to: {chart_filename}")
         
@@ -1898,9 +1992,17 @@ class GameRecommendationSystem:
         # Adjust layout
         plt.tight_layout()
         
-        # Save heatmap
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
+        
+        # Save heatmap vào folder charts
         if not filename:
-            filename = 'user_similarity_heatmap.png'  # Tên file cố định
+            filename = os.path.join(charts_dir, 'user_similarity_heatmap.png')
+        else:
+            filename = os.path.join(charts_dir, filename)
         plt.savefig(filename, dpi=300, bbox_inches='tight')
         print(f"User similarity heatmap saved to: {filename}")
         
@@ -1966,7 +2068,7 @@ class GameRecommendationSystem:
         return similarities
     
     def create_content_comparison_chart(self, user_id, recommendations, filename=None):
-        """Tạo heatmap ma trận so sánh content similarity giữa games được gợi ý và games user đã thích"""
+        """Tạo heatmap ma trận so sánh content similarity giữa games được gợi ý và games user đã tương tác (favorite_games + purchased_games + view_history)"""
         if not MATPLOTLIB_AVAILABLE:
             print("Matplotlib not available. Skipping content comparison chart creation.")
             return None
@@ -1984,20 +2086,62 @@ class GameRecommendationSystem:
         if not target_user:
             return None
         
-        # Lấy games user đã tương tác
+        # Lấy games user đã tương tác (GIỐNG NHƯ get_content_recommendations)
         favorite_games = target_user.get('favorite_games', [])
-        purchased_games = list(target_user.get('purchased_games', {}).keys())
-        interacted_games = favorite_games + purchased_games
+        purchased_games_dict = target_user.get('purchased_games', {})
+        view_history = target_user.get('view_history', {})
+        
+        # Convert purchased_games dict to list of game_ids (convert to int)
+        purchased_games = [int(game_id) for game_id in purchased_games_dict.keys()]
+        
+        # Tạo danh sách games với trọng số từ view history (convert to int)
+        view_games_weighted = []
+        for game_id, view_count in view_history.items():
+            # Lặp lại game_id theo số lần xem để tăng trọng số
+            view_games_weighted.extend([int(game_id)] * view_count)
+        
+        # KHÔNG dùng set() để giữ trùng lặp - games vừa thích vừa mua vừa xem sẽ xuất hiện nhiều lần
+        interacted_games = favorite_games + purchased_games + view_games_weighted
         
         if not interacted_games:
             print("User chưa có game nào đã tương tác")
             return None
         
-        # Lấy top 10 recommendations để phân tích (nhiều hơn để ma trận đẹp hơn)
-        top_recommendations = recommendations[:10]
+        # Tính content scores trực tiếp từ similarity matrix (KHÔNG dựa vào recommendations)
+        unique_interacted_set = set(interacted_games)
+        
+        # Tính content scores cho tất cả games chưa tương tác
+        candidate_games = []
+        for game_id in range(1, len(self.games_data) + 1):
+            if game_id not in unique_interacted_set:
+                game = next((g for g in self.games_data if g['id'] == game_id), None)
+                if game:
+                    # Tính similarity với games user đã tương tác
+                    similarities = []
+                    for interacted_game_id in interacted_games:
+                        try:
+                            interacted_idx = int(interacted_game_id) - 1
+                            game_idx = game_id - 1
+                            if 0 <= interacted_idx < len(self.content_similarity_matrix) and 0 <= game_idx < len(self.content_similarity_matrix):
+                                sim_score = self.content_similarity_matrix[game_idx][interacted_idx]
+                                similarities.append(sim_score)
+                        except (ValueError, TypeError):
+                            continue
+                    
+                    if similarities:
+                        avg_similarity = np.mean(similarities)
+                        candidate_games.append({
+                            'game_id': game_id,
+                            'game_name': game['name'],
+                            'content_score': avg_similarity
+                        })
+        
+        # Sắp xếp theo content score và lấy top 10
+        candidate_games.sort(key=lambda x: x['content_score'], reverse=True)
+        top_recommendations = candidate_games[:10]
         
         if not top_recommendations:
-            print("Không có recommendations để phân tích")
+            print("Không có games mới để phân tích (tất cả games đã được tương tác)")
             return None
         
         # Lấy thông tin chi tiết của games user đã tương tác
@@ -2010,11 +2154,14 @@ class GameRecommendationSystem:
                     interaction_type.append("Favorite")
                 if game_id in purchased_games:
                     interaction_type.append("Purchased")
+                if str(game_id) in view_history:
+                    view_count = view_history[str(game_id)]
+                    interaction_type.append(f"Viewed({view_count})")
                 
                 user_game_details.append({
                     'game_id': game_id,
                     'game_name': game['name'],
-                    'interaction_icon': ''.join(interaction_type),
+                    'interaction_icon': ' + '.join(interaction_type),
                     'rating': game.get('rating', 0)
                 })
         
@@ -2027,7 +2174,7 @@ class GameRecommendationSystem:
         n_user_games = len(user_game_details)
         similarity_matrix = np.zeros((n_recommended, n_user_games))
         
-        # Tính similarity cho từng cặp
+        # Tính similarity cho từng cặp (sử dụng dữ liệu trực tiếp từ similarity matrix)
         for i, rec in enumerate(top_recommendations):
             for j, user_game in enumerate(user_game_details):
                 sim_score = self.content_similarity_matrix[rec['game_id'] - 1][user_game['game_id'] - 1]
@@ -2035,7 +2182,7 @@ class GameRecommendationSystem:
         
         # Tạo labels cho trục
         recommended_labels = [f"{i+1}. {rec['game_name'][:25]}" for i, rec in enumerate(top_recommendations)]
-        user_game_labels = [f"{game['game_name'][:20]} {game['interaction_icon']}" for game in user_game_details]
+        user_game_labels = [f"{game['game_name'][:15]} ({game['interaction_icon']})" for game in user_game_details]
         
         # Tính average similarity cho mỗi recommended game để thêm vào label
         avg_similarities = np.mean(similarity_matrix, axis=1)
@@ -2065,12 +2212,14 @@ class GameRecommendationSystem:
         cbar.ax.tick_params(labelsize=10)
         
         # Customize plot
-        plt.title(f'Content Similarity Heatmap: Recommended Games vs User\'s Favorites\n'
-                 f'User: {target_user["name"]} (ID: {user_id}) | Age: {target_user["age"]}, Gender: {target_user["gender"]}',
+        plt.title(f'Content Similarity Heatmap: Top Content-Based Games vs User\'s Past Interactions\n'
+                 f'User: {target_user["name"]} (ID: {user_id}) | Age: {target_user["age"]}, Gender: {target_user["gender"]}\n'
+                 f'Interactions: {len(favorite_games)} favorites + {len(purchased_games)} purchased + {len(view_history)} viewed\n'
+                 f'Showing {len(top_recommendations)} games with highest content similarity (calculated directly)',
                  fontsize=15, fontweight='bold', pad=20, color='#2C3E50')
         
-        plt.xlabel('User\'s Favorite/Purchased Games', fontsize=13, fontweight='bold', color='#2C3E50')
-        plt.ylabel('Top Recommended Games', fontsize=13, fontweight='bold', color='#2C3E50')
+        plt.xlabel('User\'s Interacted Games (Favorites + Purchased + Viewed)', fontsize=13, fontweight='bold', color='#2C3E50')
+        plt.ylabel('Top Content-Based Games (Calculated Directly)', fontsize=13, fontweight='bold', color='#2C3E50')
         
         # Rotate labels
         plt.xticks(rotation=45, ha='right', fontsize=10)
@@ -2079,9 +2228,17 @@ class GameRecommendationSystem:
         # Adjust layout
         plt.tight_layout(rect=[0, 0.03, 1, 1])
         
-        # Save chart
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
+        
+        # Save chart vào folder charts
         if not filename:
-            filename = 'content_comparison_chart.png'
+            filename = os.path.join(charts_dir, 'content_comparison_chart.png')
+        else:
+            filename = os.path.join(charts_dir, filename)
         plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='white')
         print(f"Content similarity heatmap saved to: {filename}")
         
@@ -2365,9 +2522,17 @@ class GameRecommendationSystem:
         
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
         
-        # Save
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
+        
+        # Save vào folder charts
         if not filename:
-            filename = 'temporal_impact_chart.png'
+            filename = os.path.join(charts_dir, 'temporal_impact_chart.png')
+        else:
+            filename = os.path.join(charts_dir, filename)
         plt.savefig(filename, dpi=300, bbox_inches='tight', facecolor='white')
         print(f"Temporal impact chart saved to: {filename}")
         
@@ -2534,9 +2699,17 @@ class GameRecommendationSystem:
         plt.tight_layout()
         plt.subplots_adjust(top=0.9)
         
-        # Save chart
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
+        
+        # Save chart vào folder charts
         if not filename:
-            filename = 'user_game_relationship.png'
+            filename = os.path.join(charts_dir, 'user_game_relationship.png')
+        else:
+            filename = os.path.join(charts_dir, filename)
         plt.savefig(filename, dpi=300, bbox_inches='tight')
         print(f"User-Game relationship chart saved to: {filename}")
         
@@ -2547,8 +2720,16 @@ class GameRecommendationSystem:
     
     def export_scores_to_txt(self, recommendations, user_data, keyword="", filename=None):
         """Xuất điểm số ra file txt với định dạng bảng"""
+        # Tạo folder charts nếu chưa có
+        import os
+        charts_dir = 'charts'
+        if not os.path.exists(charts_dir):
+            os.makedirs(charts_dir)
+        
         if not filename:
-            filename = "scores_table.txt"  # Tên file cố định
+            filename = os.path.join(charts_dir, "scores_table.txt")
+        else:
+            filename = os.path.join(charts_dir, filename)
         
         try:
             with open(filename, 'w', encoding='utf-8') as f:
@@ -2743,23 +2924,32 @@ class GameRecommendationSystem:
         print(f"\n{title}")
         print("=" * 60)
         
-        # Hiển thị thông tin trọng số
-        if keyword and keyword.strip():
-            weights = WEIGHTS_WITH_KEYWORD
-            print(f"Weights: SVD({weights['svd']:.0%}) + Content({weights['content']:.0%}) + Demographic({weights['demographic']:.0%}) + Keyword({weights['keyword']:.0%})")
-        else:
-            weights = WEIGHTS_NO_KEYWORD
-            print(f"Weights: SVD({weights['svd']:.0%}) + Content({weights['content']:.0%}) + Demographic({weights['demographic']:.0%})")
+        # Kiểm tra cold start
+        is_cold_start = recommendations and recommendations[0].get('cold_start', False)
         
-        # Hiển thị top games có boost cao nhất
-        boosted_recs = [rec for rec in recommendations if rec.get('boost_factor', 1.0) > 1.0]
-        if boosted_recs:
-            top_boosted = sorted(boosted_recs, key=lambda x: x.get('boost_factor', 1.0), reverse=True)[:3]
-            print(f"\n🚀 Top Boosted Games (by user preferences):")
-            for i, rec in enumerate(top_boosted, 1):
-                boost = rec.get('boost_factor', 1.0)
-                original = rec.get('original_score', rec.get('hybrid_score', 0))
-                print(f"   {i}. {rec['game_name'][:30]} - Boost: {boost:.2f}x (Score: {original:.3f} → {rec.get('hybrid_score', 0):.3f})")
+        if is_cold_start:
+            print(f"❄️ COLD START MODE: User chưa có lịch sử → Gợi ý theo TOP DOWNLOADS")
+            if keyword:
+                print(f"🔍 Filtered by keyword: '{keyword}'")
+        else:
+            # Hiển thị thông tin trọng số
+            if keyword and keyword.strip():
+                weights = WEIGHTS_WITH_KEYWORD
+                print(f"Weights: SVD({weights['svd']:.0%}) + Content({weights['content']:.0%}) + Demographic({weights['demographic']:.0%}) + Keyword({weights['keyword']:.0%})")
+            else:
+                weights = WEIGHTS_NO_KEYWORD
+                print(f"Weights: SVD({weights['svd']:.0%}) + Content({weights['content']:.0%}) + Demographic({weights['demographic']:.0%})")
+        
+        # Hiển thị top games có boost cao nhất (chỉ khi không phải cold start)
+        if not is_cold_start:
+            boosted_recs = [rec for rec in recommendations if rec.get('boost_factor', 1.0) > 1.0]
+            if boosted_recs:
+                top_boosted = sorted(boosted_recs, key=lambda x: x.get('boost_factor', 1.0), reverse=True)[:3]
+                print(f"\n🚀 Top Boosted Games (by user preferences):")
+                for i, rec in enumerate(top_boosted, 1):
+                    boost = rec.get('boost_factor', 1.0)
+                    original = rec.get('original_score', rec.get('hybrid_score', 0))
+                    print(f"   {i}. {rec['game_name'][:30]} - Boost: {boost:.2f}x (Score: {original:.3f} → {rec.get('hybrid_score', 0):.3f})")
         
         print("=" * 60)
         
@@ -2771,29 +2961,37 @@ class GameRecommendationSystem:
         top_display = min(10, len(recommendations))
         for i, rec in enumerate(recommendations[:top_display], 1):
             boost_indicator = ""
-            if rec.get('boost_factor', 1.0) > 1.0:
+            if rec.get('boost_factor', 1.0) > 1.0 and not is_cold_start:
                 boost_indicator = f" 🚀x{rec.get('boost_factor', 1.0):.2f}"
             
-            print(f"\n{i}. {rec['game_name']}{boost_indicator}")
+            # Highlight downloads cho cold start
+            downloads_indicator = ""
+            if is_cold_start:
+                downloads_indicator = f" 🔥 {rec.get('downloads', 0):,} downloads"
+            
+            print(f"\n{i}. {rec['game_name']}{boost_indicator}{downloads_indicator}")
             print(f"   Rating: {rec['actual_rating']}/5.0")
             print(f"   Genre: {', '.join(rec['genre'])}")
             print(f"   Price: {rec['price']:,} VND")
-            print(f"   Downloads: {rec.get('downloads', 0):,}")
+            if not is_cold_start:
+                print(f"   Downloads: {rec.get('downloads', 0):,}")
             
-            if 'hybrid_score' in rec:
-                print(f"   Hybrid Score: {rec['hybrid_score']:.3f}", end="")
-                if rec.get('original_score') and rec.get('boost_factor', 1.0) > 1.0:
-                    print(f" (boosted from {rec.get('original_score', 0):.3f})")
-                else:
-                    print()
-            if 'svd_score' in rec and rec['svd_score'] != 0:
-                print(f"   SVD Score: {rec['svd_score']:.3f}")
-            if 'content_score' in rec and rec['content_score'] != 0:
-                print(f"   Content Score: {rec['content_score']:.3f}")
-            if 'demographic_score' in rec:
-                print(f"   Demographic Score: {rec['demographic_score']:.3f}")
-            if 'keyword_score' in rec and rec['keyword_score'] > 0:
-                print(f"   Keyword Score: {rec['keyword_score']:.3f}")
+            # Hiển thị scores (chỉ khi không phải cold start)
+            if not is_cold_start:
+                if 'hybrid_score' in rec:
+                    print(f"   Hybrid Score: {rec['hybrid_score']:.3f}", end="")
+                    if rec.get('original_score') and rec.get('boost_factor', 1.0) > 1.0:
+                        print(f" (boosted from {rec.get('original_score', 0):.3f})")
+                    else:
+                        print()
+                if 'svd_score' in rec and rec['svd_score'] != 0:
+                    print(f"   SVD Score: {rec['svd_score']:.3f}")
+                if 'content_score' in rec and rec['content_score'] != 0:
+                    print(f"   Content Score: {rec['content_score']:.3f}")
+                if 'demographic_score' in rec:
+                    print(f"   Demographic Score: {rec['demographic_score']:.3f}")
+                if 'keyword_score' in rec and rec['keyword_score'] > 0:
+                    print(f"   Keyword Score: {rec['keyword_score']:.3f}")
             
             print("-" * 40)
         
@@ -2953,7 +3151,7 @@ def show_recommendations_for_user(recommender, user_id, query="", generate_chart
     
     # Lay tat ca games chua tuong tac (chỉ loại bỏ favorite và purchased)
     favorite_games = set(user_data.get('favorite_games', []))
-    purchased_games = set(user_data.get('purchased_games', {}).keys())
+    purchased_games = set(int(k) for k in user_data.get('purchased_games', {}).keys())
     excluded_games = favorite_games.union(purchased_games)
     total_games = len(recommender.games_data)
     available_games = total_games - len(excluded_games)

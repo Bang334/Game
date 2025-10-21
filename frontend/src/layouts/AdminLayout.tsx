@@ -252,25 +252,60 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           sx={{
             width: { sm: `calc(100% - ${collapsed ? collapsedDrawerWidth : drawerWidth}px)` },
             ml: { sm: `${collapsed ? collapsedDrawerWidth : drawerWidth}px` },
-            backgroundColor: theme.palette.background.paper,
-            color: theme.palette.text.primary,
-            boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+            background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+            color: 'white',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            backdropFilter: 'blur(10px)',
           }}
         >
-          <Toolbar>
+          <Toolbar sx={{ minHeight: 64 }}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
+              sx={{ 
+                mr: 2, 
+                display: { sm: 'none' },
+                bgcolor: 'rgba(255,255,255,0.1)',
+                '&:hover': {
+                  bgcolor: 'rgba(255,255,255,0.2)',
+                }
+              }}
             >
               <MenuIcon />
             </IconButton>
             
-            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Admin Dashboard
-            </Typography>
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mr: 3 }}>
+                <Avatar 
+                  sx={{ 
+                    width: 40, 
+                    height: 40, 
+                    bgcolor: 'rgba(255,255,255,0.2)',
+                    mr: 2,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                  }}
+                >
+                  <StorefrontIcon />
+                </Avatar>
+                <Typography variant="h6" sx={{ 
+                  fontWeight: 700,
+                  textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                  letterSpacing: '0.5px'
+                }}>
+                  Admin Dashboard
+                </Typography>
+              </Box>
+              
+              <Typography variant="body2" sx={{ 
+                opacity: 0.9,
+                fontSize: '0.9rem',
+                fontWeight: 500
+              }}>
+                Chào mừng, {currentUser?.username}
+              </Typography>
+            </Box>
 
             {/* User Menu */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -281,9 +316,23 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
+                sx={{
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                  '&:hover': {
+                    bgcolor: 'rgba(255,255,255,0.2)',
+                    transform: 'scale(1.05)'
+                  },
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                }}
               >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: theme.palette.primary.main }}>
+                <Avatar sx={{ 
+                  width: 36, 
+                  height: 36, 
+                  bgcolor: 'rgba(255,255,255,0.2)',
+                  color: 'white',
+                  fontWeight: 700
+                }}>
                   {currentUser?.username?.charAt(0).toUpperCase()}
                 </Avatar>
               </IconButton>
@@ -301,10 +350,41 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleProfileMenuClose}
+                PaperProps={{
+                  sx: {
+                    mt: 1,
+                    minWidth: 180,
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                    borderRadius: 2,
+                    border: '1px solid rgba(0,0,0,0.05)',
+                  }
+                }}
               >
-                <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <LogoutIcon sx={{ mr: 1 }} />
+                <MenuItem 
+                  onClick={handleProfileMenuClose}
+                  sx={{ 
+                    py: 1.5,
+                    '&:hover': {
+                      bgcolor: alpha(theme.palette.primary.main, 0.1)
+                    }
+                  }}
+                >
+                  <Avatar sx={{ width: 24, height: 24, mr: 2, bgcolor: theme.palette.primary.main }}>
+                    {currentUser?.username?.charAt(0).toUpperCase()}
+                  </Avatar>
+                  Profile
+                </MenuItem>
+                <MenuItem 
+                  onClick={handleLogout}
+                  sx={{ 
+                    py: 1.5,
+                    color: theme.palette.error.main,
+                    '&:hover': {
+                      bgcolor: alpha(theme.palette.error.main, 0.1)
+                    }
+                  }}
+                >
+                  <LogoutIcon sx={{ mr: 2, fontSize: 20 }} />
                   Logout
                 </MenuItem>
               </Menu>

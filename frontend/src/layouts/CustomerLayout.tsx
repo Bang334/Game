@@ -62,7 +62,7 @@ const CustomerLayout = ({ children }) => {
     { text: 'Trang chủ', icon: <HomeIcon />, path: '/', color: menuItemColors.home },
     { text: 'Games', icon: <GamesIcon />, path: '/games', color: menuItemColors.games },
     ...(currentUser ? [
-      { text: 'Trang cá nhân', icon: <Avatar sx={{ width: 24, height: 24, fontSize: '0.875rem' }}>{currentUser.username.charAt(0).toUpperCase()}</Avatar>, path: '/profile', color: menuItemColors.profile },
+      { text: 'Trang cá nhân', icon: <Avatar sx={{ width: 24, height: 24, fontSize: '0.875rem' }}>{currentUser.username?.charAt(0).toUpperCase() || currentUser.email?.charAt(0).toUpperCase() || 'U'}</Avatar>, path: '/profile', color: menuItemColors.profile },
     ] : []),
   ];
 
@@ -88,64 +88,19 @@ const CustomerLayout = ({ children }) => {
       width: '100%',
       maxWidth: '100vw',
       overflowX: 'hidden',
+      background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%)',
+      backgroundAttachment: 'fixed',
     }}>
       <AppBar 
         position="fixed"
         sx={{
-          backgroundColor: 'transparent',
-          backgroundImage: `linear-gradient(to right, ${alpha(theme.palette.primary.dark, 0.97)}, ${alpha(theme.palette.primary.main, 0.97)})`,
-          backdropFilter: 'blur(12px)',
-          color: 'text.primary',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-          borderBottom: 'none',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: 'blur(20px)',
+          color: 'white',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
-        {/* Dòng quảng cáo chạy ngang */}
-        <Box
-          sx={{
-            position: 'relative',
-            height: '36px',
-            background: 'linear-gradient(90deg, #1a237e, #283593, #3949ab)',
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            overflow: 'hidden',
-            width: '100vw',
-          }}
-        >
-          <Box 
-            sx={{
-              display: 'flex',
-              whiteSpace: 'nowrap',
-              animation: 'tickerMove 30s infinite linear',
-              '@keyframes tickerMove': {
-                '0%': { transform: 'translateX(100%)' },
-                '100%': { transform: 'translateX(-180%)' }
-              },
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', mx: 2 }}>
-              <Badge color="error" variant="dot" sx={{ mr: 1.5 }}>
-                <NotificationsIcon fontSize="small" sx={{ color: 'rgba(255,255,255,0.95)' }} />
-              </Badge>
-              <Typography variant="body2" fontWeight="medium" sx={{ 
-                fontSize: '0.9rem',
-                textShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                letterSpacing: '0.4px'
-              }}>Chào mừng đến với GameStore - Nền tảng game hàng đầu</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', mx: 2 }}>
-              <Badge color="warning" sx={{ mr: 1.5 }}>
-                <PromotionIcon fontSize="small" sx={{ color: 'rgba(255,255,255,0.95)' }} />
-              </Badge>
-              <Typography variant="body2" fontWeight="medium" sx={{ 
-                fontSize: '0.9rem',
-                textShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                letterSpacing: '0.4px'
-              }}>Giảm 20% cho tất cả games AAA trong tháng này!</Typography>
-            </Box>
-          </Box>
-        </Box>
         
         <Toolbar
           sx={{
@@ -236,9 +191,10 @@ const CustomerLayout = ({ children }) => {
         sx={{
           '& .MuiDrawer-paper': { 
             width: 280, 
-            background: 'linear-gradient(to bottom, #ffffff, #f8f9fa)',
-            boxShadow: '0 0 20px rgba(0,0,0,0.1)',
-            borderRight: 'none',
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            borderRight: '1px solid rgba(255, 255, 255, 0.2)',
           },
         }}
       >
@@ -404,19 +360,34 @@ const CustomerLayout = ({ children }) => {
 
       <Box 
         sx={{ 
-          marginTop: '100px',
-          padding: '8px',
+          marginTop: '68px',
+          padding: '16px',
           flex: 1,
           width: '100%',
           maxWidth: '100vw',
-          overflowX: 'hidden'
+          overflowX: 'hidden',
+          background: 'rgba(255, 255, 255, 0.02)',
+          backdropFilter: 'blur(10px)',
+          borderRadius: '16px 16px 0 0',
+          margin: '68px 8px 0 8px',
+          minHeight: 'calc(100vh - 68px)',
         }}
       >
         {children || <Outlet />}
       </Box>
 
-      <Box component="footer" sx={{ py: 2, bgcolor: 'background.paper', textAlign: 'center' }}>
-        <Typography variant="body2" color="text.secondary">
+      <Box 
+        component="footer" 
+        sx={{ 
+          py: 3, 
+          background: 'rgba(255, 255, 255, 0.05)',
+          backdropFilter: 'blur(20px)',
+          textAlign: 'center',
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          color: 'white',
+        }}
+      >
+        <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
           © {new Date().getFullYear()} GameStore. Nền tảng game hàng đầu Việt Nam.
         </Typography>
       </Box>

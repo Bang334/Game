@@ -11,9 +11,17 @@ const router = (0, express_1.Router)();
 const JWT_SECRET = process.env.JWT_SECRET ?? 'dev_secret_change_me';
 router.post('/register', async (req, res) => {
     const { username, email, password, age, gender } = req.body;
-    // Validate required fields
-    if (!username || !email || !password) {
+    // Validate required fields (including age and gender)
+    if (!username || !email || !password || !age || !gender) {
         return res.status(400).json({ error: 'MISSING_FIELDS' });
+    }
+    // Validate age range
+    if (typeof age !== 'number' || age < 1 || age > 120) {
+        return res.status(400).json({ error: 'INVALID_AGE' });
+    }
+    // Validate gender (only 'male' or 'female' allowed)
+    if (gender !== 'male' && gender !== 'female') {
+        return res.status(400).json({ error: 'INVALID_GENDER' });
     }
     try {
         // Check if email already exists
@@ -37,17 +45,15 @@ router.post('/register', async (req, res) => {
                 customerRole = { role_id: roleId, name: 'CUSTOMER' };
             }
         }
-        // Create user with plain password
+        // Create user with plain password (age and gender are now required)
         const userData = {
             username,
             email,
             password: password, // Store password as plain text
+            age: age, // Required field
+            gender: gender, // Required field (only 'male' or 'female')
             role_id: customerRole.role_id
         };
-        if (age !== undefined)
-            userData.age = age;
-        if (gender !== undefined)
-            userData.gender = gender;
         const userId = await models_1.UserModel.create(userData);
         // Generate token
         const token = jsonwebtoken_1.default.sign({ sub: userId, role: customerRole.name, email }, JWT_SECRET, { expiresIn: '2h' });
