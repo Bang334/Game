@@ -365,7 +365,6 @@ class GameRecommendationSystem:
         """
         Chuyển đổi query tiếng Việt thành keyword chính (English key)
         VD: "ẩn nấp" → "Stealth"
-        VD: "hành động" → "Action"
         """
         if not query or not hasattr(self, 'keyword_library'):
             return query
@@ -378,24 +377,15 @@ class GameRecommendationSystem:
         
         # Tìm kiếm key chính từ value (synonyms)
         for english_key, vietnamese_synonyms in self.keyword_library.items():
-            vietnamese_synonyms_lower = vietnamese_synonyms.lower()
+            vietnamese_synonyms = vietnamese_synonyms.lower()
             
             # Kiểm tra từng phrase trong query
             for phrase in query_phrases:
-                # Match cả CỤM TỪ và TỪ ĐỚN
-                # Ví dụ: "ẩn nấp" match trong "ẩn nấp stealth sneaking"
-                phrase_words = phrase.split()
-                
-                # Case 1: Match cụm từ hoàn chỉnh (ưu tiên)
-                if phrase in vietnamese_synonyms_lower:
+                # Tìm từ trong value synonyms
+                if phrase in vietnamese_synonyms.split():
+                    # CHỈ thêm english_key (key chính), GIỮ NGUYÊN case
                     matched_keys.add(english_key)
-                    break
-                
-                # Case 2: Match từng từ đơn (fallback)
-                # Chỉ match nếu TẤT CẢ các từ trong phrase đều có trong synonyms
-                elif all(word in vietnamese_synonyms_lower.split() for word in phrase_words):
-                    matched_keys.add(english_key)
-                    break
+                    break  # Đã tìm thấy key này, không cần kiểm tra phrase khác
         
         # Nếu tìm thấy key → trả về key, nếu không → trả về query gốc
         if matched_keys:

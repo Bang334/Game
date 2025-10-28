@@ -362,46 +362,32 @@ class GameRecommendationSystem:
         return 0
     
     def expand_query(self, query):
-        """
-        Chuyển đổi query tiếng Việt thành keyword chính (English key)
-        VD: "ẩn nấp" → "Stealth"
-        VD: "hành động" → "Action"
-        """
+        """Mở rộng query 1 lần duy nhất từ tiếng Việt sang tiếng Anh"""
         if not query or not hasattr(self, 'keyword_library'):
             return query
         
         query = query.lower().strip()
-        matched_keys = set()
+        expanded_keywords = set()
+        
+        # Thêm query gốc
+        expanded_keywords.add(query)
         
         # Tách query theo dấu phẩy (ví dụ: "hành động, kịch tính" → ["hành động", "kịch tính"])
         query_phrases = [phrase.strip() for phrase in query.split(',')]
         
-        # Tìm kiếm key chính từ value (synonyms)
+        # Tìm kiếm trong library để mở rộng 1 lần duy nhất
         for english_key, vietnamese_synonyms in self.keyword_library.items():
-            vietnamese_synonyms_lower = vietnamese_synonyms.lower()
+            vietnamese_synonyms = vietnamese_synonyms.lower()
             
             # Kiểm tra từng phrase trong query
             for phrase in query_phrases:
-                # Match cả CỤM TỪ và TỪ ĐỚN
-                # Ví dụ: "ẩn nấp" match trong "ẩn nấp stealth sneaking"
-                phrase_words = phrase.split()
-                
-                # Case 1: Match cụm từ hoàn chỉnh (ưu tiên)
-                if phrase in vietnamese_synonyms_lower:
-                    matched_keys.add(english_key)
-                    break
-                
-                # Case 2: Match từng từ đơn (fallback)
-                # Chỉ match nếu TẤT CẢ các từ trong phrase đều có trong synonyms
-                elif all(word in vietnamese_synonyms_lower.split() for word in phrase_words):
-                    matched_keys.add(english_key)
-                    break
+                # Match whole word - kiểm tra phrase có xuất hiện như một từ hoàn chỉnh trong synonyms
+                if phrase in vietnamese_synonyms:
+                    # Chỉ thêm english_key, không mở rộng thêm
+                    expanded_keywords.add(english_key.lower())
         
-        # Nếu tìm thấy key → trả về key, nếu không → trả về query gốc
-        if matched_keys:
-            return ' '.join(matched_keys)
-        else:
-            return query
+        # Kết hợp tất cả keywords (chỉ mở rộng 1 lần)
+        return ' '.join(expanded_keywords)
     
     def can_run_game(self, user_cpu, user_gpu, user_ram, game_id):
         """Kiểm tra xem user có thể chạy game không"""
