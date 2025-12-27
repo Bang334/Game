@@ -29,6 +29,9 @@ def initialize_recommender(games, users):
     # Create new instance
     recommender = GameRecommendationSystem()
     
+    # ⚠️ Clear user preferences cache to ensure fresh calculation
+    recommender.user_preferences = {}
+    
     # Set data directly (skip file loading)
     recommender.games_data = games
     recommender.users_data = users
@@ -40,6 +43,26 @@ def initialize_recommender(games, users):
             recommender.keyword_library = library_data.get('keywords', {})
     except:
         recommender.keyword_library = {}
+    
+    # ⭐ Connect to SQLite database for adaptive boosting
+    try:
+        import sqlite3
+        recommender.interactions_db = sqlite3.connect('user_interactions.db')
+        recommender.use_sqlite = True
+        print("✓ Connected to SQLite interactions database for adaptive boosting")
+    except Exception as e:
+        print(f"! SQLite database not found - adaptive boosting will be limited: {e}")
+        recommender.use_sqlite = False
+    
+    # Load CPU/GPU data for spec checking
+    try:
+        with open('game_recommendation_system/cpu.json', 'r', encoding='utf-8') as f:
+            recommender.cpu_data = json.load(f)
+        with open('game_recommendation_system/gpu.json', 'r', encoding='utf-8') as f:
+            recommender.gpu_data = json.load(f)
+    except:
+        recommender.cpu_data = {}
+        recommender.gpu_data = {}
     
     # Preprocess and train models
     recommender.preprocess_data()
@@ -75,18 +98,11 @@ def health_check():
 
 @app.route('/api/recommend', methods=['POST'])
 def get_recommendations():
-    """
-    Get personalized game recommendations with keyword support
-    POST /api/recommend
-    Body: {
-        "user_id": 1,
-        "games": [...],
-        "users": [...],
-        "query": "action game",  # Optional keyword
-        "days": 7,               # Optional: recent days filter
-        "top_n": 10
-    }
-    """
+
+    print("\n" + "🟢"*30)
+    print("📨 NEW REQUEST RECEIVED - CODE VERSION 2.0")
+    print("🟢"*30)
+    
     try:
         data = request.get_json()
         
@@ -102,6 +118,7 @@ def get_recommendations():
         users = data.get('users', [])
         query = data.get('query', '').strip()  # Keyword search
         recent_days = data.get('days', None)
+        enable_adaptive = data.get('enable_adaptive', True)  # Adaptive boost setting (default: True)
         top_n = data.get('top_n', 10)
         
         if not user_id:
@@ -125,20 +142,43 @@ def get_recommendations():
         print(f"   Users: {len(users)}")
         print(f"   Keyword: '{query}'" if query else "   Keyword: (none)")
         print(f"   Recent days: {recent_days}" if recent_days else "   Recent days: (all time)")
+        print(f"   Adaptive Boost: {'ENABLED ⚡' if enable_adaptive else 'DISABLED 🔒'}")
         print(f"   Top N: {top_n}")
         print(f"{'='*50}\n")
         
-        # Initialize recommender with data
+        # Initialize recommender with data (FRESH INSTANCE mỗi request)
         rec = initialize_recommender(games, users)
         
-        # Get hybrid recommendations with keyword support
+        print(f"\n🔧 CALLING get_hybrid_recommendations:")
+        print(f"   user_id={user_id}")
+        print(f"   enable_adaptive={enable_adaptive} (type: {type(enable_adaptive).__name__})")
+        print(f"   keyword='{query}'")
+        
+        # Get hybrid recommendations with keyword support and adaptive setting
         recommendations = rec.get_hybrid_recommendations(
             user_id=user_id,
             top_n=top_n,
             keyword=query,
-            enable_adaptive=True,
+            enable_adaptive=enable_adaptive,  # Use setting from request
             recent_days=recent_days
         )
+        
+        print(f"\n📦 RECOMMENDATION RESULTS:")
+        print(f"   Total: {len(recommendations)} games")
+        if recommendations:
+            print(f"   Top 3 games: {[r['game_name'] for r in recommendations[:3]]}")
+            print(f"   Top 3 scores: {[round(r.get('hybrid_score', 0), 4) for r in recommendations[:3]]}")
+            print(f"   Top 3 boost factors: {[round(r.get('boost_factor', 1.0), 2) for r in recommendations[:3]]}")
+            
+            # Check if boost worked
+            has_boost = any(r.get('boost_factor', 1.0) != 1.0 for r in recommendations)
+            if enable_adaptive and not has_boost:
+                print(f"\n   ⚠️  WARNING: enable_adaptive=True but all boost_factors = 1.0!")
+                print(f"   → Adaptive boosting DID NOT WORK")
+            elif enable_adaptive and has_boost:
+                print(f"\n   ✅ Adaptive boosting WORKED! Boost factors vary")
+            else:
+                print(f"\n   ℹ️  Adaptive boosting disabled (expected)")
         
         # Transform to API format
         api_recommendations = []

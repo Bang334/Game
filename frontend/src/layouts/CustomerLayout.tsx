@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
+import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { 
-  AppBar, 
-  Box, 
-  Toolbar, 
-  Typography, 
-  IconButton, 
-  Badge, 
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  IconButton,
   Drawer,
   List,
   ListItemButton,
@@ -16,10 +16,10 @@ import {
   useTheme,
   alpha,
   Avatar,
+  Chip,
 } from '@mui/material';
-import { 
-  Menu as MenuIcon, 
-  ShoppingCart as ShoppingCartIcon,
+import {
+  Menu as MenuIcon,
   Gamepad as GamepadIcon,
   Home as HomeIcon,
   SportsEsports as GamesIcon,
@@ -28,11 +28,18 @@ import {
   ArrowRightAlt as ArrowRightAltIcon,
   Login as LoginIcon,
   Logout as LogoutIcon,
+  Close as CloseIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const CustomerLayout = ({ children }) => {
+
+type CustomerLayoutProps = {
+  children?: ReactNode;
+};
+
+const CustomerLayout = ({ children }: CustomerLayoutProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -81,27 +88,26 @@ const CustomerLayout = ({ children }) => {
   };
 
   return (
-    <Box sx={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      minHeight: '100vh', 
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
       width: '100%',
       maxWidth: '100vw',
       overflowX: 'hidden',
-      background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%)',
+      background: '#f8f9fa',
       backgroundAttachment: 'fixed',
     }}>
-      <AppBar 
+      <AppBar
         position="fixed"
+        elevation={0}
         sx={{
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(20px)',
-          color: 'white',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          borderBottom: '1px solid #e0e0e0',
         }}
       >
-        
+
         <Toolbar
           sx={{
             minHeight: { xs: 60, sm: 68 },
@@ -118,14 +124,12 @@ const CustomerLayout = ({ children }) => {
             onClick={handleDrawerToggle}
             sx={{
               p: 1.2,
-              color: 'white',
-              bgcolor: 'rgba(255,255,255,0.1)',
+              color: '#555',
+              bgcolor: 'transparent',
               '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                transform: 'scale(1.05)'
+                backgroundColor: 'rgba(0,0,0,0.05)',
               },
               transition: 'all 0.2s ease',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
             }}
           >
             <MenuIcon fontSize="large" />
@@ -137,47 +141,15 @@ const CustomerLayout = ({ children }) => {
               flexGrow: 1,
               textAlign: 'center',
               fontWeight: 'bold',
-              color: 'white',
+              color: '#333',
               fontSize: { xs: '1.2rem', sm: '1.4rem' },
-              textShadow: '0 2px 4px rgba(0,0,0,0.2)',
               letterSpacing: '0.5px'
             }}
           >
             {getPageTitle()}
           </Box>
 
-          {/* Nút giỏ hàng */}
-          <IconButton 
-            color="inherit" 
-            onClick={() => navigate('/cart')}
-            sx={{
-              p: 1.2,
-              color: 'white',
-              bgcolor: 'rgba(255,255,255,0.1)',
-              '&:hover': {
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                transform: 'scale(1.05)',
-              },
-              transition: 'all 0.2s ease',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-            }}
-          >
-            <Badge 
-              badgeContent={0} 
-              color="error"
-              sx={{
-                '& .MuiBadge-badge': {
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold',
-                  minWidth: '20px',
-                  height: '20px',
-                  boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
-                }
-              }}
-            >
-              <ShoppingCartIcon fontSize="large" />
-            </Badge>
-          </IconButton>
+
         </Toolbar>
       </AppBar>
 
@@ -189,185 +161,341 @@ const CustomerLayout = ({ children }) => {
           keepMounted: true,
         }}
         sx={{
-          '& .MuiDrawer-paper': { 
-            width: 280, 
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-            borderRight: '1px solid rgba(255, 255, 255, 0.2)',
+          '& .MuiDrawer-paper': {
+            width: 280,
+            background: '#ffffff',
+            boxShadow: '4px 0 20px rgba(0,0,0,0.08)',
+            display: 'flex',
+            flexDirection: 'column',
           },
         }}
       >
-        {/* Logo section */}
-        <Box 
-          sx={{ 
-            py: 3,
-            px: 2,
-            background: 'linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%)',
+        {/* Sidebar Header with Gradient */}
+        <Box
+          sx={{
+            p: '1.38rem 1.5rem',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            position: 'relative',
+            overflow: 'hidden',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200%',
+              height: '200%',
+              background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
+              transform: 'translate(-50%, -50%)',
+              animation: 'pulse 4s ease-in-out infinite',
+            },
+            '@keyframes pulse': {
+              '0%, 100%': { transform: 'translate(-50%, -50%) scale(1)', opacity: 0.5 },
+              '50%': { transform: 'translate(-50%, -50%) scale(1.1)', opacity: 0.3 },
+            },
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <Avatar 
-              sx={{ 
-                width: 60, 
-                height: 60, 
-                bgcolor: 'white', 
-                color: '#FF6B6B',
-                mr: 2,
-                boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
-              }}
-            >
-              <GamepadIcon sx={{ fontSize: 36 }} />
-            </Avatar>
-            <Box>
-              <Typography variant="h6" sx={{ fontWeight: 700, textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <GamepadIcon sx={{ fontSize: 32 }} />
+              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.35rem' }}>
                 GameStore
               </Typography>
             </Box>
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{
+                color: 'white',
+                display: { xs: 'block', md: 'none' },
+                '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
           </Box>
         </Box>
-        
-        {/* Menu Items */}
-        <List sx={{ pt: 2, px: 1.5 }}>
-          {menuItems.map((item) => {
-            const isSelected = location.pathname === item.path;
-            return (
-              <ListItemButton
-                key={item.text}
-                component={RouterLink}
-                to={item.path}
-                onClick={handleDrawerToggle}
-                selected={isSelected}
+
+        {/* User Info Card */}
+        {currentUser && (
+          <Box
+            sx={{
+              m: 2,
+              p: 3,
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+              border: '1px solid #86efac',
+              boxShadow: '0 2px 8px rgba(34, 197, 94, 0.1)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(34, 197, 94, 0.2)',
+              }
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Avatar
                 sx={{
-                  my: 0.5,
-                  borderRadius: 2,
-                  transition: 'all 0.2s ease-in-out',
-                  bgcolor: isSelected ? alpha(item.color, 0.1) : 'transparent',
-                  '&:hover': {
-                    bgcolor: isSelected ? alpha(item.color, 0.15) : alpha(item.color, 0.05),
-                    transform: 'translateX(5px)',
-                    '& .MuiListItemIcon-root': {
-                      color: item.color,
-                    }
-                  },
-                  ...(isSelected && {
-                    borderLeft: `4px solid ${item.color}`,
-                    '& .MuiListItemIcon-root': {
-                      color: item.color,
-                    },
-                  }),
+                  width: 56,
+                  height: 56,
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  border: '3px solid white',
+                  boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                  fontSize: '1.5rem',
+                  fontWeight: 700,
                 }}
               >
-                <ListItemIcon sx={{ 
-                  minWidth: 45,
-                  color: isSelected ? item.color : alpha(item.color, 0.7),
-                  transition: 'color 0.2s ease-in-out',
-                }}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText 
-                  primary={item.text} 
-                  sx={{ 
-                    '& .MuiTypography-root': {
-                      fontWeight: isSelected ? 600 : 500,
-                      transition: 'all 0.2s ease-in-out',
-                    }
+                {currentUser.username?.charAt(0).toUpperCase() || currentUser.email?.charAt(0).toUpperCase() || 'U'}
+              </Avatar>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: 700,
+                    color: '#166534',
+                    mb: 0.5,
+                  }}
+                >
+                  {currentUser.username || currentUser.email}
+                </Typography>
+                <Chip
+                  label="Customer"
+                  size="small"
+                  sx={{
+                    bgcolor: 'white',
+                    color: '#15803d',
+                    fontWeight: 600,
+                    fontSize: '0.7rem',
+                    height: '20px',
                   }}
                 />
-                {isSelected && (
-                  <ArrowRightAltIcon sx={{ color: item.color, opacity: 0.7 }} />
-                )}
-              </ListItemButton>
-            );
-          })}
-        </List>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    display: 'block',
+                    color: '#22c55e',
+                    fontFamily: 'monospace',
+                    mt: 0.5,
+                  }}
+                >
+                  ID: {currentUser.user_id}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
 
-        {/* Auth Menu Items */}
-        <List sx={{ px: 1.5 }}>
-          <Divider sx={{ my: 1 }} />
-          {authMenuItems.map((item) => (
+        {/* Navigation Menu */}
+        <Box
+          sx={{
+            flex: 1,
+            overflowY: 'auto',
+            p: '0.5rem 1rem 1rem',
+            '&::-webkit-scrollbar': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-track': {
+              background: '#f1f5f9',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              background: '#cbd5e1',
+              borderRadius: '10px',
+              '&:hover': {
+                background: '#94a3b8',
+              },
+            },
+          }}
+        >
+          <List sx={{ p: 0 }}>
+            {menuItems.map((item) => {
+              const isSelected = location.pathname === item.path;
+              return (
+                <ListItemButton
+                  key={item.text}
+                  component={RouterLink}
+                  to={item.path}
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    mb: '0.375rem',
+                    p: '0.875rem 1rem',
+                    borderRadius: '12px',
+                    color: isSelected ? '#1e40af' : '#64748b',
+                    fontWeight: isSelected ? 700 : 500,
+                    fontSize: '0.9rem',
+                    position: 'relative',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    background: isSelected
+                      ? 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)'
+                      : 'transparent',
+                    boxShadow: isSelected ? '0 2px 8px rgba(59, 130, 246, 0.15)' : 'none',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      top: '15%',
+                      height: '70%',
+                      width: isSelected ? '4px' : 0,
+                      background: 'linear-gradient(180deg, #3b82f6 0%, #1e40af 100%)',
+                      borderRadius: '0 4px 4px 0',
+                      transition: 'width 0.3s ease',
+                    },
+                    '&:hover': {
+                      background: isSelected
+                        ? 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)'
+                        : 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+                      color: isSelected ? '#1e40af' : '#1e293b',
+                      transform: 'translateX(4px)',
+                      pl: '1.25rem',
+                      '&::before': {
+                        width: '4px',
+                        background: isSelected
+                          ? 'linear-gradient(180deg, #3b82f6 0%, #1e40af 100%)'
+                          : 'linear-gradient(180deg, #667eea 0%, #764ba2 100%)',
+                      },
+                      '& .MuiListItemIcon-root': {
+                        transform: 'scale(1.1)',
+                      },
+                    },
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 40,
+                      color: 'inherit',
+                      transition: 'transform 0.3s ease',
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    primaryTypographyProps={{
+                      sx: {
+                        fontWeight: 'inherit',
+                        fontSize: 'inherit',
+                      }
+                    }}
+                  />
+                </ListItemButton>
+              );
+            })}
+          </List>
+        </Box>
+
+        {/* Logout Button */}
+        {currentUser && (
+          <Box sx={{ p: 2 }}>
             <ListItemButton
-              key={item.text}
-              component={item.action ? 'div' : RouterLink}
-              to={item.action ? undefined : item.path}
-              onClick={item.action || handleDrawerToggle}
+              onClick={handleLogout}
               sx={{
-                my: 0.5,
-                borderRadius: 2,
-                transition: 'all 0.2s ease-in-out',
+                p: '0.95rem 1rem',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
+                border: '2px solid #fee2e2',
+                color: '#dc2626',
+                fontWeight: 600,
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                position: 'relative',
+                overflow: 'hidden',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: '-100%',
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                  transition: 'left 0.5s ease',
+                },
                 '&:hover': {
-                  bgcolor: alpha(item.color, 0.05),
-                  transform: 'translateX(5px)',
+                  background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                  color: 'white',
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0 6px 20px rgba(220, 38, 38, 0.4)',
+                  '&::before': {
+                    left: '100%',
+                  },
                   '& .MuiListItemIcon-root': {
-                    color: item.color,
-                  }
+                    transform: 'rotate(-10deg) scale(1.1)',
+                  },
                 },
               }}
             >
-              <ListItemIcon sx={{ 
-                minWidth: 45,
-                color: alpha(item.color, 0.7),
-                transition: 'color 0.2s ease-in-out',
-              }}>
-                {item.icon}
+              <ListItemIcon
+                sx={{
+                  minWidth: 40,
+                  color: 'inherit',
+                  transition: 'transform 0.3s ease',
+                }}
+              >
+                <LogoutIcon />
               </ListItemIcon>
-              <ListItemText 
-                primary={item.text} 
-                sx={{ 
-                  '& .MuiTypography-root': {
-                    fontWeight: 500,
-                    transition: 'all 0.2s ease-in-out',
+              <ListItemText
+                primary="Đăng xuất"
+                primaryTypographyProps={{
+                  sx: {
+                    fontWeight: 600,
                   }
                 }}
               />
             </ListItemButton>
-          ))}
-        </List>
-        
-        {/* Footer section in drawer */}
-        <Box sx={{ 
-          mt: 'auto', 
-          p: 2, 
-          textAlign: 'center',
-          bgcolor: alpha(theme.palette.primary.main, 0.05),
-          borderTop: '1px solid',
-          borderTopColor: alpha(theme.palette.primary.main, 0.1),
-        }}>
-          <Typography 
-            variant="caption" 
-            sx={{ 
-              display: 'block', 
-              color: theme.palette.text.secondary,
-              fontWeight: 500
-            }}
-          >
-            © {new Date().getFullYear()} GameStore
-          </Typography>
-          <Typography 
-            variant="caption" 
-            sx={{ 
-              display: 'block', 
-              color: theme.palette.text.secondary,
-              mt: 0.5
-            }}
-          >
-            Nền tảng game số 1
-          </Typography>
-        </Box>
+          </Box>
+        )}
+
+        {/* Login Button for guests */}
+        {!currentUser && (
+          <Box sx={{ p: 2 }}>
+            <ListItemButton
+              component={RouterLink}
+              to="/login"
+              onClick={handleDrawerToggle}
+              sx={{
+                p: '0.95rem 1rem',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+                border: '2px solid #86efac',
+                color: '#15803d',
+                fontWeight: 600,
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                  color: 'white',
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0 6px 20px rgba(34, 197, 94, 0.4)',
+                },
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 40,
+                  color: 'inherit',
+                }}
+              >
+                <LoginIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Đăng nhập"
+                primaryTypographyProps={{
+                  sx: {
+                    fontWeight: 600,
+                  }
+                }}
+              />
+            </ListItemButton>
+          </Box>
+        )}
       </Drawer>
 
-      <Box 
-        sx={{ 
+      <Box
+        sx={{
           marginTop: '68px',
           padding: '16px',
           flex: 1,
           width: '100%',
           maxWidth: '100vw',
           overflowX: 'hidden',
-          background: 'rgba(255, 255, 255, 0.02)',
-          backdropFilter: 'blur(10px)',
+          background: 'transparent',
           borderRadius: '16px 16px 0 0',
           margin: '68px 8px 0 8px',
           minHeight: 'calc(100vh - 68px)',
@@ -376,18 +504,17 @@ const CustomerLayout = ({ children }) => {
         {children || <Outlet />}
       </Box>
 
-      <Box 
-        component="footer" 
-        sx={{ 
-          py: 3, 
-          background: 'rgba(255, 255, 255, 0.05)',
-          backdropFilter: 'blur(20px)',
+      <Box
+        component="footer"
+        sx={{
+          py: 3,
+          background: '#ffffff',
           textAlign: 'center',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          color: 'white',
+          borderTop: '1px solid #e0e0e0',
+          color: '#666',
         }}
       >
-        <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           © {new Date().getFullYear()} GameStore. Nền tảng game hàng đầu Việt Nam.
         </Typography>
       </Box>

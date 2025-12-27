@@ -146,29 +146,29 @@ const ProfilePage = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [editMode, setEditMode] = useState(false);
   const [editedProfile, setEditedProfile] = useState<Partial<UserProfile>>({});
-  
+
   // Wishlist
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
   const [purchasedGames, setPurchasedGames] = useState<number[]>([]);
-  
+
   // Purchases
   const [purchases, setPurchases] = useState<PurchaseItem[]>([]);
   const [ratingModalOpen, setRatingModalOpen] = useState(false);
-  const [selectedGame, setSelectedGame] = useState<{id: number, name: string} | null>(null);
-  
+  const [selectedGame, setSelectedGame] = useState<{ id: number, name: string } | null>(null);
+
   // Viewed
   const [viewedGames, setViewedGames] = useState<ViewedGame[]>([]);
-  
+
   // Balance Transactions
   const [transactions, setTransactions] = useState<BalanceTransaction[]>([]);
   const [transactionStats, setTransactionStats] = useState<TransactionStats | null>(null);
   const [pendingDeposits, setPendingDeposits] = useState<PendingDeposit[]>([]);
-  
+
   // Deposit Request Form
   const [depositAmount, setDepositAmount] = useState<string>('');
   const [depositDescription, setDepositDescription] = useState<string>('');
   const [depositLoading, setDepositLoading] = useState(false);
-  
+
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -322,7 +322,7 @@ const ProfilePage = () => {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
-      
+
       setProfile(response.data.user);
       setEditMode(false);
       enqueueSnackbar('Cập nhật thông tin thành công', { variant: 'success' });
@@ -414,19 +414,18 @@ const ProfilePage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Header with Avatar */}
-      <Card sx={{ 
+      <Card sx={{
         mb: 3,
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+        background: 'white',
+        border: '1px solid #eee',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
       }}>
         <CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-            <Avatar 
-              sx={{ 
-                width: 100, 
-                height: 100, 
+            <Avatar
+              sx={{
+                width: 100,
+                height: 100,
                 bgcolor: 'primary.main',
                 fontSize: '2.5rem'
               }}
@@ -434,46 +433,34 @@ const ProfilePage = () => {
               {profile?.username?.charAt(0).toUpperCase()}
             </Avatar>
             <Box sx={{ flex: 1 }}>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, color: 'white' }}>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 700, color: 'text.primary' }}>
                 {profile?.username}
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Chip 
-                  icon={<EmailIcon />} 
-                  label={profile?.email} 
+                <Chip
+                  icon={<EmailIcon />}
+                  label={profile?.email}
                   variant="outlined"
-                  sx={{ 
-                    color: 'white',
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
-                    '& .MuiChip-icon': { color: 'white' }
-                  }}
+                  sx={{ color: 'text.secondary' }}
                 />
                 {profile?.age && (
-                  <Chip 
-                    icon={<CakeIcon />} 
-                    label={`${profile.age} tuổi`} 
+                  <Chip
+                    icon={<CakeIcon />}
+                    label={`${profile.age} tuổi`}
                     variant="outlined"
-                    sx={{ 
-                      color: 'white',
-                      borderColor: 'rgba(255, 255, 255, 0.3)',
-                      '& .MuiChip-icon': { color: 'white' }
-                    }}
+                    sx={{ color: 'text.secondary' }}
                   />
                 )}
                 {profile?.gender && (
-                  <Chip 
-                    icon={<GenderIcon />} 
-                    label={profile.gender === 'male' ? 'Nam' : profile.gender === 'female' ? 'Nữ' : 'Khác'} 
+                  <Chip
+                    icon={<GenderIcon />}
+                    label={profile.gender === 'male' ? 'Nam' : profile.gender === 'female' ? 'Nữ' : 'Khác'}
                     variant="outlined"
-                    sx={{ 
-                      color: 'white',
-                      borderColor: 'rgba(255, 255, 255, 0.3)',
-                      '& .MuiChip-icon': { color: 'white' }
-                    }}
+                    sx={{ color: 'text.secondary' }}
                   />
                 )}
                 {profile?.balance !== undefined && (
-                  <Chip 
+                  <Chip
                     label={`Số dư: ${formatPrice(profile.balance)}`}
                     color="success"
                     variant="filled"
@@ -487,30 +474,17 @@ const ProfilePage = () => {
 
       {/* Tabs */}
       <Card sx={{
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+        background: 'white',
+        border: '1px solid #eee',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
       }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-          <Tabs 
-            value={tabValue} 
+        <Box sx={{ borderBottom: 1, borderColor: '#e0e0e0' }}>
+          <Tabs
+            value={tabValue}
             onChange={handleTabChange}
             variant="fullWidth"
-            sx={{
-              '& .MuiTab-root': {
-                minHeight: 64,
-                fontSize: '1rem',
-                fontWeight: 600,
-                color: 'rgba(255, 255, 255, 0.7)',
-                '&.Mui-selected': {
-                  color: 'white',
-                }
-              },
-              '& .MuiTabs-indicator': {
-                backgroundColor: 'white',
-              }
-            }}
+            textColor="primary"
+            indicatorColor="primary"
           >
             <Tab icon={<PersonIcon />} label="Thông tin" iconPosition="start" />
             <Tab icon={<DepositIcon />} label="Nạp tiền" iconPosition="start" />
@@ -525,7 +499,7 @@ const ProfilePage = () => {
         <TabPanel value={tabValue} index={0}>
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-              <Typography variant="h5" sx={{ fontWeight: 600, color: 'white' }}>
+              <Typography variant="h5" sx={{ fontWeight: 600, color: 'text.primary' }}>
                 Thông tin cá nhân
               </Typography>
               {!editMode ? (
@@ -564,7 +538,6 @@ const ProfilePage = () => {
                   value={profile?.username || ''}
                   disabled
                   variant="outlined"
-                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -574,7 +547,6 @@ const ProfilePage = () => {
                   value={profile?.email || ''}
                   disabled
                   variant="outlined"
-                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -587,7 +559,6 @@ const ProfilePage = () => {
                   disabled={!editMode}
                   variant="outlined"
                   inputProps={{ min: 1, max: 120 }}
-                  sx={textFieldStyle}
                 />
               </Box>
               <Box sx={{ width: { xs: '100%', md: 'calc(50% - 12px)' } }}>
@@ -599,7 +570,6 @@ const ProfilePage = () => {
                   onChange={(e) => setEditedProfile(prev => ({ ...prev, gender: e.target.value }))}
                   disabled={!editMode}
                   variant="outlined"
-                  sx={textFieldStyle}
                 >
                   <MenuItem value="">Không chọn</MenuItem>
                   <MenuItem value="male">Nam</MenuItem>
@@ -616,108 +586,108 @@ const ProfilePage = () => {
           </CardContent>
         </TabPanel>
 
-               {/* Tab 1: Deposit/Nạp tiền */}
-               <TabPanel value={tabValue} index={1}>
-                 <CardContent>
-                   <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
-                     Nạp tiền vào tài khoản
-                   </Typography>
+        {/* Tab 1: Deposit/Nạp tiền */}
+        <TabPanel value={tabValue} index={1}>
+          <CardContent>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 3 }}>
+              Nạp tiền vào tài khoản
+            </Typography>
 
-                   {/* Current Balance */}
-                   <Card sx={{ mb: 3, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-                     <CardContent>
-                       <Typography variant="body2" sx={{ color: 'white', opacity: 0.9 }}>
-                         Số dư hiện tại
-                       </Typography>
-                       <Typography variant="h3" sx={{ color: 'white', fontWeight: 700 }}>
-                         {formatPrice(profile?.balance || 0)}
-                       </Typography>
-                     </CardContent>
-                   </Card>
+            {/* Current Balance */}
+            <Card sx={{ mb: 3, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+              <CardContent>
+                <Typography variant="body2" sx={{ color: 'white', opacity: 0.9 }}>
+                  Số dư hiện tại
+                </Typography>
+                <Typography variant="h3" sx={{ color: 'white', fontWeight: 700 }}>
+                  {formatPrice(profile?.balance || 0)}
+                </Typography>
+              </CardContent>
+            </Card>
 
-                   {/* Deposit Request Form */}
-                   <Card variant="outlined" sx={{ mb: 3 }}>
-                     <CardContent>
-                       <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                         Gửi yêu cầu nạp tiền
-                       </Typography>
-                       
-                       <Box sx={{ mb: 2 }}>
-                         <TextField
-                           fullWidth
-                           label="Số tiền cần nạp (VNĐ)"
-                           type="number"
-                           value={depositAmount}
-                           onChange={(e) => setDepositAmount(e.target.value)}
-                           placeholder="Ví dụ: 100000"
-                           inputProps={{ min: 10000, step: 10000 }}
-                           sx={{ mb: 2 }}
-                         />
-                         <TextField
-                           fullWidth
-                           label="Ghi chú (tùy chọn)"
-                           value={depositDescription}
-                           onChange={(e) => setDepositDescription(e.target.value)}
-                           placeholder="Ví dụ: Nạp tiền qua Vietcombank"
-                           multiline
-                           rows={2}
-                           sx={{ mb: 2 }}
-                         />
-                         <Button
-                           fullWidth
-                           variant="contained"
-                           size="large"
-                           onClick={handleDepositRequest}
-                           disabled={depositLoading || !depositAmount}
-                           startIcon={depositLoading ? <CircularProgress size={20} /> : <DepositIcon />}
-                         >
-                           {depositLoading ? 'Đang gửi...' : 'Gửi yêu cầu nạp tiền'}
-                         </Button>
-                       </Box>
+            {/* Deposit Request Form */}
+            <Card variant="outlined" sx={{ mb: 3 }}>
+              <CardContent>
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+                  Gửi yêu cầu nạp tiền
+                </Typography>
 
-                       <Alert severity="info" sx={{ mt: 2 }}>
-                         <Typography variant="body2" fontWeight="bold">
-                           Hướng dẫn nạp tiền:
-                         </Typography>
-                         <Typography variant="body2" component="div">
-                           1. Nhập số tiền cần nạp và gửi yêu cầu<br />
-                           2. Chuyển khoản đúng số tiền vào tài khoản bên dưới<br />
-                           3. Ghi nội dung: <strong>NAPTIEN {profile?.user_id}</strong><br />
-                           4. Chờ admin xác nhận (5-30 phút)<br />
-                           5. Số dư sẽ được cập nhật tự động sau khi duyệt
-                         </Typography>
-                       </Alert>
-                     </CardContent>
-                   </Card>
+                <Box sx={{ mb: 2 }}>
+                  <TextField
+                    fullWidth
+                    label="Số tiền cần nạp (VNĐ)"
+                    type="number"
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(e.target.value)}
+                    placeholder="Ví dụ: 100000"
+                    inputProps={{ min: 10000, step: 10000 }}
+                    sx={{ mb: 2 }}
+                  />
+                  <TextField
+                    fullWidth
+                    label="Ghi chú (tùy chọn)"
+                    value={depositDescription}
+                    onChange={(e) => setDepositDescription(e.target.value)}
+                    placeholder="Ví dụ: Nạp tiền qua Vietcombank"
+                    multiline
+                    rows={2}
+                    sx={{ mb: 2 }}
+                  />
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="large"
+                    onClick={handleDepositRequest}
+                    disabled={depositLoading || !depositAmount}
+                    startIcon={depositLoading ? <CircularProgress size={20} /> : <DepositIcon />}
+                  >
+                    {depositLoading ? 'Đang gửi...' : 'Gửi yêu cầu nạp tiền'}
+                  </Button>
+                </Box>
 
-                   {/* Pending Deposits */}
-                   {pendingDeposits.length > 0 && (
-                     <Card variant="outlined" sx={{ mb: 3, borderColor: 'warning.main' }}>
-                       <CardContent>
-                         <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 2, color: 'warning.main' }}>
-                           ⏳ Yêu cầu đang chờ duyệt ({pendingDeposits.length})
-                         </Typography>
-                         {pendingDeposits.map((deposit) => (
-                           <Box key={deposit.transaction_id} sx={{ mb: 2, p: 2, bgcolor: 'warning.light', borderRadius: 1 }}>
-                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                               <Box>
-                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                                   {formatPrice(deposit.amount)}
-                                 </Typography>
-                                 <Typography variant="body2" color="text.secondary">
-                                   {deposit.description}
-                                 </Typography>
-                                 <Typography variant="caption" color="text.secondary">
-                                   Gửi lúc: {formatDate(deposit.created_at)}
-                                 </Typography>
-                               </Box>
-                               <Chip label="Đang chờ" color="warning" />
-                             </Box>
-                           </Box>
-                         ))}
-                       </CardContent>
-                     </Card>
-                   )}
+                <Alert severity="info" sx={{ mt: 2 }}>
+                  <Typography variant="body2" fontWeight="bold">
+                    Hướng dẫn nạp tiền:
+                  </Typography>
+                  <Typography variant="body2" component="div">
+                    1. Nhập số tiền cần nạp và gửi yêu cầu<br />
+                    2. Chuyển khoản đúng số tiền vào tài khoản bên dưới<br />
+                    3. Ghi nội dung: <strong>NAPTIEN {profile?.user_id}</strong><br />
+                    4. Chờ admin xác nhận (5-30 phút)<br />
+                    5. Số dư sẽ được cập nhật tự động sau khi duyệt
+                  </Typography>
+                </Alert>
+              </CardContent>
+            </Card>
+
+            {/* Pending Deposits */}
+            {pendingDeposits.length > 0 && (
+              <Card variant="outlined" sx={{ mb: 3, borderColor: 'warning.main' }}>
+                <CardContent>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 2, color: 'warning.main' }}>
+                    ⏳ Yêu cầu đang chờ duyệt ({pendingDeposits.length})
+                  </Typography>
+                  {pendingDeposits.map((deposit) => (
+                    <Box key={deposit.transaction_id} sx={{ mb: 2, p: 2, bgcolor: 'warning.light', borderRadius: 1 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box>
+                          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                            {formatPrice(deposit.amount)}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {deposit.description}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            Gửi lúc: {formatDate(deposit.created_at)}
+                          </Typography>
+                        </Box>
+                        <Chip label="Đang chờ" color="warning" />
+                      </Box>
+                    </Box>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
 
             <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
               {/* QR Code Section */}
@@ -728,7 +698,7 @@ const ProfilePage = () => {
                       Quét mã QR để chuyển khoản
                     </Typography>
                     <Box sx={{ textAlign: 'center', mb: 2 }}>
-                      <Box 
+                      <Box
                         component="img"
                         src="/qr.png"
                         alt="QR Code"
@@ -919,10 +889,10 @@ const ProfilePage = () => {
                         </Typography>
                         <Box sx={{ mb: 2 }}>
                           {item.genres?.slice(0, 2).map((genre, idx) => (
-                            <Chip 
-                              key={idx} 
-                              label={genre} 
-                              size="small" 
+                            <Chip
+                              key={idx}
+                              label={genre}
+                              size="small"
                               sx={{ mr: 0.5, mb: 0.5 }}
                             />
                           ))}
@@ -1054,9 +1024,9 @@ const ProfilePage = () => {
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
                 {viewedGames.map((game) => (
                   <Box key={game.game_id} sx={{ width: { xs: '100%', sm: 'calc(50% - 12px)', md: 'calc(33.333% - 16px)' } }}>
-                    <Card 
-                      sx={{ 
-                        height: '100%', 
+                    <Card
+                      sx={{
+                        height: '100%',
                         cursor: 'pointer',
                         transition: 'transform 0.2s',
                         '&:hover': { transform: 'translateY(-4px)' }
@@ -1157,35 +1127,34 @@ const ProfilePage = () => {
             ) : (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {transactions.map((transaction) => (
-                  <Card 
+                  <Card
                     key={transaction.transaction_id}
                     variant="outlined"
                     sx={{
-                      borderLeft: `4px solid ${
-                        transaction.transaction_type === 'DEPOSIT' ? '#4caf50' :
+                      borderLeft: `4px solid ${transaction.transaction_type === 'DEPOSIT' ? '#4caf50' :
                         transaction.transaction_type === 'PURCHASE' ? '#f44336' :
-                        transaction.transaction_type === 'REFUND' ? '#2196f3' :
-                        '#ff9800'
-                      }`
+                          transaction.transaction_type === 'REFUND' ? '#2196f3' :
+                            '#ff9800'
+                        }`
                     }}
                   >
                     <CardContent>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                         <Box sx={{ flex: 1 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                            <Chip 
+                            <Chip
                               label={
                                 transaction.transaction_type === 'DEPOSIT' ? 'Nạp tiền' :
-                                transaction.transaction_type === 'PURCHASE' ? 'Mua game' :
-                                transaction.transaction_type === 'REFUND' ? 'Hoàn tiền' :
-                                'Điều chỉnh'
+                                  transaction.transaction_type === 'PURCHASE' ? 'Mua game' :
+                                    transaction.transaction_type === 'REFUND' ? 'Hoàn tiền' :
+                                      'Điều chỉnh'
                               }
                               size="small"
                               color={
                                 transaction.transaction_type === 'DEPOSIT' ? 'success' :
-                                transaction.transaction_type === 'PURCHASE' ? 'error' :
-                                transaction.transaction_type === 'REFUND' ? 'info' :
-                                'warning'
+                                  transaction.transaction_type === 'PURCHASE' ? 'error' :
+                                    transaction.transaction_type === 'REFUND' ? 'info' :
+                                      'warning'
                               }
                             />
                             <Typography variant="caption" color="text.secondary">
@@ -1200,8 +1169,8 @@ const ProfilePage = () => {
                           {transaction.game_name && (
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
                               {transaction.game_image && (
-                                <Avatar 
-                                  src={transaction.game_image} 
+                                <Avatar
+                                  src={transaction.game_image}
                                   variant="rounded"
                                   sx={{ width: 40, height: 40 }}
                                 />
@@ -1214,9 +1183,9 @@ const ProfilePage = () => {
                         </Box>
 
                         <Box sx={{ textAlign: 'right', minWidth: 150 }}>
-                          <Typography 
-                            variant="h6" 
-                            sx={{ 
+                          <Typography
+                            variant="h6"
+                            sx={{
                               fontWeight: 700,
                               color: transaction.amount >= 0 ? 'success.main' : 'error.main'
                             }}

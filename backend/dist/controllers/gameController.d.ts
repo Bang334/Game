@@ -17,6 +17,10 @@ export declare class GameController {
      */
     static getTopRated(req: Request, res: Response): Promise<void>;
     /**
+     * Get newest released games
+     */
+    static getNewestReleases(req: Request, res: Response): Promise<void>;
+    /**
      * Get all genres
      */
     static getAllGenres(req: Request, res: Response): Promise<void>;

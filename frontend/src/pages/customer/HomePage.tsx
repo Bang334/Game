@@ -93,7 +93,7 @@ const HomePage = () => {
   const handleGameClick = async (gameId: number) => {
     // Navigate to game detail first
     navigate(`/games/${gameId}`);
-    
+
     // Track view if user is logged in (async, don't wait)
     if (currentUser) {
       trackView(gameId);
@@ -102,7 +102,7 @@ const HomePage = () => {
 
   const trackView = async (gameId: number) => {
     if (!currentUser) return;
-    
+
     try {
       await axios.post(`http://localhost:3001/api/customer/games/${gameId}/view`);
       console.log('View tracked successfully');
@@ -120,12 +120,11 @@ const HomePage = () => {
           sx={{
             p: 4,
             mb: 4,
-            background: 'rgba(255, 255, 255, 0.05)',
-            backdropFilter: 'blur(20px)',
+            background: 'linear-gradient(135deg, #2c3e50 0%, #3498db 100%)',
             color: 'white',
             textAlign: 'center',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+            borderRadius: 4,
+            boxShadow: '0 10px 30px rgba(52, 152, 219, 0.3)',
           }}
         >
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 800 }}>
@@ -139,9 +138,11 @@ const HomePage = () => {
             size="large"
             onClick={() => navigate('/games')}
             sx={{
-              bgcolor: 'rgba(255,255,255,0.2)',
+              bgcolor: 'white',
+              color: '#3498db',
+              fontWeight: 'bold',
               '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.3)',
+                bgcolor: '#f1f1f1',
               }
             }}
           >
@@ -150,7 +151,7 @@ const HomePage = () => {
         </Paper>
 
         {/* Quick Actions */}
-        <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 700, color: 'white' }}>
+        <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 700, color: 'text.primary' }}>
           Thao tác nhanh
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3, mb: 4 }}>
@@ -161,27 +162,41 @@ const HomePage = () => {
                   p: 3,
                   textAlign: 'center',
                   cursor: 'pointer',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(20px)',
-                  color: 'white',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+                  background: 'white',
+                  color: 'text.primary',
+                  borderRadius: 3,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                   transition: 'all 0.3s ease',
+                  border: '1px solid #eee',
                   '&:hover': {
                     transform: 'translateY(-4px)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                    background: 'rgba(255, 255, 255, 0.08)',
+                    boxShadow: '0 12px 24px rgba(0,0,0,0.1)',
+                    borderColor: action.color,
                   }
                 }}
                 onClick={() => navigate(action.path)}
               >
-                <Box sx={{ color: 'white', mb: 2 }}>
+                <Box
+                  sx={{
+                    color: 'white',
+                    mb: 2,
+                    mx: 'auto',
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    background: action.gradient,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
+                  }}
+                >
                   {action.icon}
                 </Box>
-                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, color: 'white' }}>
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
                   {action.title}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                <Typography variant="body2" color="text.secondary">
                   {action.description}
                 </Typography>
               </Card>
@@ -190,13 +205,13 @@ const HomePage = () => {
         </Box>
 
         {/* Featured Games */}
-        <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 700, color: 'white' }}>
+        <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 700, color: 'text.primary' }}>
           Games nổi bật
         </Typography>
-        
+
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-            <CircularProgress size={60} sx={{ color: 'white' }} />
+            <CircularProgress size={60} color="primary" />
           </Box>
         ) : (
           <Box
@@ -218,15 +233,14 @@ const HomePage = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   cursor: 'pointer',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.05)',
+                  background: 'white',
+                  borderRadius: 3,
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                   transition: 'all 0.3s ease',
+                  border: '1px solid #eee',
                   '&:hover': {
                     transform: 'translateY(-4px)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                    background: 'rgba(255, 255, 255, 0.08)',
+                    boxShadow: '0 12px 24px rgba(0,0,0,0.1)',
                   }
                 }}
                 onClick={() => handleGameClick(game.game_id)}
@@ -249,15 +263,15 @@ const HomePage = () => {
                   {!game.image && 'No Image'}
                 </Box>
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, color: 'white' }}>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, color: 'text.primary', lineHeight: 1.2 }}>
                     {game.name}
                   </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="h6" sx={{ color: '#ffd700', fontWeight: 700 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                    <Typography variant="h6" sx={{ color: '#d32f2f', fontWeight: 700 }}>
                       ${game.price}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body2" sx={{ mr: 0.5, color: 'rgba(255,255,255,0.8)' }}>
+                      <Typography variant="body2" sx={{ mr: 0.5, color: 'text.secondary', fontWeight: 500 }}>
                         ⭐ {game.average_rating ? Number(game.average_rating).toFixed(1) : 'N/A'}
                       </Typography>
                     </Box>

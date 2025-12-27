@@ -135,6 +135,11 @@ class GameRecommendationSystem:
     
     def preprocess_data(self):
         """Tiền xử lý dữ liệu"""
+        # 🔒 FIX: Sắp xếp dữ liệu đầu vào theo ID để đảm bảo thứ tự nhất quán
+        # Giúp đồng bộ Matrix giữa các lần chạy khác nhau và giữa các môi trường (API vs Script)
+        self.games_data.sort(key=lambda x: int(x['id']))
+        self.users_data.sort(key=lambda x: int(x['id']))
+
         # Convert to DataFrame
         self.games_df = pd.DataFrame(self.games_data)
         self.users_df = pd.DataFrame(self.users_data)
@@ -151,19 +156,30 @@ class GameRecommendationSystem:
             
             for game in self.games_data:
                 game_id = game['id']
+                str_game_id = str(game_id)
                 rating = 0.0
                 
                 # Tính điểm cộng dồn cho trường hợp trùng lặp
-                if game_id in favorites:
-                    rating += 5.0  # Favorite games
-                if game_id in purchased:
-                    rating += purchased[game_id]  # Use actual rating from review (1-5) or default 3
+                # FIX: Handle cả int và string cho game_id để tránh miss data
+                if game_id in favorites or str_game_id in [str(x) for x in favorites]:
+                    rating += 3.0  # Favorite games
+                    
+                if str_game_id in purchased:
+                    rating += purchased[str_game_id]
+                elif game_id in purchased:
+                    rating += purchased[game_id]
                 
                 # Thêm điểm từ view history (0.5 điểm mỗi lần xem)
-                view_count = view_history.get(game_id, 0)
+                if str_game_id in view_history:
+                    view_count = view_history[str_game_id]
+                elif game_id in view_history:
+                    view_count = view_history[game_id]
+                else:
+                    view_count = 0
+                    
                 rating += view_count * 0.5  # 0.5 điểm mỗi lần xem
                 
-                # Nếu vừa favorite vừa purchased vừa xem nhiều lần = 5.0 + 3.0 + (số lần xem * 0.5)
+                # Nếu vừa favorite vừa purchased vừa xem nhiều lần = 3.0 + rating + (số lần xem * 0.5)
                 
                 user_game_ratings.append({
                     'user_id': user_id,
@@ -185,6 +201,10 @@ class GameRecommendationSystem:
     def train_svd_model(self, k=2):
         """Huấn luyện mô hình SVD"""
         try:
+            # 🔒 FIX: Cố định random seed để kết quả SVD nhất quán tuyệt đối giữa các lần chạy
+            # Giúp đồng bộ điểm số giữa Python script (offline) và API Service (online)
+            np.random.seed(42) 
+
             # Chuẩn hóa dữ liệu (trừ mean của mỗi user)
             user_ratings_mean = np.mean(self.user_item_matrix.values, axis=1)
             ratings_demeaned = self.user_item_matrix.values - user_ratings_mean.reshape(-1, 1)
@@ -345,6 +365,8 @@ class GameRecommendationSystem:
     
     def get_cpu_score(self, cpu_name):
         """Lấy điểm benchmark CPU"""
+        if not self.cpu_data:
+            return 0
         # Tìm trong tất cả các category
         for category in self.cpu_data.values():
             if isinstance(category, dict):
@@ -354,6 +376,8 @@ class GameRecommendationSystem:
     
     def get_gpu_score(self, gpu_name):
         """Lấy điểm benchmark GPU"""
+        if not self.gpu_data:
+            return 0
         # Tìm trong tất cả các category
         for category in self.gpu_data.values():
             if isinstance(category, dict):
@@ -673,7 +697,7 @@ class GameRecommendationSystem:
                     rating = 0.0
                     
                     if game_id in other_favorites:
-                        rating = 5.0  # User tương tự thích game này
+                        rating = 3.0  # User tương tự thích game này
                     elif game_id in other_purchased:
                         rating = other_purchased_dict.get(game_id, 3.0)  # Use actual rating from review
                     elif game_id in other_view_history:
@@ -939,10 +963,10 @@ class GameRecommendationSystem:
         
         Trả về dictionary chứa preferences: publisher, genre, price_range, etc.
         """
-        # Check cache (bỏ qua cache nếu có recent_days)
-        cache_key = f"{user_id}_{recent_days}" if recent_days else str(user_id)
-        if cache_key in self.user_preferences:
-            return self.user_preferences[cache_key]
+        # ❌ DISABLED CACHE - Always recalculate
+        # cache_key = f"{user_id}_{recent_days}" if recent_days else str(user_id)
+        # if cache_key in self.user_preferences:
+        #     return self.user_preferences[cache_key]
         
         user_data = next((u for u in self.users_data if u['id'] == user_id), None)
         if not user_data:
@@ -1137,8 +1161,8 @@ class GameRecommendationSystem:
             'total_interactions': len(weighted_interactions)
         }
         
-        # Cache preferences
-        self.user_preferences[cache_key] = preferences
+        # ❌ DISABLED CACHE - Don't save
+        # self.user_preferences[cache_key] = preferences
         
         return preferences
     
@@ -1656,6 +1680,16 @@ class GameRecommendationSystem:
         else:
             svd_min = svd_max = svd_range = 0
         
+        # Tính max cho Demographic scores để normalize
+        demographic_scores = [all_games[game_id]['demographic_score'] for game_id in all_games if all_games[game_id]['demographic_score'] != 0]
+        if demographic_scores:
+            demo_max = max(demographic_scores)
+            demo_divisor = 5.0 if demo_max < 5.0 else demo_max
+            print(f"Demographic scores: max={demo_max:.3f}, divisor={demo_divisor:.3f}")
+        else:
+            demo_max = 0
+            demo_divisor = 5.0
+        
         # Chọn trọng số dựa trên cold start và keyword
         if is_cold_start:
             if keyword and keyword.strip():
@@ -1700,7 +1734,14 @@ class GameRecommendationSystem:
             else:
                 svd_normalized = 0
             content_normalized = content_score  # Đã được điều chỉnh để dương
-            demographic_normalized = demographic_score / 5.0  # Normalize demographic (max = 5) to 0-1
+            
+            # Normalize Demographic scores: chia cho 5 nếu max < 5, chia cho max nếu max >= 5
+            # VD: [1,2,3,4] → [0.2,0.4,0.6,0.8] | [1,5,7] → [1/7,5/7,7/7]
+            if demographic_score != 0 and demo_divisor > 0:
+                demographic_normalized = demographic_score / demo_divisor
+            else:
+                demographic_normalized = 0
+            
             keyword_normalized = keyword_score  # Already 0-1
             
             # Cập nhật scores đã chuẩn hóa để hiển thị

@@ -12,6 +12,7 @@ const reviewController_1 = require("../controllers/reviewController");
 const wishlistController_1 = require("../controllers/wishlistController");
 const balanceController_1 = require("../controllers/balanceController");
 const viewController_1 = require("../controllers/viewController");
+const similarGamesController_1 = require("../controllers/similarGamesController");
 const JWT_SECRET = process.env.JWT_SECRET ?? 'dev_secret_change_me';
 /**
  * Authentication middleware
@@ -40,9 +41,12 @@ const router = (0, express_1.Router)();
 router.get('/games', gameController_1.GameController.getAllGames);
 // Get game by ID
 router.get('/games/:id', gameController_1.GameController.getGameById);
+// Get similar games
+router.get('/games/:id/similar', similarGamesController_1.SimilarGamesController.getSimilarGames);
 // Get top games
 router.get('/games/top/downloaded', gameController_1.GameController.getTopDownloaded);
 router.get('/games/top/rated', gameController_1.GameController.getTopRated);
+router.get('/games/top/newest', gameController_1.GameController.getNewestReleases);
 // Get filters
 router.get('/filters/genres', gameController_1.GameController.getAllGenres);
 router.get('/filters/platforms', gameController_1.GameController.getAllPlatforms);

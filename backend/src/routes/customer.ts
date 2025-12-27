@@ -48,6 +48,7 @@ router.get('/games/:id/similar', SimilarGamesController.getSimilarGames)
 // Get top games
 router.get('/games/top/downloaded', GameController.getTopDownloaded)
 router.get('/games/top/rated', GameController.getTopRated)
+router.get('/games/top/newest', GameController.getNewestReleases)
 
 // Get filters
 router.get('/filters/genres', GameController.getAllGenres)

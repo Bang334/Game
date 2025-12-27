@@ -75,6 +75,7 @@ export declare class GameModel {
     static findByIdWithDetails(gameId: number): Promise<GameWithDetails | null>;
     static findTopDownloaded(limit?: number): Promise<GameWithPublisher[]>;
     static findTopRated(limit?: number): Promise<GameWithPublisher[]>;
+    static findNewestReleases(limit?: number): Promise<GameWithPublisher[]>;
     static findByPriceRange(minPrice: number, maxPrice: number): Promise<GameWithPublisher[]>;
     static findSimilarGames(gameId: number, limit?: number): Promise<GameWithDetails[]>;
     static create(data: CreateGameData): Promise<number>;

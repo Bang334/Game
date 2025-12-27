@@ -1,0 +1,334 @@
+-- ============================================
+-- UPDATE GAME IMAGES
+-- ============================================
+-- This script updates game images for games with ID >= 201
+-- Images are sourced from sforum.vn and cellphones.com.vn
+--
+-- ID 201-300: Gaming images (hinh-nen-gaming-{1-100}.jpg)
+-- ID 301-400: Yu-Gi-Oh images (hinh-nen-yugioh-{1-100}.jpg)
+-- ID 401-500: Anime images (anh-ac-quy-anime-{1-100}.jpg)
+-- ID > 500: Cycles through anime images
+-- ============================================
+
+-- ============================================
+-- GAMES 201-300: Gaming Images
+-- ============================================
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-1.jpg' WHERE game_id = 201;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-2.jpg' WHERE game_id = 202;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-3.jpg' WHERE game_id = 203;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-4.jpg' WHERE game_id = 204;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-5.jpg' WHERE game_id = 205;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-6.jpg' WHERE game_id = 206;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-7.jpg' WHERE game_id = 207;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-8.jpg' WHERE game_id = 208;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-9.jpg' WHERE game_id = 209;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-10.jpg' WHERE game_id = 210;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-11.jpg' WHERE game_id = 211;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-12.jpg' WHERE game_id = 212;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-13.jpg' WHERE game_id = 213;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-14.jpg' WHERE game_id = 214;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-15.jpg' WHERE game_id = 215;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-16.jpg' WHERE game_id = 216;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-17.jpg' WHERE game_id = 217;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-18.jpg' WHERE game_id = 218;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-19.jpg' WHERE game_id = 219;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-20.jpg' WHERE game_id = 220;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-21.jpg' WHERE game_id = 221;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-22.jpg' WHERE game_id = 222;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-23.jpg' WHERE game_id = 223;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-24.jpg' WHERE game_id = 224;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-25.jpg' WHERE game_id = 225;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-26.jpg' WHERE game_id = 226;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-27.jpg' WHERE game_id = 227;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-28.jpg' WHERE game_id = 228;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-29.jpg' WHERE game_id = 229;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-30.jpg' WHERE game_id = 230;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-31.jpg' WHERE game_id = 231;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-32.jpg' WHERE game_id = 232;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-33.jpg' WHERE game_id = 233;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-34.jpg' WHERE game_id = 234;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-35.jpg' WHERE game_id = 235;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-36.jpg' WHERE game_id = 236;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-37.jpg' WHERE game_id = 237;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-38.jpg' WHERE game_id = 238;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-39.jpg' WHERE game_id = 239;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-40.jpg' WHERE game_id = 240;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-41.jpg' WHERE game_id = 241;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-42.jpg' WHERE game_id = 242;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-43.jpg' WHERE game_id = 243;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-44.jpg' WHERE game_id = 244;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-45.jpg' WHERE game_id = 245;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-46.jpg' WHERE game_id = 246;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-47.jpg' WHERE game_id = 247;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-48.jpg' WHERE game_id = 248;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-49.jpg' WHERE game_id = 249;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-50.jpg' WHERE game_id = 250;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-51.jpg' WHERE game_id = 251;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-52.jpg' WHERE game_id = 252;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-53.jpg' WHERE game_id = 253;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-54.jpg' WHERE game_id = 254;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-55.jpg' WHERE game_id = 255;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-56.jpg' WHERE game_id = 256;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-57.jpg' WHERE game_id = 257;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-58.jpg' WHERE game_id = 258;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-59.jpg' WHERE game_id = 259;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-60.jpg' WHERE game_id = 260;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-61.jpg' WHERE game_id = 261;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-62.jpg' WHERE game_id = 262;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-63.jpg' WHERE game_id = 263;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-64.jpg' WHERE game_id = 264;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-65.jpg' WHERE game_id = 265;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-66.jpg' WHERE game_id = 266;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-67.jpg' WHERE game_id = 267;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-68.jpg' WHERE game_id = 268;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-69.jpg' WHERE game_id = 269;
+UPDATE game SET image = 'https://cellphones.com.vn/sforum/wp-content/uploads/2023/08/hinh-nen-gaming-70.jpg' WHERE game_id = 270;
+
+-- ============================================
+-- GAMES 270-300: MSI Gaming Images (Override)
+-- ============================================
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-1.jpg' WHERE game_id = 270;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-2.jpg' WHERE game_id = 271;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-3.jpg' WHERE game_id = 272;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-4.jpg' WHERE game_id = 273;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-5.jpg' WHERE game_id = 274;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-6.jpg' WHERE game_id = 275;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-7.jpg' WHERE game_id = 276;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-8.jpg' WHERE game_id = 277;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-9.jpg' WHERE game_id = 278;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-10.jpg' WHERE game_id = 279;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-11.jpg' WHERE game_id = 280;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-12.jpg' WHERE game_id = 281;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-13.jpg' WHERE game_id = 282;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-14.jpg' WHERE game_id = 283;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-15.jpg' WHERE game_id = 284;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-16.jpg' WHERE game_id = 285;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-17.jpg' WHERE game_id = 286;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-18.jpg' WHERE game_id = 287;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-19.jpg' WHERE game_id = 288;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-20.jpg' WHERE game_id = 289;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-21.jpg' WHERE game_id = 290;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-22.jpg' WHERE game_id = 291;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-23.jpg' WHERE game_id = 292;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-24.jpg' WHERE game_id = 293;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-25.jpg' WHERE game_id = 294;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-26.jpg' WHERE game_id = 295;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-27.jpg' WHERE game_id = 296;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-28.jpg' WHERE game_id = 297;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-29.jpg' WHERE game_id = 298;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-30.jpg' WHERE game_id = 299;
+UPDATE game SET image = 'https://vanhoadoisong.vn/wp-content/uploads/2022/05/100-hinh-nen-anh-msi-full-hd-cho-game-thu-dat-may-tinh-dien-thoai-31.jpg' WHERE game_id = 300;
+
+-- ============================================
+-- GAMES 301-400: Yu-Gi-Oh Images
+-- ============================================
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-1.jpg' WHERE game_id = 301;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-2.jpg' WHERE game_id = 302;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-3.jpg' WHERE game_id = 303;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-4.jpg' WHERE game_id = 304;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-5.jpg' WHERE game_id = 305;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-6.jpg' WHERE game_id = 306;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-7.jpg' WHERE game_id = 307;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-8.jpg' WHERE game_id = 308;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-9.jpg' WHERE game_id = 309;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-10.jpg' WHERE game_id = 310;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-11.jpg' WHERE game_id = 311;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-12.jpg' WHERE game_id = 312;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-13.jpg' WHERE game_id = 313;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-14.jpg' WHERE game_id = 314;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-15.jpg' WHERE game_id = 315;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-16.jpg' WHERE game_id = 316;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-17.jpg' WHERE game_id = 317;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-18.jpg' WHERE game_id = 318;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-19.jpg' WHERE game_id = 319;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-20.jpg' WHERE game_id = 320;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-21.jpg' WHERE game_id = 321;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-22.jpg' WHERE game_id = 322;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-23.jpg' WHERE game_id = 323;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-24.jpg' WHERE game_id = 324;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-25.jpg' WHERE game_id = 325;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-26.jpg' WHERE game_id = 326;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-27.jpg' WHERE game_id = 327;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-28.jpg' WHERE game_id = 328;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-29.jpg' WHERE game_id = 329;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-30.jpg' WHERE game_id = 330;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-31.jpg' WHERE game_id = 331;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-32.jpg' WHERE game_id = 332;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-33.jpg' WHERE game_id = 333;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-34.jpg' WHERE game_id = 334;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-35.jpg' WHERE game_id = 335;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-36.jpg' WHERE game_id = 336;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-37.jpg' WHERE game_id = 337;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-38.jpg' WHERE game_id = 338;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-39.jpg' WHERE game_id = 339;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-40.jpg' WHERE game_id = 340;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-41.jpg' WHERE game_id = 341;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-42.jpg' WHERE game_id = 342;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-43.jpg' WHERE game_id = 343;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-44.jpg' WHERE game_id = 344;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-45.jpg' WHERE game_id = 345;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-46.jpg' WHERE game_id = 346;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-47.jpg' WHERE game_id = 347;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-48.jpg' WHERE game_id = 348;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-49.jpg' WHERE game_id = 349;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-50.jpg' WHERE game_id = 350;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-51.jpg' WHERE game_id = 351;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-52.jpg' WHERE game_id = 352;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-53.jpg' WHERE game_id = 353;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-54.jpg' WHERE game_id = 354;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-55.jpg' WHERE game_id = 355;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-56.jpg' WHERE game_id = 356;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-57.jpg' WHERE game_id = 357;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-58.jpg' WHERE game_id = 358;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-59.jpg' WHERE game_id = 359;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-60.jpg' WHERE game_id = 360;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-61.jpg' WHERE game_id = 361;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-62.jpg' WHERE game_id = 362;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-63.jpg' WHERE game_id = 363;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-64.jpg' WHERE game_id = 364;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-65.jpg' WHERE game_id = 365;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-66.jpg' WHERE game_id = 366;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-67.jpg' WHERE game_id = 367;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-68.jpg' WHERE game_id = 368;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-69.jpg' WHERE game_id = 369;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-70.jpg' WHERE game_id = 370;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-71.jpg' WHERE game_id = 371;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-72.jpg' WHERE game_id = 372;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-73.jpg' WHERE game_id = 373;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-74.jpg' WHERE game_id = 374;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-75.jpg' WHERE game_id = 375;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-76.jpg' WHERE game_id = 376;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-77.jpg' WHERE game_id = 377;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-78.jpg' WHERE game_id = 378;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-79.jpg' WHERE game_id = 379;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-80.jpg' WHERE game_id = 380;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-81.jpg' WHERE game_id = 381;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-82.jpg' WHERE game_id = 382;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-83.jpg' WHERE game_id = 383;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-84.jpg' WHERE game_id = 384;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-85.jpg' WHERE game_id = 385;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-86.jpg' WHERE game_id = 386;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-87.jpg' WHERE game_id = 387;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-88.jpg' WHERE game_id = 388;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-89.jpg' WHERE game_id = 389;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-90.jpg' WHERE game_id = 390;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-91.jpg' WHERE game_id = 391;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-92.jpg' WHERE game_id = 392;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-93.jpg' WHERE game_id = 393;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-94.jpg' WHERE game_id = 394;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-95.jpg' WHERE game_id = 395;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-96.jpg' WHERE game_id = 396;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-97.jpg' WHERE game_id = 397;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-98.jpg' WHERE game_id = 398;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-99.jpg' WHERE game_id = 399;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/ctvseo_maihue/hinh-nen-yugioh/hinh-nen-yugioh-100.jpg' WHERE game_id = 400;
+
+-- ============================================
+-- GAMES 401-500: Anime Images
+-- ============================================
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-1.jpg' WHERE game_id = 401;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-2.jpg' WHERE game_id = 402;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-3.jpg' WHERE game_id = 403;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-4.jpg' WHERE game_id = 404;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-5.jpg' WHERE game_id = 405;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-6.jpg' WHERE game_id = 406;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-7.jpg' WHERE game_id = 407;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-8.jpg' WHERE game_id = 408;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-9.jpg' WHERE game_id = 409;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-10.jpg' WHERE game_id = 410;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-11.jpg' WHERE game_id = 411;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-12.jpg' WHERE game_id = 412;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-13.jpg' WHERE game_id = 413;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-14.jpg' WHERE game_id = 414;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-15.jpg' WHERE game_id = 415;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-16.jpg' WHERE game_id = 416;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-17.jpg' WHERE game_id = 417;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-18.jpg' WHERE game_id = 418;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-19.jpg' WHERE game_id = 419;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-20.jpg' WHERE game_id = 420;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-21.jpg' WHERE game_id = 421;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-22.jpg' WHERE game_id = 422;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-23.jpg' WHERE game_id = 423;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-24.jpg' WHERE game_id = 424;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-25.jpg' WHERE game_id = 425;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-26.jpg' WHERE game_id = 426;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-27.jpg' WHERE game_id = 427;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-28.jpg' WHERE game_id = 428;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-29.jpg' WHERE game_id = 429;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-30.jpg' WHERE game_id = 430;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-31.jpg' WHERE game_id = 431;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-32.jpg' WHERE game_id = 432;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-33.jpg' WHERE game_id = 433;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-34.jpg' WHERE game_id = 434;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-35.jpg' WHERE game_id = 435;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-36.jpg' WHERE game_id = 436;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-37.jpg' WHERE game_id = 437;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-38.jpg' WHERE game_id = 438;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-39.jpg' WHERE game_id = 439;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-40.jpg' WHERE game_id = 440;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-41.jpg' WHERE game_id = 441;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-42.jpg' WHERE game_id = 442;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-43.jpg' WHERE game_id = 443;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-44.jpg' WHERE game_id = 444;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-45.jpg' WHERE game_id = 445;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-46.jpg' WHERE game_id = 446;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-47.jpg' WHERE game_id = 447;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-48.jpg' WHERE game_id = 448;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-49.jpg' WHERE game_id = 449;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-50.jpg' WHERE game_id = 450;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-51.jpg' WHERE game_id = 451;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-52.jpg' WHERE game_id = 452;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-53.jpg' WHERE game_id = 453;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-54.jpg' WHERE game_id = 454;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-55.jpg' WHERE game_id = 455;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-56.jpg' WHERE game_id = 456;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-57.jpg' WHERE game_id = 457;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-58.jpg' WHERE game_id = 458;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-59.jpg' WHERE game_id = 459;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-60.jpg' WHERE game_id = 460;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-61.jpg' WHERE game_id = 461;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-62.jpg' WHERE game_id = 462;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-63.jpg' WHERE game_id = 463;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-64.jpg' WHERE game_id = 464;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-65.jpg' WHERE game_id = 465;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-66.jpg' WHERE game_id = 466;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-67.jpg' WHERE game_id = 467;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-68.jpg' WHERE game_id = 468;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-69.jpg' WHERE game_id = 469;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-70.jpg' WHERE game_id = 470;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-71.jpg' WHERE game_id = 471;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-72.jpg' WHERE game_id = 472;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-73.jpg' WHERE game_id = 473;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-74.jpg' WHERE game_id = 474;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-75.jpg' WHERE game_id = 475;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-76.jpg' WHERE game_id = 476;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-77.jpg' WHERE game_id = 477;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-78.jpg' WHERE game_id = 478;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-79.jpg' WHERE game_id = 479;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-80.jpg' WHERE game_id = 480;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-81.jpg' WHERE game_id = 481;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-82.jpg' WHERE game_id = 482;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-83.jpg' WHERE game_id = 483;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-84.jpg' WHERE game_id = 484;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-85.jpg' WHERE game_id = 485;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-86.jpg' WHERE game_id = 486;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-87.jpg' WHERE game_id = 487;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-88.jpg' WHERE game_id = 488;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-89.jpg' WHERE game_id = 489;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-90.jpg' WHERE game_id = 490;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-91.jpg' WHERE game_id = 491;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-92.jpg' WHERE game_id = 492;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-93.jpg' WHERE game_id = 493;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-94.jpg' WHERE game_id = 494;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-95.jpg' WHERE game_id = 495;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-96.jpg' WHERE game_id = 496;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-97.jpg' WHERE game_id = 497;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-98.jpg' WHERE game_id = 498;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-99.jpg' WHERE game_id = 499;
+UPDATE game SET image = 'https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-100.jpg' WHERE game_id = 500;
+
+-- ============================================
+-- GAMES > 500: Cycle through anime images
+-- ============================================
+UPDATE game SET image = CONCAT('https://cdn-media.sforum.vn/storage/app/media/Van%20Pham/5/5b/anh-ac-quy-anime-', ((game_id - 401) MOD 100) + 1, '.jpg')
+WHERE game_id > 500;

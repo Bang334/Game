@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "migrate:unique-constraint": "node scripts/add-unique-constraint.js",
-    "test:rating-system": "node test-rating-system.js"
+    "test:rating-system": "node test-rating-system.js",
+    "export:json": "ts-node src/scripts/export-to-json.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
   "description": "",
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
+    "axios": "^1.13.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",

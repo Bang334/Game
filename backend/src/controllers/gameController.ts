@@ -8,7 +8,7 @@ export class GameController {
    */
   static async getAllGames(req: Request, res: Response) {
     try {
-      const { search, genre, platform, publisher, minPrice, maxPrice, sortBy = 'name', page = '1', limit = '20' } = req.query
+      const { search, genre, platform, publisher, minPrice, maxPrice, sortBy = 'name', page = '1', limit } = req.query
       
       let games = await GameModel.findAllWithPublisherAndGenres()
       
@@ -66,9 +66,9 @@ export class GameController {
           games.sort((a, b) => a.name.localeCompare(b.name))
       }
       
-      // Apply pagination
+      // Apply pagination - if no limit is provided, return all games
       const pageNum = parseInt(page as string)
-      const limitNum = parseInt(limit as string)
+      const limitNum = limit ? parseInt(limit as string) : games.length // Return all games if no limit
       const totalGames = games.length
       const totalPages = Math.ceil(totalGames / limitNum)
       const startIndex = (pageNum - 1) * limitNum
@@ -170,6 +170,48 @@ export class GameController {
       res.json({ games })
     } catch (error) {
       console.error('Error in getTopRated:', error)
+      res.status(500).json({ error: 'DB_ERROR' })
+    }
+  }
+
+  /**
+   * Get newest released games
+   */
+  static async getNewestReleases(req: Request, res: Response) {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10
+      const topGames = await GameModel.findNewestReleases(limit)
+      
+      // Enrich with genres and platforms
+      const gamesWithDetails = await Promise.all(
+        topGames.map(async (game) => {
+          // Get genres
+          const [genreRows] = await pool.execute(`
+            SELECT gen.name FROM Genre gen
+            JOIN Game_Genre gg ON gen.genre_id = gg.genre_id
+            WHERE gg.game_id = ?
+          `, [game.game_id])
+          const genres = (genreRows as any[]).map((row: any) => row.name)
+
+          // Get platforms
+          const [platformRows] = await pool.execute(`
+            SELECT p.name FROM Platform p
+            JOIN Game_Platform gp ON p.platform_id = gp.platform_id
+            WHERE gp.game_id = ?
+          `, [game.game_id])
+          const platforms = (platformRows as any[]).map((row: any) => row.name)
+
+          return {
+            ...game,
+            genres,
+            platforms
+          }
+        })
+      )
+      
+      res.json({ games: gamesWithDetails })
+    } catch (error) {
+      console.error('Error in getNewestReleases:', error)
       res.status(500).json({ error: 'DB_ERROR' })
     }
   }

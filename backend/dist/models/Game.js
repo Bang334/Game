@@ -204,6 +204,20 @@ class GameModel {
     `);
         return rows;
     }
+    // Get newest released games
+    static async findNewestReleases(limit = 10) {
+        // Ensure limit is a safe integer to prevent SQL injection
+        const safeLimit = Math.max(1, Math.min(100, Math.floor(limit)));
+        const [rows] = await db_1.pool.execute(`
+      SELECT g.*, p.name as publisher_name
+      FROM Game g
+      JOIN Publisher p ON g.publisher_id = p.publisher_id
+      WHERE g.release_date IS NOT NULL
+      ORDER BY g.release_date DESC
+      LIMIT ${safeLimit}
+    `);
+        return rows;
+    }
     // Get games by price range
     static async findByPriceRange(minPrice, maxPrice) {
         const [rows] = await db_1.pool.execute(`

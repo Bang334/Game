@@ -310,6 +310,21 @@ export class GameModel {
     return rows as GameWithPublisher[]
   }
 
+  // Get newest released games
+  static async findNewestReleases(limit: number = 10): Promise<GameWithPublisher[]> {
+    // Ensure limit is a safe integer to prevent SQL injection
+    const safeLimit = Math.max(1, Math.min(100, Math.floor(limit)))
+    const [rows] = await pool.execute(`
+      SELECT g.*, p.name as publisher_name
+      FROM Game g
+      JOIN Publisher p ON g.publisher_id = p.publisher_id
+      WHERE g.release_date IS NOT NULL
+      ORDER BY g.release_date DESC
+      LIMIT ${safeLimit}
+    `)
+    return rows as GameWithPublisher[]
+  }
+
   // Get games by price range
   static async findByPriceRange(minPrice: number, maxPrice: number): Promise<GameWithPublisher[]> {
     const [rows] = await pool.execute(`

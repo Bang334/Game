@@ -181,7 +181,7 @@ export class RecommendationController {
    */
   static async getRecommendations(req: Request, res: Response) {
     try {
-      const { user_id, query, days } = req.query
+      const { user_id, query, days, enable_adaptive } = req.query
       
       if (!user_id) {
         return res.status(400).json({ 
@@ -193,12 +193,16 @@ export class RecommendationController {
       
       const userId = parseInt(user_id as string)
       const searchQuery = query ? (query as string).trim() : ''
-      const recentDays = days ? parseInt(days as string) : 7
+      const recentDays = days ? parseInt(days as string) : null  // null = all time (SQLite data is old)
+      const enableAdaptive = enable_adaptive === '1' || enable_adaptive === 'true' || enable_adaptive === undefined // Default: true
       
       console.log('\n=== RECOMMENDATION REQUEST ===')
       console.log('User ID:', userId)
       console.log('Search Query:', searchQuery || '(none)')
       console.log('Recent Days:', recentDays)
+      console.log('enable_adaptive param:', enable_adaptive, '(raw)')
+      console.log('enableAdaptive parsed:', enableAdaptive, '(parsed)')
+      console.log('Adaptive Boost:', enableAdaptive ? 'ENABLED ⚡' : 'DISABLED 🔒')
       console.log('AI Service URL:', AI_SERVICE_URL)
       
       try {
@@ -207,16 +211,23 @@ export class RecommendationController {
         const users = await RecommendationController.prepareUserData()
         
         console.log('\n🚀 Calling AI Service...')
+        console.log('Sending to AI: enable_adaptive =', enableAdaptive)
         
         // Call AI service
-        const aiResponse = await axios.post(`${AI_SERVICE_URL}/api/recommend`, {
+        // Request all games (or a large number) and let frontend handle pagination
+        const requestBody = {
           user_id: userId,
           games: games,
           users: users,
           query: searchQuery,
           days: recentDays,
-          top_n: 20
-        }, {
+          enable_adaptive: enableAdaptive, // Pass adaptive boost setting to AI service
+          top_n: games.length // Get all available games
+        }
+        
+        console.log('Request body enable_adaptive:', requestBody.enable_adaptive)
+        
+        const aiResponse = await axios.post(`${AI_SERVICE_URL}/api/recommend`, requestBody, {
           timeout: 30000 // 30 second timeout
         })
         
@@ -253,7 +264,8 @@ export class RecommendationController {
         console.log('⚠️ Falling back to regular games list...')
         
         const games = await GameModel.findAllWithPublisherAndGenres()
-        const limitedGames = games.slice(0, 20)
+        // Return all games for fallback as well
+        const limitedGames = games
         
         res.json({
           success: true,

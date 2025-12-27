@@ -6,6 +6,7 @@ import adminRouter from './routes/admin'
 import customerRouter from './routes/customer'
 import authRouter from './routes/auth'
 import recoRouter from './routes/reco'
+import interactionRouter from './routes/interactionRoutes'
 import { pingDatabase } from './db'
 
 dotenv.config()
@@ -30,6 +31,7 @@ app.use('/api/admin', adminRouter)
 app.use('/api/customer', customerRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/reco', recoRouter)
+app.use('/api/interactions', interactionRouter)
 
 const port = Number(process.env.PORT ?? 3001)
 app.listen(port, () => {

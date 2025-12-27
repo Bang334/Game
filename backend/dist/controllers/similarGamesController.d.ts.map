@@ -1,0 +1,1 @@
+{"version":3,"file":"similarGamesController.d.ts","sourceRoot":"","sources":["../../src/controllers/similarGamesController.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAA;AAM3C,qBAAa,sBAAsB;IACjC;;OAEG;WACU,eAAe,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ;IA2HxD;;OAEG;mBACkB,eAAe;CAiDrC"}
