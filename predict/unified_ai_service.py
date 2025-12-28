@@ -44,15 +44,9 @@ def initialize_recommender(games, users):
     except:
         recommender.keyword_library = {}
     
-    # ⭐ Connect to SQLite database for adaptive boosting
-    try:
-        import sqlite3
-        recommender.interactions_db = sqlite3.connect('user_interactions.db')
-        recommender.use_sqlite = True
-        print("✓ Connected to SQLite interactions database for adaptive boosting")
-    except Exception as e:
-        print(f"! SQLite database not found - adaptive boosting will be limited: {e}")
-        recommender.use_sqlite = False
+    # ⭐ Data comes from MySQL via the request body, no need for separate SQLite
+    recommender.use_sqlite = False
+    print("✓ Using integrated MySQL data for adaptive boosting")
     
     # Load CPU/GPU data for spec checking
     try:
@@ -117,7 +111,7 @@ def get_recommendations():
         games = data.get('games', [])
         users = data.get('users', [])
         query = data.get('query', '').strip()  # Keyword search
-        recent_days = data.get('days', None)
+        recent_days = data.get('days', 7)  # ⏰ Default to 7 days
         enable_adaptive = data.get('enable_adaptive', True)  # Adaptive boost setting (default: True)
         top_n = data.get('top_n', 10)
         
@@ -144,6 +138,17 @@ def get_recommendations():
         print(f"   Recent days: {recent_days}" if recent_days else "   Recent days: (all time)")
         print(f"   Adaptive Boost: {'ENABLED ⚡' if enable_adaptive else 'DISABLED 🔒'}")
         print(f"   Top N: {top_n}")
+        
+        # DEBUG: Check interactions for user
+        target_user = next((u for u in users if u['id'] == user_id), None)
+        if target_user:
+            interactions = target_user.get('interactions', [])
+            print(f"   🔍 User {user_id} Interactions (Last 7 days): {len(interactions)}")
+            if interactions:
+                print(f"      sample: {interactions[0]}")
+        else:
+            print(f"   ⚠️ User {user_id} not found in user list!")
+            
         print(f"{'='*50}\n")
         
         # Initialize recommender with data (FRESH INSTANCE mỗi request)

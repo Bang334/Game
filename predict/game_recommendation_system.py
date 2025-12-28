@@ -92,9 +92,8 @@ class GameRecommendationSystem:
         self.users_df = None
         # Adaptive preferences
         self.user_preferences = {}  # Cache user preferences
-        # SQLite connection
-        self.interactions_db = None
-        self.use_sqlite = False  # Flag to use SQLite or JSON
+        # MySQL Integrated Data (set via initialization or setter)
+        self.use_sqlite = False  # Always False as we now use MySQL data directly
         
     def load_data(self):
         """Load dữ liệu từ các file JSON"""
@@ -118,14 +117,8 @@ class GameRecommendationSystem:
                 library_data = json.load(f)
                 self.keyword_library = library_data['keywords']
                 
-            # Try to connect to SQLite interactions database
-            try:
-                self.interactions_db = sqlite3.connect('user_interactions.db')
-                self.use_sqlite = True
-                print("✓ Connected to SQLite interactions database")
-            except:
-                print("! SQLite database not found - using JSON timestamps (if available)")
-                self.use_sqlite = False
+            print("✓ Using integrated MySQL data path")
+            self.use_sqlite = False
             
             print("Load du lieu thanh cong!")
             return True
@@ -891,74 +884,14 @@ class GameRecommendationSystem:
         # 3.0 + 2.0 + 2.5 + 1.5 + 1.5 + 1.5 + 1.0 + 1.0 + (3 specs * 1.5) + 1.0 + 2.0 (release_date) + 1.0 (multiplayer) = 15.0
         return min(score / 15.0, 1.0)
     
-    def get_user_interactions_from_db(self, user_id, recent_days=None):
-        """
-        Lấy user interactions từ SQLite database
-        
-        Args:
-            user_id: ID của user
-            recent_days: Số ngày gần đây (None = all time)
-        
-        Returns:
-            dict: {
-                'favorite_games': [game_ids],
-                'purchased_games': {game_id: rating},
-                'view_history': {game_id: view_count}
-            }
-        """
-        if not self.use_sqlite or not self.interactions_db:
-            return None
-        
-        cursor = self.interactions_db.cursor()
-        
-        # Calculate cutoff date
-        if recent_days:
-            cutoff_date = (datetime.now() - timedelta(days=recent_days)).isoformat()
-            where_clause = "WHERE user_id = ? AND timestamp >= ?"
-            params = (user_id, cutoff_date)
-        else:
-            where_clause = "WHERE user_id = ?"
-            params = (user_id,)
-        
-        # Query all interactions
-        query = f"""
-            SELECT game_id, interaction_type, rating
-            FROM user_interactions
-            {where_clause}
-            ORDER BY timestamp DESC
-        """
-        
-        cursor.execute(query, params)
-        results = cursor.fetchall()
-        
-        # Process results
-        favorite_games = []
-        purchased_games = {}
-        view_history = {}
-        
-        for game_id, interaction_type, rating in results:
-            if interaction_type == 'favorite':
-                if game_id not in favorite_games:
-                    favorite_games.append(game_id)
-            elif interaction_type == 'purchase':
-                if game_id not in purchased_games:
-                    purchased_games[game_id] = rating if rating else 3
-            elif interaction_type == 'view':
-                view_history[game_id] = view_history.get(game_id, 0) + 1
-        
-        return {
-            'favorite_games': favorite_games,
-            'purchased_games': purchased_games,
-            'view_history': view_history
-        }
     
-    def analyze_user_preferences(self, user_id, recent_days=None):
+    def analyze_user_preferences(self, user_id, recent_days=7):
         """
         Phân tích sở thích người dùng dựa trên lịch sử tương tác
         
         Args:
             user_id: ID của user
-            recent_days: Số ngày gần đây để phân tích (None = all time)
+            recent_days: Số ngày gần đây để phân tích (Mặc định: 7 ngày)
                         Ví dụ: recent_days=7 → chỉ phân tích 7 ngày vừa qua
         
         Trả về dictionary chứa preferences: publisher, genre, price_range, etc.
@@ -972,75 +905,56 @@ class GameRecommendationSystem:
         if not user_data:
             return None
         
-        # Initialize db_interactions
-        db_interactions = None
+        # 🆕 PRIORITY: Use consolidated interactions (pre-filtered by Backend/Script)
+        interactions = user_data.get('interactions', [])
         
-        # ⭐ TRY SQLite DATABASE FIRST (if available)
-        if self.use_sqlite:
-            # Lấy từ SQLite (all time hoặc recent_days)
-            db_interactions = self.get_user_interactions_from_db(user_id, recent_days)
-            
-            # Kiểm tra XEM CÓ DATA thật không (không chỉ kiểm tra dict)
-            has_db_data = (
-                db_interactions and (
-                    db_interactions['favorite_games'] or 
-                    db_interactions['purchased_games'] or 
-                    db_interactions['view_history']
-                )
-            )
-            
-            if has_db_data:
-                # ✓ Dùng data từ SQLite (CÓ DATA THẬT)
-                favorite_games = db_interactions['favorite_games']
-                purchased_games = list(db_interactions['purchased_games'].keys())
-                view_history = db_interactions['view_history']
-            else:
-                # ⚠️ SQLite KHÔNG CÓ DATA cho user này
-                # → Fallback to JSON (CHỈ cho testing, KHÔNG dùng cho adaptive boosting)
-                print(f"⚠️  Warning: User {user_id} không có trong SQLite → Dùng data test từ JSON (không boost)")
-                favorite_games = user_data.get('favorite_games', [])
-                purchased_games = list(user_data.get('purchased_games', {}).keys())
-                view_history = user_data.get('view_history', {})
+        favorite_games = []
+        purchased_games_dict = {}
+        view_history = {}
+        
+        if interactions:
+            # Dữ liệu này đã được lọc 7 ngày sẵn từ SQL/Export Script
+            # Không cần bọc thêm hay check timestamp
+            for interac in interactions:
+                g_id = interac.get('game_id')
+                if not g_id: continue
                 
-                # ❌ KHÔNG tính preferences cho test users (để tránh boost với data fake)
-                # Nếu muốn enable boost cho test users, comment dòng dưới
-                return None  # → adaptive boosting sẽ bị disable
+                i_type = interac.get('type')
+                if i_type == 'favorite':
+                    favorite_games.append(g_id)
+                elif i_type == 'purchase':
+                    purchased_games_dict[str(g_id)] = interac.get('rating', 3)
+                elif i_type == 'review':
+                    # Review acts like a purchase with explicit rating
+                    purchased_games_dict[str(g_id)] = interac.get('rating', 3)
+                elif i_type == 'view':
+                    view_history[str(g_id)] = view_history.get(str(g_id), 0) + interac.get('count', 1)
         else:
-            # ❌ Không có SQLite → Use data from JSON
+            # 🏛️ FALLBACK: Old fields (favorite_games, purchased_games, view_history)
             favorite_games = user_data.get('favorite_games', [])
             purchased_games_dict = user_data.get('purchased_games', {})
-            purchased_games = list(purchased_games_dict.keys())
             view_history = user_data.get('view_history', {})
             
-            # ⭐ FALLBACK: Filter by JSON timestamps if available
-            if recent_days and not self.use_sqlite:
+            # Chỉ lọc nếu có timestamps (dành cho môi trường cũ)
+            if recent_days:
                 cutoff_date = datetime.now() - timedelta(days=recent_days)
                 
-                # Filter favorite_games (nếu có timestamps)
+                # Filter favorite_games
                 favorite_games_timestamps = user_data.get('favorite_games_timestamps', {})
                 if favorite_games_timestamps:
                     favorite_games = [
                         game_id for game_id in favorite_games
-                        if game_id in favorite_games_timestamps and 
+                        if str(game_id) in favorite_games_timestamps and 
                         datetime.fromisoformat(favorite_games_timestamps[str(game_id)]) >= cutoff_date
                     ]
                 
-                # Filter purchased_games (nếu có timestamps)
+                # Filter purchased_games
                 purchased_games_timestamps = user_data.get('purchased_games_timestamps', {})
                 if purchased_games_timestamps:
-                    purchased_games = [
-                        game_id for game_id in purchased_games
-                        if game_id in purchased_games_timestamps and
-                        datetime.fromisoformat(purchased_games_timestamps[str(game_id)]) >= cutoff_date
-                    ]
-                
-                # Filter view_history (nếu có timestamps)
-                view_history_timestamps = user_data.get('view_history_timestamps', {})
-                if view_history_timestamps:
-                    view_history = {
-                        game_id: count for game_id, count in view_history.items()
-                        if game_id in view_history_timestamps and
-                        datetime.fromisoformat(view_history_timestamps[str(game_id)]) >= cutoff_date
+                    purchased_games_dict = {
+                        g_id: r for g_id, r in purchased_games_dict.items()
+                        if g_id in purchased_games_timestamps and
+                        datetime.fromisoformat(purchased_games_timestamps[g_id]) >= cutoff_date
                     }
         
         # Tạo weighted interactions: favorite=5, purchased=3, view=view_count*0.5
@@ -1049,20 +963,21 @@ class GameRecommendationSystem:
         for game_id in favorite_games:
             weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + 5.0
         
-        # Handle purchased_games with ratings
-        if self.use_sqlite and recent_days and db_interactions:
-            # Use ratings from SQLite
-            for game_id, rating in db_interactions['purchased_games'].items():
-                weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + rating
-        else:
-            # Use ratings from JSON
-            purchased_games_dict_json = user_data.get('purchased_games', {})
-            for game_id_str, rating in purchased_games_dict_json.items():
-                game_id = int(game_id_str) if isinstance(game_id_str, str) else game_id_str
-                weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + rating
-        
-        for game_id, view_count in view_history.items():
-            weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + (view_count * 0.5)
+        # Thêm điểm cho purchased games
+        for game_id_str, rating in purchased_games_dict.items():
+            try:
+                game_id = int(game_id_str)
+                weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + (rating if rating else 3)
+            except (ValueError, TypeError):
+                continue
+                
+        # Thêm điểm từ view history
+        for game_id_str, view_count in view_history.items():
+            try:
+                game_id = int(game_id_str)
+                weighted_interactions[game_id] = weighted_interactions.get(game_id, 0) + (view_count * 0.5)
+            except (ValueError, TypeError):
+                continue
         
         # Phân tích preferences
         publisher_scores = {}
@@ -1433,7 +1348,7 @@ class GameRecommendationSystem:
         # Phân tích preferences strength
         preferences = self.analyze_user_preferences(user_id)
         
-        # ⚠️ Nếu không có preferences (user không có trong SQLite) → Không điều chỉnh weights
+        # ⚠️ Nếu không có preferences (user không có lịch sử tương tác) → Không điều chỉnh weights
         if not preferences:
             return None
         
@@ -1508,7 +1423,7 @@ class GameRecommendationSystem:
         
         return adjusted_weights
     
-    def get_hybrid_recommendations(self, user_id, top_n=10, keyword="", enable_adaptive=True, recent_days=None):
+    def get_hybrid_recommendations(self, user_id, top_n=10, keyword="", enable_adaptive=True, recent_days=7):
         """
         Gợi ý kết hợp SVD + Content-based + Demographic + Keyword
         
@@ -1517,7 +1432,7 @@ class GameRecommendationSystem:
             top_n: Số lượng games gợi ý
             keyword: Từ khóa tìm kiếm
             enable_adaptive: Bật adaptive preference boosting
-            recent_days: Phân tích preferences từ N ngày gần đây (None = all time)
+            recent_days: Phân tích preferences từ N ngày gần đây (Mặc định: 7 ngày)
                         Ví dụ: recent_days=7 → chỉ dùng data 7 ngày vừa qua
         """
         

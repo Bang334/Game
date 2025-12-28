@@ -119,39 +119,66 @@ async function exportData() {
         const users = usersRows as any[]
 
         for (const user of users) {
-            // Favorite games (from wishlist)
-            const [wishlistRows] = await pool.query(`
-        SELECT game_id
-        FROM wishlist
-        WHERE user_id = ?
-      `, [user.id])
+            // 🏛️ All-time data for SVD matrix building
+            const [wishlistRows] = await pool.query('SELECT game_id FROM wishlist WHERE user_id = ?', [user.id])
             user.favorite_games = (wishlistRows as any[]).map((w: any) => w.game_id)
 
-            // Purchased games with ratings
             const [purchasedRows] = await pool.query(`
-        SELECT p.game_id, COALESCE(r.rating, 3) as rating
-        FROM purchase p
-        LEFT JOIN review r ON p.user_id = r.user_id AND p.game_id = r.game_id
-        WHERE p.user_id = ?
-      `, [user.id])
-
+                SELECT p.game_id, COALESCE(r.rating, 3) as rating
+                FROM purchase p
+                LEFT JOIN review r ON p.user_id = r.user_id AND p.game_id = r.game_id
+                WHERE p.user_id = ?
+            `, [user.id])
             user.purchased_games = {}
-            for (const purchase of (purchasedRows as any[])) {
-                user.purchased_games[purchase.game_id.toString()] = purchase.rating
+            for (const p of (purchasedRows as any[])) {
+                user.purchased_games[p.game_id.toString()] = p.rating
             }
 
-            // View history
-            const [viewsRows] = await pool.query(`
-        SELECT game_id, SUM(view_count) as view_count
-        FROM view
-        WHERE user_id = ?
-        GROUP BY game_id
-      `, [user.id])
-
+            const [viewsRows] = await pool.query('SELECT game_id, SUM(view_count) as total_views FROM view WHERE user_id = ? GROUP BY game_id', [user.id])
             user.view_history = {}
-            for (const view of (viewsRows as any[])) {
-                user.view_history[view.game_id.toString()] = view.view_count || 1
+            for (const v of (viewsRows as any[])) {
+                user.view_history[v.game_id.toString()] = v.total_views
             }
+
+            // ⚡ PRE-FILTERED INTERACTIONS (Last 7 Days) for Adaptive Boosting
+            const interactions: any[] = []
+
+            const [recentWish] = await pool.query('SELECT game_id FROM wishlist WHERE user_id = ? AND created_at >= NOW() - INTERVAL 7 DAY', [user.id])
+            for (const item of (recentWish as any[])) {
+                interactions.push({ game_id: item.game_id, type: 'favorite' })
+            }
+
+            const [recentPurch] = await pool.query(`
+                SELECT p.game_id, COALESCE(r.rating, 3) as rating
+                FROM purchase p
+                LEFT JOIN review r ON p.user_id = r.user_id AND p.game_id = r.game_id
+                WHERE p.user_id = ? AND p.purchase_date >= NOW() - INTERVAL 7 DAY
+            `, [user.id])
+            for (const item of (recentPurch as any[])) {
+                interactions.push({ game_id: item.game_id, type: 'purchase', rating: item.rating })
+            }
+
+            const [recentViews] = await pool.query('SELECT game_id, view_count FROM view WHERE user_id = ? AND viewed_at >= NOW() - INTERVAL 7 DAY', [user.id])
+            for (const item of (recentViews as any[])) {
+                interactions.push({ game_id: item.game_id, type: 'view', count: item.view_count })
+            }
+
+            // Recent Reviews (Last 7 Days) - For games bought previously but reviewed recently
+            const [recentReviews] = await pool.query(`
+                SELECT game_id, COALESCE(rating, 3) as rating
+                FROM review
+                WHERE user_id = ? AND review_date >= NOW() - INTERVAL 7 DAY
+            `, [user.id])
+
+            for (const item of (recentReviews as any[])) {
+                // Check if already recorded as a recent purchase to avoid duplicates
+                const existing = interactions.find(i => i.game_id === item.game_id && i.type === 'purchase')
+                if (!existing) {
+                    interactions.push({ game_id: item.game_id, type: 'review', rating: item.rating })
+                }
+            }
+
+            user.interactions = interactions
         }
 
         console.log(`✅ Fetched ${users.length} users`)

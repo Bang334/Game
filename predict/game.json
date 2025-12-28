@@ -22003,7 +22003,64 @@
         "368": 1,
         "369": 1,
         "388": 1
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 48,
+          "type": "favorite"
+        },
+        {
+          "game_id": 56,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 40,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 2,
@@ -22049,7 +22106,91 @@
         "165": 1,
         "260": 1,
         "503": 1
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 14,
+          "type": "favorite"
+        },
+        {
+          "game_id": 31,
+          "type": "favorite"
+        },
+        {
+          "game_id": 36,
+          "type": "favorite"
+        },
+        {
+          "game_id": 40,
+          "type": "favorite"
+        },
+        {
+          "game_id": 41,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 36,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 40,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 41,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 3,
@@ -22105,7 +22246,85 @@
         "56": 4,
         "57": 1,
         "65": 1
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 58,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 4,
@@ -22147,7 +22366,73 @@
         "39": 5,
         "40": 5,
         "45": 6
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 20,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 5,
@@ -22190,7 +22475,84 @@
         "43": 5,
         "47": 3,
         "48": 6
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 23,
+          "type": "favorite"
+        },
+        {
+          "game_id": 32,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 23,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 32,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 34,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 35,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 48,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 56,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 6,
@@ -22231,7 +22593,83 @@
         "33": 5,
         "34": 7,
         "45": 8
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 32,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 32,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 58,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 7,
@@ -22270,7 +22708,72 @@
         "33": 13,
         "41": 6,
         "48": 15
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 16,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 8,
@@ -22312,7 +22815,74 @@
         "35": 6,
         "39": 9,
         "48": 15
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 9,
@@ -22356,7 +22926,81 @@
         "38": 15,
         "39": 11,
         "43": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 20,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 10,
@@ -22395,7 +23039,72 @@
         "47": 6,
         "49": 8,
         "58": 6
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 16,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 11,
@@ -22440,7 +23149,82 @@
         "49": 5,
         "54": 9,
         "55": 10
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 31,
+          "type": "favorite"
+        },
+        {
+          "game_id": 37,
+          "type": "favorite"
+        },
+        {
+          "game_id": 48,
+          "type": "favorite"
+        },
+        {
+          "game_id": 60,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 37,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 48,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 60,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 12,
@@ -22475,7 +23259,60 @@
         "40": 12,
         "44": 12,
         "45": 13
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 13,
@@ -22515,7 +23352,76 @@
         "21": 14,
         "22": 5,
         "47": 14
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 14,
@@ -22558,7 +23464,83 @@
         "57": 10,
         "59": 9,
         "60": 8
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 33,
+          "type": "favorite"
+        },
+        {
+          "game_id": 35,
+          "type": "favorite"
+        },
+        {
+          "game_id": 37,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 46,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 33,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 35,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 37,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 45,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 46,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 15,
@@ -22601,7 +23583,87 @@
         "53": 8,
         "55": 7,
         "60": 8
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 25,
+          "type": "favorite"
+        },
+        {
+          "game_id": 31,
+          "type": "favorite"
+        },
+        {
+          "game_id": 34,
+          "type": "favorite"
+        },
+        {
+          "game_id": 56,
+          "type": "favorite"
+        },
+        {
+          "game_id": 57,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 25,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 34,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 39,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 56,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 57,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 16,
@@ -22637,7 +23699,64 @@
         "32": 12,
         "47": 9,
         "58": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 17,
@@ -22679,7 +23798,87 @@
         "45": 8,
         "47": 8,
         "50": 5
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 14,
+          "type": "favorite"
+        },
+        {
+          "game_id": 24,
+          "type": "favorite"
+        },
+        {
+          "game_id": 37,
+          "type": "favorite"
+        },
+        {
+          "game_id": 41,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 51,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 24,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 32,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 37,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 41,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 51,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 18,
@@ -22723,7 +23922,88 @@
         "36": 6,
         "40": 12,
         "42": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 16,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 20,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 19,
@@ -22764,7 +24044,78 @@
         "49": 10,
         "53": 7,
         "59": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 30,
+          "type": "favorite"
+        },
+        {
+          "game_id": 32,
+          "type": "favorite"
+        },
+        {
+          "game_id": 44,
+          "type": "favorite"
+        },
+        {
+          "game_id": 55,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 32,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 44,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 46,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 55,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 20,
@@ -22808,7 +24159,69 @@
         "55": 10,
         "58": 5,
         "59": 7
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 30,
+          "type": "favorite"
+        },
+        {
+          "game_id": 34,
+          "type": "favorite"
+        },
+        {
+          "game_id": 45,
+          "type": "favorite"
+        },
+        {
+          "game_id": 48,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 34,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 45,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 48,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 21,
@@ -22847,7 +24260,70 @@
         "21": 8,
         "22": 11,
         "40": 14
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 22,
@@ -22887,7 +24363,72 @@
         "56": 10,
         "57": 4,
         "58": 6
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 30,
+          "type": "favorite"
+        },
+        {
+          "game_id": 31,
+          "type": "favorite"
+        },
+        {
+          "game_id": 33,
+          "type": "favorite"
+        },
+        {
+          "game_id": 49,
+          "type": "favorite"
+        },
+        {
+          "game_id": 53,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 33,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 53,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 23,
@@ -22928,7 +24469,68 @@
         "56": 4,
         "57": 6,
         "60": 6
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 42,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 49,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 33,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 42,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 24,
@@ -22963,7 +24565,64 @@
         "20": 8,
         "21": 14,
         "47": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 20,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 25,
@@ -23004,7 +24663,79 @@
         "50": 3,
         "57": 8,
         "59": 4
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 24,
+          "type": "favorite"
+        },
+        {
+          "game_id": 38,
+          "type": "favorite"
+        },
+        {
+          "game_id": 50,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 24,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 35,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 38,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 44,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 50,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 26,
@@ -23044,7 +24775,65 @@
         "39": 10,
         "41": 13,
         "48": 7
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 13,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 13,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 27,
@@ -23078,7 +24867,64 @@
         "20": 8,
         "22": 13,
         "47": 7
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 6,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 21,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 16,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 28,
@@ -23126,7 +24972,93 @@
         "41": 7,
         "47": 12,
         "58": 12
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 7,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "favorite"
+        },
+        {
+          "game_id": 18,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 30,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 6,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 18,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 20,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 21,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 30,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 29,
@@ -23171,7 +25103,73 @@
         "57": 10,
         "58": 9,
         "60": 5
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 34,
+          "type": "favorite"
+        },
+        {
+          "game_id": 35,
+          "type": "favorite"
+        },
+        {
+          "game_id": 39,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 60,
+          "type": "favorite"
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 23,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 34,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 35,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 39,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 60,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 30,
@@ -23216,7 +25214,69 @@
         "56": 6,
         "57": 6,
         "60": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 12,
+          "type": "favorite"
+        },
+        {
+          "game_id": 22,
+          "type": "favorite"
+        },
+        {
+          "game_id": 32,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 57,
+          "type": "favorite"
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 22,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 25,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 32,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 36,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 44,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 57,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 31,
@@ -23258,7 +25318,70 @@
         "49": 8,
         "58": 5,
         "60": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 24,
+          "type": "favorite"
+        },
+        {
+          "game_id": 45,
+          "type": "favorite"
+        },
+        {
+          "game_id": 50,
+          "type": "favorite"
+        },
+        {
+          "game_id": 55,
+          "type": "favorite"
+        },
+        {
+          "game_id": 7,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 12,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 24,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 35,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 42,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 45,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 50,
+          "type": "review",
+          "rating": 1
+        },
+        {
+          "game_id": 55,
+          "type": "review",
+          "rating": 5
+        }
+      ]
     },
     {
       "id": 32,
@@ -23297,7 +25420,60 @@
         "56": 7,
         "59": 9,
         "60": 9
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 11,
+          "type": "favorite"
+        },
+        {
+          "game_id": 41,
+          "type": "favorite"
+        },
+        {
+          "game_id": 43,
+          "type": "favorite"
+        },
+        {
+          "game_id": 44,
+          "type": "favorite"
+        },
+        {
+          "game_id": 10,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 11,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 31,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 41,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 43,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 44,
+          "type": "review",
+          "rating": 4
+        }
+      ]
     },
     {
       "id": 33,
@@ -23340,7 +25516,79 @@
         "54": 6,
         "57": 4,
         "59": 1
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 41,
+          "type": "favorite"
+        },
+        {
+          "game_id": 49,
+          "type": "favorite"
+        },
+        {
+          "game_id": 51,
+          "type": "favorite"
+        },
+        {
+          "game_id": 52,
+          "type": "favorite"
+        },
+        {
+          "game_id": 58,
+          "type": "favorite"
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 41,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 51,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 52,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 54,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 58,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 59,
+          "type": "review",
+          "rating": 2
+        }
+      ]
     },
     {
       "id": 34,
@@ -23380,7 +25628,82 @@
         "54": 2,
         "56": 6,
         "57": 8
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 9,
+          "type": "favorite"
+        },
+        {
+          "game_id": 14,
+          "type": "favorite"
+        },
+        {
+          "game_id": 46,
+          "type": "favorite"
+        },
+        {
+          "game_id": 49,
+          "type": "favorite"
+        },
+        {
+          "game_id": 51,
+          "type": "favorite"
+        },
+        {
+          "game_id": 59,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 9,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 41,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 46,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 51,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 57,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 59,
+          "type": "review",
+          "rating": 2
+        }
+      ]
     },
     {
       "id": 35,
@@ -23419,7 +25742,81 @@
         "54": 4,
         "56": 1,
         "57": 5
-      }
+      },
+      "interactions": [
+        {
+          "game_id": 5,
+          "type": "favorite"
+        },
+        {
+          "game_id": 14,
+          "type": "favorite"
+        },
+        {
+          "game_id": 19,
+          "type": "favorite"
+        },
+        {
+          "game_id": 47,
+          "type": "favorite"
+        },
+        {
+          "game_id": 49,
+          "type": "favorite"
+        },
+        {
+          "game_id": 51,
+          "type": "favorite"
+        },
+        {
+          "game_id": 56,
+          "type": "favorite"
+        },
+        {
+          "game_id": 59,
+          "type": "favorite"
+        },
+        {
+          "game_id": 5,
+          "type": "review",
+          "rating": 2
+        },
+        {
+          "game_id": 14,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 19,
+          "type": "review",
+          "rating": 3
+        },
+        {
+          "game_id": 47,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 49,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 51,
+          "type": "review",
+          "rating": 4
+        },
+        {
+          "game_id": 56,
+          "type": "review",
+          "rating": 5
+        },
+        {
+          "game_id": 59,
+          "type": "review",
+          "rating": 3
+        }
+      ]
     },
     {
       "id": 36,
@@ -23429,7 +25826,8 @@
       "gender": "male",
       "favorite_games": [],
       "purchased_games": {},
-      "view_history": {}
+      "view_history": {},
+      "interactions": []
     }
   ]
 }
