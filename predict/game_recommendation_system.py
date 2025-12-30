@@ -737,8 +737,12 @@ class GameRecommendationSystem:
         # Mở rộng keyword bằng library
         expanded_keyword = self.expand_query(keyword)
         
-        # Tách thành các từ khóa riêng lẻ
-        keywords_to_search = expanded_keyword.lower().split()
+        # Kết hợp cả keyword gốc và keyword đã mở rộng để đảm bảo không bỏ sót match chính xác
+        # Ví dụ: gõ "18+" sẽ tìm cả "Horror" (mở rộng) và chính xác chữ "18+" (gốc)
+        combined_query = f"{expanded_keyword.lower()} {keyword.lower()}"
+        
+        # Tách thành các từ khóa riêng lẻ và loại bỏ trùng lặp
+        keywords_to_search = list(set(combined_query.split()))
         
         if debug:
             print(f"\n=== DEBUG KEYWORD SCORE: {game['name']} ===")
